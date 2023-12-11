@@ -1,3 +1,4 @@
+#' @describeIn utils_ utils_
 #' Stop messages
 #' 
 #' Conditionally print stop messages.

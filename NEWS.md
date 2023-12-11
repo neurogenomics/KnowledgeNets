@@ -1,4 +1,4 @@
-# templateR 0.99.0
+# KGExplorer 0.99.0
 
 ## New features
  

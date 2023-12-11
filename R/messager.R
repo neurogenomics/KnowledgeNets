@@ -1,3 +1,4 @@
+#' @describeIn utils_ utils_
 #' Print messages 
 #' 
 #' Conditionally print messages.
@@ -12,15 +13,17 @@
 #' 
 #' @return Null 
 #' @keywords internal 
-messager <- function(..., v = TRUE, parallel = FALSE) {
-    
-    message_parallel <- function(...) {
-        system(sprintf('echo "%s"', paste0(..., collapse = "")))
-    }
-    if(isTRUE(parallel)){
-        if(v) try({message_parallel(...)})
-    } else {
-        msg <- paste(...)
-        if (v) try({message(msg)})
-    }
+messager <- function(...,
+                     v = Sys.getenv("VERBOSE")!="FALSE", 
+                     parallel = FALSE) {
+  
+  message_parallel <- function(...) {
+    system(sprintf('echo "%s"', paste0(..., collapse = "")))
+  }
+  if(isTRUE(parallel)){
+    if(v) try({message_parallel(...)})
+  } else {
+    msg <- paste(...)
+    if (v) try({message(msg)})
+  }
 }

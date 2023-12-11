@@ -1,3 +1,6 @@
+# biocBiocypher
+biocypher-log/
+*.log
 Icon?
 # R project files
 *.Rproj
