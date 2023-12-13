@@ -7,10 +7,10 @@
 add_hoverboxes(
   g,
   columns = get_tidygraph_colnames(g),
-  interactive = TRUE,
   width = 60,
   digits = 3,
   decorators = c("<b>", "</b>"),
+  as_html = TRUE,
   force_new = FALSE
 )
 }

@@ -27,7 +27,8 @@ ontology_to <- function(ont,
                              "igraph_dist_hclust_dendrogram",
                              "tidygraph",
                              "data.frame",
-                             "data.table"),
+                             "data.table",
+                             "list"),
                         as_sparse=FALSE,
                         ...){
   to <- match.arg(to)
@@ -52,7 +53,7 @@ ontology_to <- function(ont,
   } else if(to=="dot"){
     obj <- simona::dag_as_DOT(ont, ...)
   } else if(to=="similarity"){
-    obj <- simona::term_sim(ont, terms=terms, ...)
+    obj <- simona::term_sim(ont, terms=ont@terms, ...)
   } else if(to=="adjacency_dist_hclust_clusters"){ 
     hc <- ontology_to(ont, to="adjacency_dist_hclust")
     obj <- stats::cutree(hc, ...)
@@ -75,20 +76,19 @@ ontology_to <- function(ont,
     obj <- ontology_to_tidygraph(ont, ...)
   } else if(to=="data.frame"){
     g <- ontology_to_tidygraph(ont)
-    tmp <- igraph::as_data_frame(g,what="both")  
-    ## merge edges and vertices 
-    obj <- merge(tmp$edges, 
-                 tmp$vertices,
-                 by.x="from", 
-                 by.y="name") |>
-           merge(tmp$vertices,
-                 by.x="to",
-                 by.y="name",
-                 suffixes = c(".from",".to"))
+    obj <- tidygraph_to_dt(g)
   } else if(to=="data.table"){
     df <- ontology_to(ont, to="data.frame")
     obj <- data.table::as.data.table(df)
-  }else {
+  } else if(to=="list") {
+    obj <- list(
+      similarity=ontology_to(ont, to = "similarity"), 
+      adjacency=ontology_to(ont, to = "adjacency"),
+      elementMetadata=data.table::data.table(ont@elementMetadata),
+      annotation=ont@annotation,
+      terms=ont@terms
+    )
+  } else {
     stop("Unknown conversion type.")
   }
   #### Convert to sparse ####

@@ -1,4 +1,4 @@
-#' @describeIn get_upheno_ get_ 
+#' @describeIn get_ get_ 
 #' Get uPheno
 #'
 #' Get data from the \href{https://github.com/obophenotype/upheno}{

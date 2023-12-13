@@ -38,10 +38,31 @@ NULL
 #' @param dat Input \link[data.table]{data.table}.
 #' @param force_new Create a new file instead of using any cached files.
 #' @param save_dir Directory to save a file to.
+#' @param filters A named list, where each element in the list is the name of 
+#' a column in the data, and the vector within each element represents the 
+#' values to include in the final data.
+#' @param maps A list of paired to/from types to filter Monarch association 
+#' files by. For example, \code{list(c("gene","disease"))} will return any 
+#'  files that contains gene-disease associations.
+#' Passes to \link{get_monarch_files}.
+#' @param queries A list of free-form substring queries to filter files by 
+#' (using any column in the metadata). 
+#' For example, \code{list("gene_disease","variant_disease")} will return any 
+#'  files that contain either of the substrings 
+#'  "gene_disease" or "variant_disease".
+#' Passes to \link{get_monarch_files}.
+#' @param domain Web domain to search for Monarch files.
+#' @param subdir Subdirectory path to search for Monarch files within
+#'  \code{domain}.
+#' @param rbind If \code{TRUE}, rbinds all \link[data.table]{data.table}s 
+#' together. Otherwise, returns a named list of separated 
+#' \link[data.table]{data.table}s. 
+#' 
+#' @inheritParams data.table::merge.data.table
 #' @description
 #' Functions to get data resources.
 #' @family get_ 
-#' @returns Formatted data.
+#' @returns Data..
 #' 
 #' @name get_
 #' @import data.table
@@ -77,40 +98,6 @@ NULL
 #' @import data.table
 NULL
 
-#' @title Get Monarch functions
-#' 
-#' @description
-#' Functions to get Monarch data resources.
-#' @param filters A named list, where each element in the list is the name of 
-#' a column in the data, and the vector within each element represents the 
-#' values to include in the final data.
-#' @param maps A list of paired to/from types to filter Monarch association 
-#' files by. For example, \code{list(c("gene","disease"))} will return any 
-#'  files that contains gene-disease associations.
-#' Passes to \link{get_monarch_files}.
-#' @param queries A list of free-form substring queries to filter files by 
-#' (using any column in the metadata). 
-#' For example, \code{list("gene_disease","variant_disease")} will return any 
-#'  files that contain either of the substrings 
-#'  "gene_disease" or "variant_disease".
-#' Passes to \link{get_monarch_files}.
-#' @param domain Web domain to search for Monarch files.
-#' @param subdir Subdirectory path to search for Monarch files within
-#'  \code{domain}.
-#' @param rbind If \code{TRUE}, rbinds all \link[data.table]{data.table}s 
-#' together. Otherwise, returns a named list of separated 
-#' \link[data.table]{data.table}s. 
-#' 
-#' @inheritParams get_
-#' @inheritParams map_
-#' @inheritParams data.table::merge.data.table
-#' @family get_ 
-#' @returns Formatted data.
-#' 
-#' @name get_monarch_
-NULL
-
-
 #' @title Link functions
 #' 
 #' @description
@@ -122,17 +109,6 @@ NULL
 #' @returns Merged data.
 #' 
 #' @name link_
-NULL
-
-#' @title Get uPheno functions
-#' 
-#' @description
-#' Functions to get uPheno data resources. 
-#' 
-#' @family get_ 
-#' @returns Formatted data.
-#' 
-#' @name get_upheno_
 NULL
 
 #' @title Map uPheno functions
@@ -174,6 +150,17 @@ NULL
 #' @family convert_ 
 #' @returns Converted data. 
 #' @name convert_
+NULL
+
+
+#' @title Add functions
+#' 
+#' @description
+#' Functions to add extra metadata to an ontology or data.table object. 
+#' @import simona
+#' @family add_ 
+#' @returns Added data. 
+#' @name add_
 NULL
 
 

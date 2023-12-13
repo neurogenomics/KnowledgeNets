@@ -22,6 +22,7 @@ Imports:
   data.table,
   ggplot2,
   plotly,
+  pals,
   visNetwork,
   Matrix,
   stringr,
@@ -29,7 +30,8 @@ Imports:
   igraph,
   tidygraph,
   tidyquant,
-  utils
+  utils,
+  BiocParallel
 Suggests:
   rworkflows,
   methods,
@@ -37,8 +39,8 @@ Suggests:
   rmarkdown,
   remotes,
   knitr,
-  testthat (>= 3.0.0),
-  BiocParallel,
+  testthat (>= 3.0.0), 
+  heatmaply,
   ComplexHeatmap,
   ggdist,
   htmltools,

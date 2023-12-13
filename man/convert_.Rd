@@ -16,7 +16,7 @@ ontology_to(
     "adjacency_dist_hclust_dendrogram", "adjacency_dist_hclust_clusters", "similarity",
     "dendrogram", "igraph", "dot", "adjacency_igraph", "igraph_dist",
     "igraph_dist_hclust", "igraph_dist_hclust_dendrogram", "tidygraph", "data.frame",
-    "data.table"),
+    "data.table", "list"),
   as_sparse = FALSE,
   ...
 )

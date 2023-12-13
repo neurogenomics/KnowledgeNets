@@ -1,4 +1,4 @@
-#' @describeIn utils_ utils_
+#' @describeIn filter_ filter_
 filter_dt <- function(dat,
                       filters){
   for(f in names(filters)){

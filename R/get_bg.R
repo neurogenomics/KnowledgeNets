@@ -11,7 +11,6 @@
 #' @export
 #' @importFrom tools R_user_dir
 #' @importFrom orthogene create_background
-#' @importFrom HPOExplorer get_version
 #' @examples
 #' bg <- get_bg()
 get_bg <- function(species1 = "human",
@@ -24,8 +23,6 @@ get_bg <- function(species1 = "human",
                    overwrite = FALSE,
                    verbose = TRUE,
                    ...){
-
-  # devoptera::args2vars(get_bg)
   #### Create save path ####
   save_path <- file.path(
     save_dir,
@@ -45,7 +42,7 @@ get_bg <- function(species1 = "human",
     attr(bg,"version") <- as.character(Sys.Date())
     saveRDS(bg,save_path)
   }
-  HPOExplorer::get_version(obj = bg,
-                           verbose = verbose)
+  get_version(obj = bg,
+              verbose = verbose)
   return(bg)
 }

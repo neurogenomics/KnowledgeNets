@@ -19,20 +19,23 @@
 #' g2 <- add_hoverboxes(g)
 add_hoverboxes <- function(g,
                            columns = get_tidygraph_colnames(g),
-                           interactive = TRUE,
+                           hoverbox_column=c("hover",
+                                             "title",# For visNetwork
+                                             "label"# For plotly
+                           ),
                            width = 60,
                            digits = 3,
                            decorators = c("<b>","</b>"),
+                           as_html = TRUE,
                            force_new = FALSE) {
-  hover <- name <- NULL;
+  hoverbox_column <- match.arg(hoverbox_column)
   #### Check for hover col ####
-  if("hover" %in% names(igraph::vertex.attributes(g)) && 
+  if(hoverbox_column %in% names(igraph::vertex.attributes(g)) && 
      isFALSE(force_new)){
-    messager("'hover' column already exists. Skipping hoverbox creation.")
+    messager(sQuote(hoverbox_column),
+             "column already exists. Skipping hoverbox creation.")
     return(g)
   } 
-  #### Select sep ####
-  sep <- if(isTRUE(interactive)) "<br>" else "\n"
   #### Check columns ####
   col_opts <- get_tidygraph_colnames(g)
   columns <- columns[unname(columns) %in% col_opts]
@@ -42,37 +45,16 @@ add_hoverboxes <- function(g,
   } else {
     messager("Making hoverboxes from:",paste(shQuote(columns),collapse = ", "))
     nodes <- tidygraph_to_dt(g)
-    #### Check for id col ####
-    if(!"name" %in% names(nodes)){
-      nodes[,name:=.I]
-    }
-    ## Define helper functions
-    interleave <- function(a,b,sep){
-      idx <- order(c(seq_along(a), seq_along(b)))
-      unlist(c(a,paste0(b,sep)))[idx] |> as.list()
-    }
-    round_if <- function(x,digits,width){
-      if(is.numeric(x)) {
-        round(x,digits = digits)
-      } else {
-        stringr::str_wrap(x, width = width)
-      }
-    }
-    #### Create hoverboxes....data.table style! ####
-    nodes[, hover := do.call(paste0,
-                             interleave(a = paste0(decorators[1],
-                                                   columns,
-                                                   decorators[2],"= "),
-                                        b = lapply(.SD,
-                                                   round_if,
-                                                   digits = digits,
-                                                   width = width),
-                                        sep = sep)
-                             ), 
-          .SDcols = columns, by="name"] 
-    # cat(nodes$hover[1])
+    nodes <- add_hoverboxes_dt(dat = nodes,
+                               columns = columns,
+                               hoverbox_column = hoverbox_column,
+                               width = width,
+                               digits = digits,
+                               decorators = decorators,
+                               as_html = as_html)
     #### Add hover back into graph ####
-    igraph::V(g)$hover <- nodes$hover[match(igraph::V(g)$name,nodes$name)]
+    igraph::vertex_attr(g, hoverbox_column) <- 
+      nodes[[hoverbox_column]][match(igraph::V(g)$name,nodes$name)]
   } 
   return(g)
 }

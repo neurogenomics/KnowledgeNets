@@ -10,6 +10,7 @@ get_ontology(
   filetype = "-base.obo",
   method = c("github", "bioportal"),
   add_metadata = TRUE,
+  add_ancestors = FALSE,
   save_dir = cache_dir(),
   force_new = FALSE,
   ...
@@ -34,8 +35,22 @@ GitHub.}}
   \describe{
     \item{\code{force_new}}{Create a new file instead of using any cached files.}
     \item{\code{save_dir}}{Directory to save a file to.}
-    \item{\code{file}}{name or vector of names of files to be downloaded. If \code{NULL},
-all assets attached to the release will be downloaded.}
+    \item{\code{file}}{Can be one of the following:
+\itemize{
+\item{"ontology"}{Creates an \link[simona]{ontology_DAG} R object by
+ importing the OBO file directly from the official
+ \href{https://github.com/obophenotype/upheno}{uPheno GitHub repository}.}
+\item{"bestmatches"}{Returns a merged table with the best matches between
+ human and non-human homologous phenotypes (from multiple species).
+ Distributed by the official
+ \href{https://github.com/obophenotype/upheno/tree/master/mappings}{
+ uPheno GitHub repository}.}
+\item{"upheno_mapping"}{Return a merged table with matches between human
+and non-human homologous phenotypes (from multiple species).
+Distributed by the
+ \href{https://data.monarchinitiative.org/upheno2/current/upheno-release/all/index.html}{
+ Monarch Initiative server}.}
+}}
     \item{\code{repo}}{Repository name in format "owner/repo". Defaults to \code{guess_repo()}.}
     \item{\code{tag}}{tag for the GitHub release to which this data should be attached.}
   }}

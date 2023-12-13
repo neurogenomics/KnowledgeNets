@@ -29,6 +29,7 @@ get_ontology <- function(name=c("mondo",
                          method=c("github",
                                   "bioportal"),
                          add_metadata=TRUE,
+                         add_ancestors=FALSE,
                          save_dir=cache_dir(),
                          force_new=FALSE,
                          ...){ 
@@ -58,7 +59,10 @@ get_ontology <- function(name=c("mondo",
     }
   } 
   #### Add metadata #### 
-  if(isTRUE(add_metadata)) ont <- add_ontology_metadata(ont)
+  if(isTRUE(add_metadata)) {
+    ont <- add_ontology_metadata(ont,
+                                 add_ancestors=add_ancestors)
+  }
   #### Subset ontology ####
   ont <- filter_ontology(ont = ont, 
                          terms = terms)

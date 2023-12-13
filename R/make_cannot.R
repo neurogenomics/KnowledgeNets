@@ -1,21 +1,14 @@
 make_cannot <- function(annot,
-                        col_side_vars,
-                        palettes = list(pals::kovesi.cyclic_mrybm_35_75_c68_s25,
-                                        pals::kovesi.linear_bgy_10_95_c74,
-                                        pals::kovesi.linear_bmw_5_95_c86)
-                        ){
+                        col_side_vars){
+  col <- map_colors(annot,
+                    columns = col_side_vars,
+                    as = "function")
   ha_list <- lapply(stats::setNames(col_side_vars,
-                                    gsub("celltype","cell type",
-                                         gsub("_"," ",col_side_vars)
-                                    )
-  ), function(x){
-    i <- which(col_side_vars==x)
-    vals <- annot[[x]]
-    dict <- stats::setNames(palettes[[i]](n = length(vals)),
-                            vals)
+                                    col_side_vars),
+                    function(x){
     ComplexHeatmap::anno_barplot(which = "column",
-                                 x = vals,
-                                 gp = grid::gpar(fill = dict[vals]),
+                                 x = annot[[x]] ,
+                                 gp = grid::gpar(fill = col[[x]][[1]](1)),
                                  add_numbers = FALSE)
   } )
   ha <- do.call(ComplexHeatmap::columnAnnotation, ha_list )
