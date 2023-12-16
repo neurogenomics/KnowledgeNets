@@ -2,7 +2,7 @@
 % Please edit documentation in R/_docs.R, R/make_igraph_object.R,
 %   R/plot_ontology.R, R/plot_ontology_circular.R, R/plot_ontology_graphviz.R,
 %   R/plot_ontology_heatmap.R, R/plot_ontology_tidygraph.R,
-%   R/plot_ontology_visnetwork.R
+%   R/plot_ontology_visnetwork.R, R/plot_tidygraph.R
 \name{plot_}
 \alias{plot_}
 \alias{make_igraph_object}
@@ -12,6 +12,7 @@
 \alias{plot_ontology_heatmap}
 \alias{plot_ontology_tidygraph}
 \alias{plot_ontology_visnetwork}
+\alias{plot_tidygraph}
 \title{Plot functions}
 \usage{
 make_igraph_object(
@@ -59,6 +60,8 @@ plot_ontology_heatmap(
 plot_ontology_tidygraph(ont, ...)
 
 plot_ontology_visnetwork(ont, ...)
+
+plot_tidygraph(g)
 }
 \arguments{
 \item{dat}{\link[data.table]{data.table} with genes.}
@@ -193,6 +196,8 @@ Plot a phenotype x phenotype correlation matrix based on genetic overlap.
 \item \code{plot_ontology_tidygraph()}: plot_
 
 \item \code{plot_ontology_visnetwork()}: plot_
+
+\item \code{plot_tidygraph()}: plot_
 
 }}
 \examples{

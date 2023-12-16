@@ -6,7 +6,8 @@
 \usage{
 add_hoverboxes(
   g,
-  columns = get_tidygraph_colnames(g),
+  columns = get_graph_colnames(g),
+  hoverbox_column = c("hover", "title", "label"),
   width = 60,
   digits = 3,
   decorators = c("<b>", "</b>"),

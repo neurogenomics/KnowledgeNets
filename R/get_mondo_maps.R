@@ -1,4 +1,4 @@
-#' @describeIn get_monarch_ get_
+#' @describeIn get_ get_
 #' Get Mondo ID maps
 #' 
 #' Get mappings between Mondo IDs and IDs in other databases/ontologies.

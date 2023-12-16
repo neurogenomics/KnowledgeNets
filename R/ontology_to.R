@@ -73,10 +73,10 @@ ontology_to <- function(ont,
     gdh <- ontology_to(ont, to="igraph_dist_hclust")
     obj <- stats::as.dendrogram(gdh)
   } else if(to=="tidygraph"){ 
-    obj <- ontology_to_tidygraph(ont, ...)
+    obj <- ontology_to_graph(ont, ...)
   } else if(to=="data.frame"){
-    g <- ontology_to_tidygraph(ont)
-    obj <- tidygraph_to_dt(g)
+    g <- ontology_to_graph(ont)
+    obj <- graph_to_dt(g, id_col="name")
   } else if(to=="data.table"){
     df <- ontology_to(ont, to="data.frame")
     obj <- data.table::as.data.table(df)

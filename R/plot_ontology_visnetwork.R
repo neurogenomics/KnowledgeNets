@@ -5,7 +5,7 @@
 plot_ontology_visnetwork <- function(ont,
                                      ...){
   
-  g <- ontology_to_tidygraph(ont)
+  g <- ontology_to_graph(ont)
   vn <- visNetwork::visIgraph(g,...) |>
     visNetwork::visNodes(shape = "dot", 
                          label = "name",

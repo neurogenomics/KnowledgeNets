@@ -6,14 +6,13 @@
 \title{Link functions}
 \usage{
 link_monarch(
-  maps = list(v2d = c("variant", "disease"), v2p = c("variant", "phenotype"), v2g =
-    c("variant", "gene")),
+  maps = list(c("variant", "disease"), c("variant", "phenotype"), c("variant", "gene")),
   queries = NULL,
   filters = list(phenotype = NULL, phenotype_db = c("HP"), gene = NULL),
+  as_graph = TRUE,
   domain = "https://data.monarchinitiative.org",
   subdir = "latest/tsv/all_associations/",
-  all = FALSE,
-  allow.cartesian = FALSE
+  ...
 )
 }
 \arguments{
@@ -38,7 +37,7 @@ values to include in the final data.}
 \item{subdir}{Subdirectory path to search for Monarch files within
 \code{domain}.}
 
-\item{allow.cartesian}{See \code{allow.cartesian} in \code{\link[data.table]{[.data.table}}.}
+\item{...}{Not used at this time.}
 }
 \value{
 Merged data.

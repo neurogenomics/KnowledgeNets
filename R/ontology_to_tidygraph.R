@@ -1,6 +1,6 @@
 #' @describeIn convert_ convert_
 #' @keywords internal
-ontology_to_tidygraph <- function(ont,
+ontology_to_graph <- function(ont,
                                   ...){
   name <- id <- NULL;
   

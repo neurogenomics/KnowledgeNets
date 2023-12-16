@@ -1,4 +1,4 @@
-#' @describeIn get_monarch_ get_
+#' @describeIn get_ get_
 #' Monarch files
 #' 
 #' Find files 
@@ -34,7 +34,7 @@ get_monarch_files <- function(maps=NULL,
       files <- lapply(maps, function(m){
         if(!is.null(m)){
           files[(from==m[1] & to==m[2]) | 
-                   (from==m[2] & to==m[1])]
+                (from==m[2] & to==m[1])]
         } 
       }) |> data.table::rbindlist() |> unique()
     } 

@@ -4,6 +4,6 @@
 #' @keywords internal
 plot_ontology_tidygraph <- function(ont,
                                  ...){
-  g <- ontology_to_tidygraph(ont)
+  g <- ontology_to_graph(ont)
   plot(g,...)
 }

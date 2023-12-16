@@ -59,7 +59,7 @@ map_upheno_data_i <- function(pheno_map_method,
 
   #### Map non-human genes onto human orthologs ####
   {
-    genes_homol <- map_monarch_genes(dat=genes,
+    genes_homol <- map_genes_monarch(dat=genes,
                                      gene_col="subject")
     messager(data.table::uniqueN(genes_homol$subject_taxon_label),"/",
              data.table::uniqueN(genes$subject_taxon_label),

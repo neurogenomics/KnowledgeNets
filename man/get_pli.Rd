@@ -11,6 +11,15 @@ get_pli(
   verbose = TRUE
 )
 }
+\arguments{
+\item{save_dir}{The directory to save the data to.}
+
+\item{agg_fun}{A function to aggregate multiple transcripts per gene.}
+
+\item{force_new}{If TRUE, force a new download.}
+
+\item{verbose}{If TRUE, print messages.}
+}
 \value{
 A data.table with the following columns
 }

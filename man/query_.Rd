@@ -31,4 +31,7 @@ Functions to query specific subset of data via dedicated APIs.
 \item \code{query_oard()}: query_
 
 }}
+\examples{
+cells <- monarchr::biolink_search(phrase_or_id = "T-cell")
+}
 \concept{query_}

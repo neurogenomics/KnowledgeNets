@@ -1,4 +1,4 @@
-#' @describeIn get_monarch_ get_
+#' @describeIn get_ get_
 #' Get Monarch models
 #'
 #' Get disease-to-model mappings for multiple model species.
@@ -37,7 +37,7 @@ get_monarch_models <- function(maps = list(
   #### Map gene IDs ####
   if(isTRUE(map_orthologs) &&
      "gene" %in% names(dat)){
-    dat <- map_monarch_genes(dat = dat,
+    dat <- map_genes_monarch(dat = dat,
                              gene_col ="gene")
   }
   return(dat)

@@ -17,7 +17,7 @@ ontology_to_adjacency <- function(ont,
   ont <- filter_ontology(ont,
                          terms = terms,
                          remove_terms = remove_terms)
-  g <- ontology_to_tidygraph(ont)
+  g <- ontology_to_graph(ont)
   adj <- igraph::as_adj(g)
   return(adj)
 }

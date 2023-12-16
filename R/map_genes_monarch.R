@@ -10,11 +10,12 @@
 #' @export
 #' @examples
 #' dat <- example_dat("gene")
-#' dt2 <- map_monarch_genes(dat=dat, gene_col="gene")
-map_monarch_genes <- function(dat,
+#' dt2 <- map_genes_monarch(dat=dat, gene_col="gene")
+map_genes_monarch <- function(dat,
                               gene_col,
                               all.x=FALSE){
-  subject <- hgnc <- hgnc_label <- gene <- gene_label <- NULL;
+  subject <- hgnc <- hgnc_label <- gene <- gene_label <- subject_taxon_label <-
+    NULL;
 
   #### Prepare orthology map ####
   {

@@ -1,4 +1,4 @@
-#' @describeIn get_monarch_ get_
+#' @describeIn get_ get_
 #' Load disease genes
 #'
 #' Load gene lists associated with each disease phenotype from:

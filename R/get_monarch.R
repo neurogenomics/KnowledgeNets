@@ -1,4 +1,4 @@
-#' @describeIn get_monarch_ get_
+#' @describeIn get_ get_
 #' Get Monarch
 #'
 #' Get key datasets from the

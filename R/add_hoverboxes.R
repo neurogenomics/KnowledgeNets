@@ -15,10 +15,10 @@
 #' @importFrom stringr str_wrap
 #' @examples
 #' ont <- get_ont("hpo")
-#' g <- ontology_to_tidygraph(ont)
+#' g <- ontology_to_graph(ont)
 #' g2 <- add_hoverboxes(g)
 add_hoverboxes <- function(g,
-                           columns = get_tidygraph_colnames(g),
+                           columns = get_graph_colnames(g),
                            hoverbox_column=c("hover",
                                              "title",# For visNetwork
                                              "label"# For plotly
@@ -37,14 +37,14 @@ add_hoverboxes <- function(g,
     return(g)
   } 
   #### Check columns ####
-  col_opts <- get_tidygraph_colnames(g)
+  col_opts <- get_graph_colnames(g)
   columns <- columns[unname(columns) %in% col_opts]
   ##### Proceed ####
   if(length(columns)==0){
     messager("No columns found. Skipping hoverbox creation.")
   } else {
     messager("Making hoverboxes from:",paste(shQuote(columns),collapse = ", "))
-    nodes <- tidygraph_to_dt(g)
+    nodes <- graph_to_dt(g)
     nodes <- add_hoverboxes_dt(dat = nodes,
                                columns = columns,
                                hoverbox_column = hoverbox_column,

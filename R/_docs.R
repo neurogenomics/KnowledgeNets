@@ -104,7 +104,6 @@ NULL
 #' Functions to merge data resources.
 #' @inheritParams get_
 #' @inheritParams map_
-#' @inheritParams get_monarch_
 #' @family link_ 
 #' @returns Merged data.
 #' 
@@ -161,6 +160,15 @@ NULL
 #' @family add_ 
 #' @returns Added data. 
 #' @name add_
+NULL
+
+#' @title Cache functions
+#' 
+#' @description
+#' Functions to cache objects in order to speed up processes the second time. 
+#' @family cache_ 
+#' @returns Null. 
+#' @name cache_
 NULL
 
 
