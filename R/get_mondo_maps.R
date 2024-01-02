@@ -5,11 +5,13 @@
 #' All mappings stored on the official
 #'\href{https://github.com/monarch-initiative/mondo/tree/master/src/ontology/mappings}{
 #'Mondo GitHub}.
+#' @param top_by Grouping columns when selecting \code{top_n} rows per grouping.
+#' Can be a character vector of one or more column names. 
 #' @returns \link[data.table]{data.table} of mappings.
 #' 
 #' @export
 #' @examples
-#' map <- get_mondo_maps("hasdbxref") 
+#' map <- get_mondo_maps("default") 
 get_mondo_maps <- function(map_types=c("default",
                                        "broadmatch",
                                        "closematch",
@@ -26,40 +28,48 @@ get_mondo_maps <- function(map_types=c("default",
                                             "relatedmatch",
                                             "hasdbxref"),
                            top_n=NULL,
-                           top_by=c("subject","object")
+                           top_by=c("subject","object"),
+                           save_dir=cache_dir()
                            ){
-  path <- subject_label <- object_label <- disease_label <- NULL;
+  path <- subject_label <- object_label <- disease_label <- map_type <- to <- 
+    db <- NULL;
+  requireNamespace("downloadR")
   
   if(length(map_types)==1 &&
-     map_types=="default"){
-    map <- data.table::fread(
-      paste0("https://github.com/monarch-initiative/mondo/raw/master/",
-             "src/ontology/mappings/mondo.sssom.tsv"),
-      skip = "subject")
-    
+     map_types=="default"){ 
+    path <- downloadR::downloader(
+      input_url =  paste0(
+        "https://github.com/monarch-initiative/mondo/raw/master/",
+        "src/ontology/mappings/mondo.sssom.tsv"),
+      output_dir = save_dir,
+      download_method = "download.file")
+    map <- data.table::fread(path,
+                             skip = "subject",
+                             tmpdir = save_dir)
+    map[,file:=basename(path)]
+    map[,map_type:="default"]
+    map[,to:=data.table::tstrsplit(basename(file),"_|[.]",keep=3)]
+    add_db(dat=map,
+           input_col="subject_id",
+           output_col="from")
+    add_db(dat=map,
+           input_col="object_id",
+           output_col="db")
+    map[,to:=db]
   } else {
-    files <- echogithub::github_files(owner = "monarch-initiative",
-                                      repo = "mondo", 
-                                      query = "src/ontology/mappings/") 
-    #### Filter map types ####
-    files[,map_type:=data.table::tstrsplit(basename(path),"_",keep=2)]
-    files[is.na(map_type),map_type:="default"]
-    if(!is.null(map_types)){
-      files <- files[map_type %in% map_types]  
-    }
-    #### Filter mapping to ####
-    files[,to:=data.table::tstrsplit(basename(path),"_|[.]",keep=3)]
-    if(!is.null(map_to)) {
-      if("hpo" %in% map_to) {
-        map_to <- c(map_to[map_to!="hpo"],
-                    "omim","decipher","orphanet","hp") |> unique()
-      }
-      files <- files[to %in% map_to]
-    }
+    files <- get_mondo_maps_files(save_dir = save_dir,
+                                  map_types = map_types,
+                                  map_to = map_to)
     #### Import maps #####
     map <- lapply(stats::setNames(files$link_raw,
-                                  basename(files$link_raw)), function(x){
-      data.table::fread(x,skip="subject_id")
+                                  basename(files$link_raw)),
+                  function(x){
+      path <- downloadR::downloader(input_url = x,
+                                    output_dir = save_dir,
+                                    download_method = "download.file")
+      data.table::fread(path,
+                        skip="subject_id",
+                        tmpdir = save_dir)
     }) |> data.table::rbindlist(fill = TRUE, idcol = "file")
     map[,map_type:=data.table::tstrsplit(basename(file),"_",keep=2)]
     map[,to:=data.table::tstrsplit(basename(file),"_|[.]",keep=3)]

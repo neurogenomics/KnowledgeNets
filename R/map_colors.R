@@ -1,31 +1,14 @@
 #' @describeIn map_ map_
+#' @param columns Names of columns to map colour palettes to.
 #' @import pals
 map_colors <- function(dat,
                        columns=NULL,
                        as=c("function","vector","name")){
+  used <- palette <- NULL;
   as <- match.arg(as)
   maxcolors <- NULL;
-  if(!is.null(columns)) dat <- dat[,columns,with=FALSE]
-  #### Get all available palettes ####
-  pals_info <- function(){
-    maxcolors <- NULL;
-    ns <- getNamespaceExports("pals")
-    syspals <- utils::getFromNamespace("syspals", "pals")
-    pdt <- sapply(names(syspals)[names(syspals) %in% ns], 
-                  function(p){
-      f <- formals(utils::getFromNamespace(p,"pals"))
-      if(!"n" %in% names(f)) return(NA)
-      if(rlang::is_missing(f$n)) Inf else eval(f$n)
-    }) |> 
-      data.table::as.data.table(keep.rownames=TRUE) |>
-      `colnames<-`(c("palette","maxcolors"))
-    pdt[,is_finite:=is.finite(maxcolors)]
-    data.table::setorderv(pdt,"maxcolors",na.last=TRUE)
-    return(pdt)
-  } 
-  pdt <- pals_info()
-  # bpi <- data.table::data.table(RColorBrewer::brewer.pal.info, 
-  #                               keep.rownames = "palette")
+  if(!is.null(columns)) dat <- dat[,columns,with=FALSE] 
+  pdt <- pals::pals.maxcolors() |> data.table::data.table()
   #### Get unique palette for each column ####
   pdt[,used:=FALSE]
   lapply(dat,function(x){ 

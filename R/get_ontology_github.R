@@ -7,7 +7,7 @@
 #'
 #' @export
 #' @examples
-#' mondo <- get_mondo_ont()
+#' mondo <- get_ontology_github()
 get_ontology_github <- function(file="mondo-base.obo", 
                                 repo="monarch-initiative/mondo",
                                 tag="latest",

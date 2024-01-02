@@ -11,9 +11,9 @@ dt_to_kg <- function(d,
     d_sub <- d
   }
   message("object_label examples:")
-  print(head(d_sub$object_label))
+  methods::show(utils::head(d_sub$object_label))
   message("subject_label examples:")
-  print(head(d_sub$subject_label))
+  methods::show(utils::head(d_sub$subject_label))
   if(as_tidygraph){
     d_sub <- dt_to_graph(d_sub,
                          add_hover=add_hover)

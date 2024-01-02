@@ -1,3 +1,4 @@
+#' @describeIn get_ get_
 #' Get ontology
 #' 
 #' Import an up-to-date ontology directly from from the creators.
@@ -12,6 +13,7 @@
 #' \href{https://github.com/obophenotype/human-phenotype-ontology/release}{
 #' GitHub.}}
 #' }
+#' @param filetype File type to search for.
 #' @param add_metadata Add metadata to the resulting ontology object.
 #' @inheritDotParams get_ontology_github
 #' @returns \link[simona]{ontology_DAG}
@@ -30,6 +32,8 @@ get_ontology <- function(name=c("mondo",
                                   "bioportal"),
                          add_metadata=TRUE,
                          add_ancestors=FALSE,
+                         add_n_edges=TRUE,
+                         add_ontology_levels=TRUE,
                          save_dir=cache_dir(),
                          force_new=FALSE,
                          ...){ 
@@ -50,7 +54,13 @@ get_ontology <- function(name=c("mondo",
                                  save_dir=save_dir,
                                  force_new=force_new,
                                  ...)
-    } else if(name=="upheno"){
+    } else if (name=="cellontology"){
+      ont <- get_ontology_github(file=paste0(name,filetype), 
+                                 repo="obophenotype/cell-ontology",
+                                 save_dir=save_dir,
+                                 force_new=force_new,
+                                 ...)
+    }else if(name=="upheno"){
       ont <- get_ontology_url(
         "https://github.com/obophenotype/upheno-dev/raw/master/upheno.obo", 
         force_new = force_new, 
@@ -58,14 +68,17 @@ get_ontology <- function(name=c("mondo",
         ...) 
     }
   } 
-  #### Add metadata #### 
-  if(isTRUE(add_metadata)) {
-    ont <- add_ontology_metadata(ont,
-                                 add_ancestors=add_ancestors)
-  }
+  
   #### Subset ontology ####
   ont <- filter_ontology(ont = ont, 
                          terms = terms)
+  #### Add metadata #### 
+  if(isTRUE(add_metadata)) {
+    ont <- add_ontology_metadata(ont,
+                                 add_n_edges=add_n_edges,
+                                 add_ancestors=add_ancestors, 
+                                 add_ontology_levels=add_ontology_levels)
+  }
   #### Return ####
   return(ont)
 }

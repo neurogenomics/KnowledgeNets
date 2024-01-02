@@ -5,6 +5,13 @@
 \alias{query_monarch}
 \alias{query_oard}
 \title{Query functions}
+\source{
+\href{https://smart-api.info/ui/25d608913f0e16a87dd29dabe3f52f78}{
+OARD API docs}
+
+\href{https://www.cell.com/ajhg/fulltext/S0002-9297(22)00319-6}{
+Publication}
+}
 \usage{
 query_monarch(...)
 
@@ -14,9 +21,30 @@ query_oard(
   domain = "https://rare.cohd.io/api/",
   dataset_id = NULL,
   endpoint = "vocabulary/findConceptByAny",
-  batch_size = 100,
-  workers = 1
+  batch_size = 100
 )
+}
+\arguments{
+\item{...}{
+  Arguments passed on to \code{\link[monarchr:biolink_search]{monarchr::biolink_search}}
+  \describe{
+    \item{\code{phrase_or_id}}{Something for which we are looking for more information, or to find useful entities.}
+    \item{\code{rows}}{Number of rows of results to fetch.}
+  }}
+
+\item{ids}{IDs to query.}
+
+\item{concept_prefix}{Concept prefix.}
+
+\item{domain}{OARD domain URL.}
+
+\item{dataset_id}{Dataset ID.}
+
+\item{endpoint}{OARD API endpoint to use. 
+See the \href{https://smart-api.info/ui/25d608913f0e16a87dd29dabe3f52f78}{
+OARD API docs} for details.}
+
+\item{batch_size}{Number of IDs to query at once.}
 }
 \value{
 Queried data.
@@ -29,6 +57,9 @@ Functions to query specific subset of data via dedicated APIs.
 \item \code{query_monarch()}: query_
 
 \item \code{query_oard()}: query_
+
+Query the Open Real-world-based Annotation for Rare Disease (OARD).
+See \href{https://rare.cohd.io/}{here} for details.
 
 }}
 \examples{

@@ -1,3 +1,4 @@
+#' @describeIn convert_ convert_
 #' Adjacency matrix
 #'
 #' Create adjacency matrix of HPO child-parent relationships. 

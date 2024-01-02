@@ -12,14 +12,10 @@ plot_visnetwork <- function(g,
                             width,
                             randomSeed,
                             main,
-                            submain,
-                            verbose){
+                            submain){
   requireNamespace("visNetwork")
-  requireNamespace("dplyr")
-
   . <- NULL;
-
-  messager("Creating plot.",v=verbose)
+  messager("Creating plot.")
   visnet <- visNetwork::toVisNetworkData(g) %>%
     {
       do.call(visNetwork::visNetwork,
@@ -77,7 +73,7 @@ plot_visnetwork <- function(g,
   #### Save network ####
   if(!is.null(save_path)) {
     dir.create(dirname(save_path), showWarnings = FALSE, recursive = TRUE)
-    messager("Saving plot ==>",save_path,v=verbose)
+    messager("Saving plot ==>",save_path)
     visNetwork::visSave(visnet,
                         file = save_path,
                         selfcontained = TRUE,

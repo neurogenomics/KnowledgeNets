@@ -1,4 +1,4 @@
-#' @describeIn map_upheno_ map_
+#' @describeIn map_ map_
 #' Map phenotypes across uPheno
 #'
 #' Map phenotypes across species within the Unified Phenotype Ontology (uPheno).
@@ -54,7 +54,7 @@ map_upheno <- function(pheno_map_method=c("upheno","monarch"),
                                            force_new = force_new,
                                            terms=terms)
   #### Plots ####
-  plots <- map_upheno_plot(pheno_map_genes_match,
+  plots <- plot_upheno(pheno_map_genes_match,
                            subset_db1=subset_db1)
   #### Return ####
   return(

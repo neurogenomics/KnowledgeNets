@@ -11,7 +11,7 @@ mondo_to_matrix <- function(species=c("Homo sapiens")){
   dat[,evidence_score:=sapply(evidence,
                               function(x){length(strsplit(x,"|")[[1]])})]
   dat <- dat[subject_taxon_label %in% species]
-  mondo <- get_mondo_ont()
+  mondo <- get_ontology("mondo")
   dat[,object_definition:=mondo$def[object]]
   #### Make matrix ####
   X_dt <- data.table::dcast.data.table(data = dat,

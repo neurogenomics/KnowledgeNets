@@ -8,7 +8,7 @@
 link_monarch(
   maps = list(c("variant", "disease"), c("variant", "phenotype"), c("variant", "gene")),
   queries = NULL,
-  filters = list(phenotype = NULL, phenotype_db = c("HP"), gene = NULL),
+  filters = list(phenotype = NULL, db = NULL, gene = NULL),
   as_graph = TRUE,
   domain = "https://data.monarchinitiative.org",
   subdir = "latest/tsv/all_associations/",
@@ -32,12 +32,14 @@ Passes to \link{get_monarch_files}.}
 a column in the data, and the vector within each element represents the 
 values to include in the final data.}
 
+\item{as_graph}{Return the object as a \link[tidygraph]{tbl_graph}.}
+
 \item{domain}{Web domain to search for Monarch files.}
 
 \item{subdir}{Subdirectory path to search for Monarch files within
 \code{domain}.}
 
-\item{...}{Not used at this time.}
+\item{...}{Additional arguments passed to plot-specific functions.}
 }
 \value{
 Merged data.

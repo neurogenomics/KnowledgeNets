@@ -1,3 +1,4 @@
+#' @describeIn get_ get_
 #' Get AlphaMissense predictions
 #'
 #' Get gene-level
@@ -6,17 +7,11 @@
 #' protein-coding gene transcripts.
 #' @param types A character vector of types to return.
 #' @param agg_fun A function to aggregate multiple transcripts per gene.
-#' @param save_dir The directory to save the data to.
 #' @param force_new If TRUE, force a new download.
-#' @param verbose If TRUE, print messages.
 #' @return A named list of data.tables of AlphaMissense predictions.
-#'
-#'
+#' 
 #' @export
-#' @import data.table
-#' @importFrom tools R_user_dir
 #' @importFrom orthogene map_genes
-#'
 #' @examples
 #' \dontrun{
 #' am <- get_alphamissense()

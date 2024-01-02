@@ -9,8 +9,8 @@ add_hoverboxes_dt <- function(dat,
                               decorators = c("<b>","</b>"),
                               as_html=TRUE,
                               sep = if(isTRUE(as_html)) "<br>" else "\n"){
+  name <- NULL;
   messager("Adding hoverboxes to data.table.")
-  hover <- name <- NULL;
   #### Check for id col ####
   if(!"name" %in% names(dat)){
     dat[,name:=.I]
@@ -28,6 +28,7 @@ add_hoverboxes_dt <- function(dat,
     }
   }
   #### Create hoverboxes....data.table style! ####
+  columns <- columns[columns %in% names(dat)]
   dat[, (hoverbox_column) := do.call(paste0,
                            interleave(a = paste0(decorators[1],
                                                  columns,

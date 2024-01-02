@@ -31,7 +31,7 @@ get_genes_disease <- function(maps = list(c("gene","disease")),
                      to = c("OMIM","Orphanet","DECIPHER"))
   genes[,disease_id:=data.table::fcoalesce(disease_id,disease)] 
   data.table::setnames(genes,"disease","mondo_id")
-  genes <- genes[grepl("^MONDO",mondo_id)]
+  genes <- genes[grepl("^mondo",mondo_id)]
   add_db(genes,
          input_col = "disease_id", 
          output_col = "disease_db")

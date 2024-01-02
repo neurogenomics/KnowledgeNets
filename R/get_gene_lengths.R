@@ -1,22 +1,24 @@
-get_gene_lengths <- function(gene_list,
-                             keep_seqnames = c(seq(22),"X","Y"),
-                             ensembl_version = 75,
-                             verbose = TRUE){
+#' @describeIn get_ get_
+#' @param genes A character vector of gene symbols
+#' @param ensembl_version Which Ensembl database version to use.
+#' @export
+get_gene_lengths <- function(genes,
+                             keep_chr = c(seq(22),"X","Y"),
+                             ensembl_version = 75){
 
   requireNamespace("ensembldb")
   requireNamespace("AnnotationFilter")
 
-  gene_list <- unique(gene_list)
-  messager("Gathering metadata for",length(gene_list),"unique genes.",
-           v=verbose)
-  if(is.null(keep_seqnames)){
-    keep_seqnames <- eval(formals(get_gene_lengths)$keep_seqnames)
+  genes <- unique(genes)
+  messager("Gathering metadata for",length(genes),"unique genes.")
+  if(is.null(keep_chr)){
+    keep_chr <- eval(formals(get_gene_lengths)$keep_chr)
   }
   #### Standardise seqnames ####
-  keep_seqnames <- unique(
-    c(tolower(keep_seqnames),
-      paste0("chr",keep_seqnames),
-      keep_seqnames)
+  keep_chr <- unique(
+    c(tolower(keep_chr),
+      paste0("chr",keep_chr),
+      keep_chr)
   )
   #### Get gene reference database ####
   if(ensembl_version==75){
@@ -35,8 +37,8 @@ get_gene_lengths <- function(gene_list,
     txdb,
     columns = c(ensembldb::listColumns(txdb, "gene"), "entrezid"),
     filter=AnnotationFilter::AnnotationFilterList(
-      AnnotationFilter::SymbolFilter(value = gene_list),
-      AnnotationFilter::SeqNameFilter(value = keep_seqnames)
+      AnnotationFilter::SymbolFilter(value = genes),
+      AnnotationFilter::SeqNameFilter(value = keep_chr)
     ))
   return(tx_gr)
 }

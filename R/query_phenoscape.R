@@ -42,10 +42,10 @@ query_phenoscape <- function(){
 
  
   #### Species-Species similarity matrix ####
-  # Xs <- rphenoscape::jaccard_similarity(terms = na.omit(tax$id),
+  # Xs <- rphenoscape::jaccard_similarity(terms = stats::na.omit(tax$id),
   #                                       .colnames = "ID")
   #### Phenotype-Phenotype similarity matrix ####
-  Xp <- rphenoscape::jaccard_similarity(terms = na.omit(terms$id),
+  Xp <- rphenoscape::jaccard_similarity(terms = stats::na.omit(terms$id),
                                         .colnames = "ID")
   Xp <- methods::as(Xp,"sparseMatrix")
   # obj <- scKirby::process_seurat(obj = Xp)

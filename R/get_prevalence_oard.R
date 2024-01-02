@@ -1,4 +1,3 @@
-#' @describeIn get_ get_
 get_prevalence_oard <- function(ids){
 
   # ids <- unique(phenos$hpo_id)[1:100]

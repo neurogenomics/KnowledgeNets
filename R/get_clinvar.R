@@ -14,6 +14,7 @@
 #' value reported in ClinicalSignificance.  In other words, if a submission without assertion criteria and
 #' evidence interpreted an allele as pathogenic, and those with assertion criteria and evidence interpreted
 #' as benign, then ClinicalSignificance would be reported as Benign and ClinSigSimple as 1.
+#' @param annotate Add variant annotations with \link{map_variants}.
 #' @source \href{https://ftp.ncbi.nlm.nih.gov/pub/clinvar/}{ClinVar server}
 #' @source \href{https://ftp.ncbi.nlm.nih.gov/pub/clinvar/README.txt}{
 #' ClinVar server README}
@@ -21,8 +22,34 @@
 #' @export
 get_clinvar <- function(as_granges=FALSE,
                         annotate=FALSE){
-  cv <- data.table::fread("https://ftp.ncbi.nlm.nih.gov/pub/clinvar/tab_delimited/variant_summary.txt.gz")
-  if(as_granges) return(cv)           
+  ClinSigSimple_label <- ClinSigSimple <- index <- Start <- Stop <- Assembly <- 
+    id <- NULL;
+  cv <- data.table::fread(
+    "https://ftp.ncbi.nlm.nih.gov/pub/clinvar/tab_delimited/variant_summary.txt.gz"
+    )
+  cv[,index:=.I]
+  ### Count unique diseases ####
+  PhenotypeList <- unique(cv$PhenotypeList)
+  messager(formatC(length(PhenotypeList),big.mark = ","),
+           "diseases/phenotypes extracted from ClinVar.")
+  #### Get disease metadata ####
+  # diseases <- data.table::fread("https://ftp.ncbi.nlm.nih.gov/pub/clinvar/disease_names") |>
+  #   data.table::setnames(c("#DiseaseName"),c("DiseaseName"))
+  # diseases <- diseases[DiseaseName %in% PhenotypeList]
+  # #### Filter IDs #####
+  # PhenotypeIDS <- unlist(stringr::str_split(cv$PhenotypeIDS,",|;|[|]"))|>
+  #   unique()|>
+  #   gsub(pattern="mondo:mondo:",replacement="mondo:")|>
+  #   gsub(pattern="Human Phenotype Ontology:",replacement="") |> unique()
+  # annot <- HPOExplorer::load_phenotype_to_genes(3)[,disease_id:=gsub(
+  #   "ORPHA:","Orphanet:",disease_id)]
+  # #### Search for disease IDs in cv #### 
+  # cv <- cv[PhenotypeList %in% diseases[SourceID!="" & is.na(DiseaseMIM)]$DiseaseName]
+  # cv <- cv_og[grepl("OMIM:|Orphanet:",PhenotypeIDS),]
+  
+  
+  if(isFALSE(as_granges) && isFALSE(annotate)) return(cv)      
+  #### Convert to GRanges ####
   grl <- list(
     "GRCh37"=GenomicRanges::makeGRangesFromDataFrame(
       cv[Start<Stop & Assembly=="GRCh37"],
@@ -38,19 +65,11 @@ get_clinvar <- function(as_granges=FALSE,
       seqnames.field = "Chromosome",
       keep.extra.columns = TRUE
     )
-  )
-  
-  if(annotate){
+  ) 
+  if(isTRUE(annotate)){
     hits <- lapply(stats::setNames(names(grl),names(grl)),function(x){
       map_variants(grl[[x]], build = x)
     })
-    # hits_dt <- lapply(hits, function(h){
-    #   data.table::data.table(
-    #     region=sort(table(h$region))/ length(h)*100
-    #   )
-    # }) |> data.table::rbindlist(idcol = "build") |>
-    #   data.table::setnames(c("build","region","percent"))
-    # hits_dt[,list(percent=mean(percent)),by="region"]
     hits_merged <- lapply(hits, function(h){
       hdt <- data.table::as.data.table(h)
       hdt[,c("PRECEDEID","FOLLOWID","CDSID"):=NULL]
@@ -63,21 +82,24 @@ get_clinvar <- function(as_granges=FALSE,
         all = TRUE
       )
     }) |> data.table::rbindlist(idcol = "build")
+    remove(cv)
     remove(hits)
-    plot_dat <- hits_merged[,.N, by=c("build","region","Type","ClinSigSimple")]
-    plot_dat[,ClinSigSimple:=factor(ClinSigSimple, levels=c(-1,0,1), labels=c("unknown","benign","pathogenic"))]
-    ggplot(plot_dat, aes(x=forcats::fct_reorder(region, N), 
-                         y=N,
-                         fill=Type)) +
-      geom_bar(stat="identity",position="stack") +
-      facet_grid(ClinSigSimple~.,  scales = "free_y") +
-      theme_bw() +
-      theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
-      labs(x="Region", y="Count", fill="Type") +
-      theme(axis.text.x=element_text(angle=45, hjust=1)) 
-    
-    # sort(table(cv$Type))
-    return(hits_merged)
+    hits_merged[,ClinSigSimple_label:=factor(
+      ClinSigSimple,
+      levels=c(-1,0,1),
+      labels=c("unknown","benign","pathogenic"))] 
+    #### Plot ####
+    plt <- plot_clinvar(
+      hits=hits_merged, 
+      x="region",
+      y="N",
+      fill="Type",
+      by=c("build","region","Type","ClinSigSimple_label"),
+      rows="ClinSigSimple_label")
+    return(list(
+      data=hits_merged,
+      plot=plt
+    ))
   } else {
     return(grl)
   }

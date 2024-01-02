@@ -1,3 +1,4 @@
+#' @describeIn get_ get_
 #' Get pLI
 #'
 #' Get gene-level \href{https://gnomad.broadinstitute.org/faq#what-is-pli}{
@@ -8,15 +9,16 @@
 #' NOTE: Mapping genes with \link[orthogene]{map_genes} only reduces the number
 #' of mapped genes compared to the provided "gene" column.
 #' @inheritParams get_alphamissense
-#' @returns A data.table with the following columns
 #' @export
-#' @import data.table
-get_pli <- function(save_dir=tools::R_user_dir(package = "MultiEWCE",
-                                               which = "cache"),
-                    agg_fun=mean,
-                    force_new=FALSE,
-                    verbose=TRUE){
-
+#' @importFrom orthogene map_genes
+#' @examples
+#' \dontrun{
+#' pli <- get_pli()
+#' }
+get_pli <- function(agg_fun=mean,
+                    save_dir=cache_dir(),
+                    force_new=FALSE){
+  mane_select <- gene <- NULL;
   file <- "gnomad.v4.0.constraint_metrics.tsv"
   save_path <- file.path(save_dir,
                          gsub("\\.tsv",
@@ -25,7 +27,7 @@ get_pli <- function(save_dir=tools::R_user_dir(package = "MultiEWCE",
                          )
   if(file.exists(save_path) &&
      isFALSE(force_new)){
-    messager("Loading cached pLI data:",shQuote(save_path),v=verbose)
+    messager("Loading cached pLI data:",shQuote(save_path))
     return(readRDS(save_path))
   }
   base_url <-paste0(
@@ -45,7 +47,7 @@ get_pli <- function(save_dir=tools::R_user_dir(package = "MultiEWCE",
   )
   #### Save ####
   if(!is.null(save_dir)){
-    messager("Saving pLI data ==>",shQuote(save_path),v=verbose)
+    messager("Saving pLI data ==>",shQuote(save_path))
     dir.create(dirname(save_path), recursive = TRUE, showWarnings = FALSE)
     saveRDS(pli_agg,save_path)
   }

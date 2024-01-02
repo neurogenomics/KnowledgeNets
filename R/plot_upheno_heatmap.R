@@ -1,4 +1,6 @@
-map_upheno_heatmap <- function(plot_dat,
+#' @describeIn plot_ plot_
+plot_upheno_heatmap <- function(plot_dat,
+                               ont,
                                hpo_ids=NULL,
                                value.var=c("phenotype_genotype_score",
                                            "prop_intersect",
@@ -37,11 +39,13 @@ map_upheno_heatmap <- function(plot_dat,
 
   #### Get clusters from ontology ####
   if(isTRUE(cluster_from_ontology)){
-    ids <- harmonise_phenotypes(plot_dat$id1,keep_order = FALSE)
+    ids <- map_ontology_terms(ont = ont,
+                              terms = plot_dat$id1,
+                              keep_order = FALSE)
     ids <- ids[ids %in% rownames(X)]
     ## best to do this on the entire HPO, then subset
     cluster_rows <- ontology_to(to="igraph_dist_hclust",
-                                     terms = names(ids))
+                                terms = names(ids))
     # leaves <- dendextend::get_leaves_attr(cluster_rows,"label")
     # c2 <- dendextend::prune(cluster_rows,
     #                         leaves[!leaves %in% names(ids)],
@@ -84,7 +88,7 @@ map_upheno_heatmap <- function(plot_dat,
   #### Save ####
   if(!is.null(save_dir)){
     grDevices::pdf(file = file.path(save_dir,
-                                    paste0("map_upheno_heatmap-",
+                                    paste0("plot_upheno_heatmap-",
                                            value.var,".pdf")),
                    height = height,
                    width = width)

@@ -2,8 +2,8 @@
 #' Get knowledge graph: Monarch
 #' 
 #' Imports the entire Monarch knowledge graph containing >500,000 nodes 
-#' and >10,000,000 edges across many categories (e.g. Disease, ).
-#' 
+#' and >10,000,000 edges across many categories 
+#' (e.g. Disease, Phenotypes, Cell Types, etc.).
 #' 
 #' Option 1: Use the \href{https://api.monarchinitiative.org/api/}{biolink API}
 #'  to efficiently extract specific subset of data
@@ -13,8 +13,15 @@
 #' @source \href{https://pubmed.ncbi.nlm.nih.gov/37707514/}{BioThings Explorer}
 #' @source \href{https://rdrr.io/github/frequena/rbiolink/}{rbiolink}
 #' @source \href{https://github.com/biolink/kgx}{KGX}
+#' @inheritDotParams data.table::fread
+#' @export
+#' @examples
+#' \dontrun{
+#' g <- get_monarch_kg(save_dir=tempdir(), nrows=100)
+#' }
 get_monarch_kg <- function(as_graph=TRUE,
-                           save_dir=cache_dir()){
+                           save_dir=cache_dir(),
+                           ...){
   files <- get_monarch_files(subdir = "monarch-kg/latest/",
                              queries = "\\.tsv\\.gz")
   path <- file.path(
@@ -25,7 +32,8 @@ get_monarch_kg <- function(as_graph=TRUE,
     g <- readRDS(path)
     return(g)
   } else {
-    d <- data.table::fread(files$url[1])
+    d <- data.table::fread(files$url[1],
+                           ...)
     if(isFALSE(as_graph))  return(d)
     g <- dt_to_kg(d)
     cache_save(g,path)
@@ -39,11 +47,11 @@ get_monarch_kg <- function(as_graph=TRUE,
 #   user = "neo4j", 
 #   password = "plop"
 # )
-# jsonlite::read_json("https://api.monarchinitiative.org/api/bioentity/MONDO:0012990")
+# jsonlite::read_json("https://api.monarchinitiative.org/api/bioentity/mondo:0012990")
 # neo2R::graphRequest(graph = ,
 #                     endpoint = "/bioentity/",
-#                     postText = "MONDO:0012990")
+#                     postText = "mondo:0012990")
 # neo <- neo2R::graphRequest("https://data.monarchinitiative.org/monarch-kg-dev/latest/monarch-kg.neo4j.dump",
 #                            endpoint = "/bioentity/",
-#                            postText = "MONDO:0012990")
+#                            postText = "mondo:0012990")
 

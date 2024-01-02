@@ -8,10 +8,7 @@
 #' @examples
 #' ont <- get_ontology()
 #' obj <- ontology_to(ont=ont, to="dendrogram")
-ontology_to <- function(ont,
-                        terms=ont@terms,
-                        remove_terms=grep(":",terms,
-                                          invert = TRUE, value = TRUE),
+ontology_to <- function(ont, 
                         to=c("adjacency",
                              "adjacency_dist",
                              "adjacency_dist_hclust",
@@ -25,10 +22,13 @@ ontology_to <- function(ont,
                              "igraph_dist",
                              "igraph_dist_hclust",
                              "igraph_dist_hclust_dendrogram",
-                             "tidygraph",
+                             "tbl_graph",
                              "data.frame",
                              "data.table",
                              "list"),
+                        terms=ont@terms,
+                        remove_terms=grep(":",terms,
+                                          invert = TRUE, value = TRUE),
                         as_sparse=FALSE,
                         ...){
   to <- match.arg(to)
@@ -48,7 +48,7 @@ ontology_to <- function(ont,
     dh <- ontology_to(ont, to="dist_hclust")
     obj <- stats::as.dendrogram(dh)
   } else if(to=="dendrogram"){
-    ont2 <- simona:::dag_treelize(ont)
+    ont2 <- simona::dag_treelize(ont)
     obj <- simona::dag_as_dendrogram(ont2)
   } else if(to=="dot"){
     obj <- simona::dag_as_DOT(ont, ...)
@@ -72,7 +72,7 @@ ontology_to <- function(ont,
   } else if(to=="igraph_dist_hclust_dendrogram"){
     gdh <- ontology_to(ont, to="igraph_dist_hclust")
     obj <- stats::as.dendrogram(gdh)
-  } else if(to=="tidygraph"){ 
+  } else if(to=="tbl_graph"){ 
     obj <- ontology_to_graph(ont, ...)
   } else if(to=="data.frame"){
     g <- ontology_to_graph(ont)

@@ -4,6 +4,7 @@
 #' Find files 
 #' \href{https://monarchinitiative.org/}{Monarch Initiative}
 #' \href{https://data.monarchinitiative.org}{server}.
+#' @param omit Files to omit from results.
 #' 
 #' @export
 #' @import rvest

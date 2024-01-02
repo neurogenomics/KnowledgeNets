@@ -1,7 +1,16 @@
+#' @describeIn add_ add_
+#' 
+#' Add per-term metadata to ontology.
+#' @export
+#' @import simona
+#' @importFrom Matrix colSums
+#' @examples
+#' ont <- get_ontology("hpo", terms=10)
+#' ont2 <- add_ontology_metadata(ont)
 add_ontology_metadata <- function(ont,
-                                  add_ancestors=FALSE){
-  # meta <- simona::mcols(ont) |> data.table::data.table()
-  # meta <- add_ancestor(meta)
+                                  add_ancestors=FALSE,
+                                  add_n_edges=TRUE,
+                                  add_ontology_levels=TRUE){
   messager("Adding term metadata.")
   simona::mcols(ont)$IC <- simona::term_IC(ont)
   simona::mcols(ont)$depth <- simona::dag_depth(ont)
@@ -10,6 +19,17 @@ add_ontology_metadata <- function(ont,
   simona::mcols(ont)$n_parents <- simona::n_parents(ont)
   simona::mcols(ont)$n_offspring <- simona::n_offspring(ont)
   simona::mcols(ont)$n_connected_leaves <- simona::n_connected_leaves(ont) 
-  if(isTRUE(add_ancestors)) ont <- add_ancestor(ont)
+  if(isTRUE(add_ancestors)) {
+    ont <- add_ancestor(ont)
+  }
+  if(isTRUE(add_n_edges)){
+    adj <- ontology_to(ont = ont,
+                       to="adjacency")
+    dict <- Matrix::colSums(adj)
+    simona::mcols(ont)$n_edges <- dict[ont@terms]
+  }
+  if(add_ontology_levels){
+    simona::mcols(ont)$ontLvl <- get_ontology_levels(ont)
+  }
   return(ont)
 }

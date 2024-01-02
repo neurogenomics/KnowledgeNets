@@ -18,12 +18,12 @@ Depends: R (>= 4.2)
 biocViews:
 Imports:
   simona,
-  DiagrammeR,
   data.table,
   ggplot2,
   plotly,
   pals,
   visNetwork,
+  ggnetwork,
   Matrix,
   stringr,
   rvest,
@@ -31,10 +31,12 @@ Imports:
   tidygraph,
   tidyquant,
   utils,
-  BiocParallel
+  methods,
+  BiocParallel,
+  GenomicRanges,
+  orthogene
 Suggests:
   rworkflows,
-  methods,
   markdown,
   rmarkdown,
   remotes,
@@ -47,11 +49,35 @@ Suggests:
   piggyback,
   monarchr,
   rphenoscape,
-  biocBiocypher
+  biocBiocypher,
+  VariantAnnotation,
+  AnnotationFilter,
+  AnnotationHub,
+  EnsDb.Hsapiens.v75,
+  TxDb.Hsapiens.UCSC.hg19.knownGene,
+  TxDb.Hsapiens.UCSC.hg38.knownGene,
+  MASS,
+  GenomeInfoDb, 
+  ensembldb,
+  BiocGenerics,
+  echogithub,
+  downloadR,
+  readxl,
+  htmlwidgets,
+  sparklyr,
+  httr,
+  jsonlite,
+  scales,
+  tidyr,
+  DiagrammeR,
+  forcats
 Remotes:
   github::charlieccarey/monarchr,
   github::phenoscape/rphenoscape,
-  gituhb::vjcitn/biocBiocypher
+  github::vjcitn/biocBiocypher,
+  github::RajLabMSSM/echogithub,
+  github::RajLabMSSM/downloadR,
+  github::kwstat/pals
 RoxygenNote: 7.2.3
 VignetteBuilder: knitr
 License: GPL-3

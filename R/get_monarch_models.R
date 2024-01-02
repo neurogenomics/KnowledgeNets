@@ -2,9 +2,13 @@
 #' Get Monarch models
 #'
 #' Get disease-to-model mappings for multiple model species.
-#' Additionally maps MONDO IDs to OMIM and Orphanet IDs.  
+#' Additionally maps mondo IDs to OMIM and Orphanet IDs.  
 #' NOTE, adding additional \code{maps} 
 #' will drastically reduce the number of results.
+#' @param map_orthologs Add gene-level data. 
+#' @param map_type_order The order in which \code{map_types} will be prioritised
+#' when filtering the \code{top_n} rows by groupings.
+#' @inheritParams map_
 #' @export
 #' @examples
 #' models <- get_monarch_models()

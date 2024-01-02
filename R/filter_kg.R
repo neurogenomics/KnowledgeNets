@@ -16,9 +16,10 @@ filter_kg <- function(g,
                                                   ),
                               to_categories = from_categories,
                               edge_categories = NULL,
-                              dbs=NULL,# c("MONDO","HP","CL")
+                              dbs=NULL,# c("mondo","HP","CL")
                               rm_isolated=TRUE,
                               as_dt=FALSE){
+  category <- db <- NULL;
   len1 <- length(g)
   nodes <- g|> tidygraph::activate("nodes")|>data.table::as.data.table()
   # edges <- g|> tidygraph::activate("edges")|>data.table::as.data.table()

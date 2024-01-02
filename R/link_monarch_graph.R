@@ -1,7 +1,7 @@
 link_monarch_graph <- function(files,
                                maps,
                                ...){
-  from <- to <- NULL;
+  from <- to <- subject_category <- object_category <- NULL;
   #### Download and prepare maps ####
   map_dt <- lapply(seq(length(maps)), function(i){
     m <- maps[[i]]

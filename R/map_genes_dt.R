@@ -14,20 +14,19 @@
 #' @examples
 #' \dontrun{
 #' dat <- data.table(gene_symbol = c("BRCA1","BRCA2","BRCA3"))
-#' dat2 <- standardise_genes(dat)
+#' dat2 <- map_genes_dt(dat)
 #' }
-standardise_genes <- function(dat,
-                              gene_col = "gene_symbol",
-                              fill_na = TRUE,
-                              verbose = TRUE,
-                              ...){
-
-  input <- name <- equal <- gene_symbol_standard <- gene_symbol <- NULL;
+map_genes_dt <- function(dat,
+                         gene_col = "gene_symbol",
+                         fill_na = TRUE,
+                         verbose = TRUE,
+                         ...){
   requireNamespace("orthogene", quietly = TRUE)
+  input <- name <- equal <- gene_symbol_standard <- gene_symbol <- NULL;
   gene_map <- orthogene::map_genes(genes = unique(dat[[gene_col]]),
                                    drop_na = TRUE,
                                    mthreshold = 1,
-                                   # ...
+                                   ...
                                    ) |>
     data.table::data.table()
 

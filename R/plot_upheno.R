@@ -12,11 +12,11 @@
 #' @export
 #' @examples
 #' pheno_map_genes_match <- map_upheno_data()
-#' upheno_plots <- map_upheno_plot(
+#' upheno_plots <- plot_upheno(
 #'   pheno_map_genes_match = pheno_map_genes_match)
-map_upheno_plot <- function(pheno_map_genes_match=NULL,
-                            subset_db1="HP",
-                            types=c("rainplot","scatterplot","heatmap")){
+plot_upheno <- function(pheno_map_genes_match=NULL,
+                        subset_db1="HP",
+                        types=c("rainplot","scatterplot","heatmap")){
   ## Prepare plot data
   n_phenotypes <- db1 <- id1 <-NULL;
   {
@@ -40,13 +40,13 @@ map_upheno_plot <- function(pheno_map_genes_match=NULL,
   }
   plots <- list()
   if("rainplot" %in% types){
-    plots[["rainplot"]] <- map_upheno_rainplot(plot_dat = plot_dat)
+    plots[["rainplot"]] <- plot_upheno_rainplot(plot_dat = plot_dat)
   }
   if("scatterplot" %in% types){
-    plots[["scatterplot"]] <- map_upheno_scatterplot(plot_dat = plot_dat)
+    plots[["scatterplot"]] <- plot_upheno_scatterplot(plot_dat = plot_dat)
   }
   if("heatmap" %in% types){
-    plots[["heatmap"]] <- map_upheno_heatmap(plot_dat = plot_dat)
+    plots[["heatmap"]] <- plot_upheno_heatmap(plot_dat = plot_dat)
   }
   return(plots)
 }

@@ -15,6 +15,7 @@ plot_ontology <- function(ont,
                                    "tidygraph",
                                    "visnetwork"),
                           ...){
+  requireNamespace("DiagrammeR")
   #### Filter ont ####
   ont <- filter_ontology(ont,
                          terms=terms)
@@ -35,6 +36,11 @@ plot_ontology <- function(ont,
   if("visnetwork" %in% types){
     res[["visnetwork"]] <- plot_ontology_visnetwork(ont,
                                                     ...)
+  }
+  if("graph_3d" %in% types){
+    g <- ontology_to(ont,"tbl_graph")
+    res[["graph_3d"]] <- plot_graph_3d(g,
+                                       ...)
   }
   return(res)
 }

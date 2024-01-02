@@ -1,6 +1,7 @@
 get_graph_colnames <- function(g,
                                what=c("nodes","edges")){
-  g <- to_tidygraph(g)
+  if(methods::is(g,"data.frame")) return(names(g))
+  g <- to_graph(g)
   what <- match.arg(what)
   g |>
     tidygraph::activate(what=!!what) |>

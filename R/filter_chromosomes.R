@@ -1,22 +1,19 @@
+#' @describeIn filter_ filter_
 #' Remove non-standard chromosomes
 #' 
 #' Remove non-standard chromosomes from a list of 
 #' \link[GenomicRanges]{GRanges} objects.
-#' @param grlist Named list of \link[GenomicRanges]{GRanges} objects.
-#' @param keep_chr Which chromosomes to keep.
-#' @param verbose Print messages.
 #' @returns Named list of \link[GenomicRanges]{GRanges} objects.
 #' @keywords internal
-#' @importFrom GenomeInfoDb seqlevelsStyle seqnames sortSeqlevels seqlevelsInUse
-#' @importFrom BiocGenerics %in% 
-remove_nonstandard_chrom <- function(grlist,
-                                     keep_chr = paste0(
-                                       "chr",c(seq_len(22),"X","Y")
-                                     ),
-                                     verbose = TRUE){
+filter_chromosomes <- function(grlist,
+                               keep_chr = paste0(
+                                 "chr",c(seq_len(22),"X","Y")
+                               )){
+  requireNamespace("GenomeInfoDb")
+  requireNamespace("BiocGenerics")
   #### Check if keep_chr is NULL ####
   if(is.null(keep_chr)) return(grlist)
-  messager("Removing non-standard chromosomes.",v=verbose)
+  messager("Removing non-standard chromosomes.")
   #### Check if it's a single element ####
   tmp_list <- FALSE
   grlist <- lapply(grlist, function(gr){ 

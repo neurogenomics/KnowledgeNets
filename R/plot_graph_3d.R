@@ -1,34 +1,7 @@
+#' @describeIn plot_ plot_
 #' 3D network
 #'
 #' Plot a subset of the HPO as a 3D network.
-#' @param g \link[tidygraph]{tbl_graph} object.
-#' @param layout_func Layout function for the graph.
-#' @param node_color_var Variable in the vertex metadata to color nodes by.
-#' @param edge_color_var Variable in the edge metadata to color edges by.
-#' @param text_color_var Variable in the node metadata to color text by.
-#' @param node_symbol_var Variable in the vertex metadata to shape nodes by.
-#' @param node_opacity Node opacity.
-#' @param edge_opacity Edge opacity.
-#' @param node_palette Color palette function for the nodes/points.
-#' @param edge_palette Color palette function for the edges/lines.
-#' @param kde_palette Color palette function for the KDE plot.
-#' @param add_kde Add a kernel density estimation (KDE) plot
-#' below the 3D scatter plot (i.e. the "mountains" beneath the points).
-#' @param extend_kde Extend the area that the KDE plot covers.
-#' @param bg_color Plot background color.
-#' @param add_labels Add phenotype name labels to each point.
-#' @param keep_grid Keep all grid lines and axis labels.
-#' @param aspectmode The proportions of the 3D plot. See the
-#' \href{https://plotly.com/python/reference/layout/scene/#layout-scene-aspectmode}{
-#' plotly documentation site} for details.
-#' @param hover_width Maximum width of the hover text.
-#' @param label_width Maximum width of the label text.
-#' @param seed Random seed to enable reproducibility.
-#' @param showlegend Show node fill legend.
-#' @param show_plot Print the plot after it's been generated.
-#' @param save_path Path to save interactive plot to
-#' as a self-contained HTML file.
-#' @param verbose Print messages.
 #' @returns A 3D interactive \link[plotly]{plotly} object.
 #'
 #' @source
@@ -48,33 +21,34 @@
 #' @importFrom stringr str_wrap
 #' @importFrom methods show
 #' @examples
-#' dat <- make_phenos_dataframe(ancestor = "Neurodevelopmental delay")
-#' g <- make_igraph_object(dat = dat)
-#' plt <- network_3d(g=g, show_plot=FALSE)
-network_3d <- function(g,
-                       layout_func = igraph::layout.fruchterman.reingold,
-                       node_color_var = "ontLvl",
-                       edge_color_var = "zend",
-                       text_color_var = node_color_var,
-                       node_symbol_var = "ancestor_name",
-                       node_palette = pals::kovesi.cyclic_mrybm_35_75_c68_s25,
-                       edge_palette = pals::kovesi.cyclic_mrybm_35_75_c68_s25,
-                       node_opacity = .75,
-                       edge_opacity = .5,
-                       kde_palette = pals::gnuplot,
-                       add_kde = TRUE,
-                       extend_kde = 1.5,
-                       bg_color = kde_palette(6)[1],
-                       add_labels = FALSE,
-                       keep_grid = FALSE,
-                       aspectmode = 'cube',
-                       hover_width=80,
-                       label_width=80,
-                       seed = 2023,
-                       showlegend = TRUE,
-                       show_plot = TRUE,
-                       save_path = tempfile(fileext = "network_3d.html"),
-                       verbose = TRUE){
+#' ont <- get_ontology("hpo", terms=10, add_ancestors=TRUE)
+#' g <- ontology_to(ont, to="tbl_graph")
+#' plt <- plot_graph_3d(g=g, show_plot=FALSE)
+plot_graph_3d <- function(g,
+                          layout_func = igraph::layout.fruchterman.reingold,
+                          id_var = "name",
+                          node_color_var = "ancestor_name",
+                          edge_color_var = "zend",
+                          text_color_var = node_color_var,
+                          node_symbol_var = "ancestor_name",
+                          node_palette = pals::kovesi.cyclic_mrybm_35_75_c68_s25,
+                          edge_palette = pals::kovesi.cyclic_mrybm_35_75_c68_s25,
+                          node_opacity = .75,
+                          edge_opacity = .5,
+                          kde_palette = pals::gnuplot,
+                          add_kde = TRUE,
+                          extend_kde = 1.5,
+                          bg_color = kde_palette(6)[1],
+                          add_labels = FALSE,
+                          keep_grid = FALSE,
+                          aspectmode = 'cube',
+                          hover_width=100,
+                          label_width=100,
+                          seed = 2023,
+                          showlegend = TRUE,
+                          show_plot = TRUE,
+                          save_path = tempfile(fileext = "plot_graph_3d.html"),
+                          verbose = TRUE){
   # anc <- "Abnormality of the nervous system"
   # dat <- make_phenos_dataframe(ancestor = anc)[ancestor_name==anc,]
   # g <- make_igraph_object(dat = dat)
@@ -85,11 +59,10 @@ network_3d <- function(g,
   label <- hpo_name <- NULL;
 
   #### Convert igraph to plotly data ####
-  d <- igraph_to_plotly(g = g,
-                        layout_func = layout_func,
-                        dim = 3,
-                        seed = seed,
-                        )
+  d <- graph_to_plotly(g = g,
+                       layout_func = layout_func,
+                       dim = 3,
+                       seed = seed)
   vdf <- d$vertices
   vdf[,label:=gsub("\n","<br>",
                    stringr::str_wrap(hpo_name, width = label_width))]
@@ -119,10 +92,10 @@ network_3d <- function(g,
                         x = ~x,
                         y = ~y,
                         z = ~z,
-                        symbol = ~stringr::str_wrap(
-                          get(node_symbol_var),
-                          width = label_width
-                        ),
+                        # symbol = ~stringr::str_wrap(
+                        #   get(node_symbol_var),
+                        #   width = label_width
+                        # ),
                         # size = ~ontLvl,
                         color = ~ get(node_color_var),
                         colors = (
@@ -137,8 +110,7 @@ network_3d <- function(g,
                         ),
                         hovertext = ~ stringr::str_wrap(
                           paste(
-                            paste0('<b>name</b>: ',name),
-                            paste0('<b>hpo_id</b>: ',hpo_id),
+                            paste0('<b>',id_var,'</b>: ',id_var),
                             paste0('<b>hpo_name</b>: ',hpo_name),
                             paste0('<b>ontLvl</b>: ',ontLvl),
                             paste0('<b>ancestor_name</b>: ',ancestor_name),
@@ -176,11 +148,11 @@ network_3d <- function(g,
                        z = ~z,
                        text = ~label,
                        color = ~ get(text_color_var),
-                       colors = (
+                       colors = 
                          node_palette(length(
                            unique(vdf[[text_color_var]])
-                         ))
-                       ),
+                           )
+                         ),
                        # textfont = list(color="rbga(255,255,255,.8"),
                        hoverinfo = "none",
                        inherit = FALSE,
@@ -219,7 +191,7 @@ network_3d <- function(g,
   # plotly::save_image(p = fig,file = file, width = 10, height =10)
   if(isTRUE(show_plot)) methods::show(fig)
   if(!is.null(save_path)) {
-    messager("Saving interactive plot -->",save_path,v=verbose)
+    messager("Saving interactive plot -->",save_path)
     dir.create(dirname(save_path),showWarnings = FALSE, recursive = TRUE)
     htmlwidgets::saveWidget(widget = fig,
                             file = save_path,

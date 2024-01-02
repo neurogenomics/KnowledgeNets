@@ -1,6 +1,11 @@
-ttd_import <- function(save_dir = tools::R_user_dir(package = "MultiEWCE",
-                                                    which = "cache"),
-                       run_map_genes = TRUE){
+#' @describeIn get_ get_
+#' @export
+#' @examples
+#' \dontrun{
+#' ttd <- get_ttd()
+#' }
+get_ttd <- function(save_dir = cache_dir(),
+                    run_map_genes = TRUE){
 
   requireNamespace("orthogene")
   requireNamespace("readxl")
@@ -79,7 +84,7 @@ ttd_import <- function(save_dir = tools::R_user_dir(package = "MultiEWCE",
     dat$GENENAME_mapped <- orthogene::map_genes(dat$GENENAME2,
                                                 mthreshold = 1,
                                                 drop_na = FALSE)$name
-    dat[,GENENAME3:=dplyr::coalesce(GENENAME2,GENENAME_mapped)]
+    dat[,GENENAME3:=data.table::fcoalesce(GENENAME2,GENENAME_mapped)]
   }
   #### Convert status to ordered factor ####
   sts <- sort(unique(dat$HIGHEST_STATUS), na.last = TRUE)

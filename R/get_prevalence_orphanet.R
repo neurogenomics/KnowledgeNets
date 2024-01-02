@@ -1,8 +1,7 @@
-#' @describeIn get_ get_
-get_prevalence_orphanet <- function(agg_by=c("MONDO_ID","id","Name"),
+get_prevalence_orphanet <- function(agg_by=c("mondo_id","id","Name"),
                                     include_mondo=TRUE){
-  prevalence_numerator <- prevalence <- mean_prevalence <- Prevalence.ValMoy <-
-    prevalence_denominator <- NULL;
+  prevalence_numerator <- prevalence <- prevalence_mean <- Prevalence.ValMoy <-
+    prevalence_denominator <- OrphaCode <- disease_id <- NULL;
   ## Open in Excel and convert to CSV first ##
   path <- system.file("extdata", "orphanet_epidemiology.csv.gz",
                       package = "KGExplorer")
@@ -29,17 +28,22 @@ get_prevalence_orphanet <- function(agg_by=c("MONDO_ID","id","Name"),
                        simplify = TRUE)[,2]
   ) |> as.numeric()
   d[,prevalence:=prevalence_numerator/prevalence_denominator*100]
-
-  #### Add MONDO ID ####
+  names(d) <- make.unique(names(d))
+  d[,disease_id:=paste0("Orphanet:",OrphaCode)]
+  #### Add mondo ID ####
   if(isTRUE(include_mondo)){
     d <- map_mondo(dat = d, 
-                   input_col = "id") 
+                   input_col = "disease_id", 
+                   map_to = "orphanet") 
    } 
   if(!is.null(agg_by)){
     ## Compute mean prevalence
-    dprev <- d[,list(n=.N, mean_prevalence=mean(prevalence, na.rm=TRUE)),
+    dprev <- d[,list(n=.N, 
+                     prevalence_numerator_mean=mean(prevalence_numerator, na.rm=TRUE),
+                     prevalence_denominator_mean=mean(prevalence_denominator, na.rm=TRUE),
+                     prevalence_mean=mean(prevalence, na.rm=TRUE)),
                by=agg_by #"Prevalence.PrevalenceType.Name"
-    ][order(-mean_prevalence)]
+    ][order(-prevalence_mean)]
     return(dprev)
   } else {
     return(d)
