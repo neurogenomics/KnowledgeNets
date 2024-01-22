@@ -78,7 +78,7 @@ Remotes:
   github::RajLabMSSM/echogithub,
   github::RajLabMSSM/downloadR,
   github::kwstat/pals
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.0
 VignetteBuilder: knitr
 License: GPL-3
 Config/testthat/edition: 3

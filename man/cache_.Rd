@@ -29,6 +29,10 @@ cache_save(obj, path)
     \item{\code{expand}}{logical. Should wildcards (see \sQuote{Details} below) and
     tilde (see \code{\link[base]{path.expand}}) be expanded?}
   }}
+
+\item{obj}{R object.}
+
+\item{path}{File name to save to.}
 }
 \value{
 Null.

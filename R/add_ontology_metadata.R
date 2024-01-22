@@ -20,7 +20,7 @@ add_ontology_metadata <- function(ont,
   simona::mcols(ont)$n_offspring <- simona::n_offspring(ont)
   simona::mcols(ont)$n_connected_leaves <- simona::n_connected_leaves(ont) 
   if(isTRUE(add_ancestors)) {
-    ont <- add_ancestor(ont)
+    ont <- add_ancestors(ont)
   }
   if(isTRUE(add_n_edges)){
     adj <- ontology_to(ont = ont,

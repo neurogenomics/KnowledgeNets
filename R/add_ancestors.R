@@ -8,8 +8,8 @@
 #' @inheritParams simona::dag_ancestors
 #' @examples 
 #' ont <- get_ontology("hpo", terms=10)
-#' ont2 <- add_ancestor(ont)
-add_ancestor <- function(ont,
+#' ont2 <- add_ancestors(ont)
+add_ancestors <- function(ont,
                          lvl=2, 
                          include_self=TRUE,
                          force_new=FALSE){

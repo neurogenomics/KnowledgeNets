@@ -52,7 +52,7 @@ plot_ontology_heatmap <- function(ont,
   X <- ontology_to(ont, to = "similarity")
   ## Check if we need to add ancestors
   if(any(c("ancestor","ancestor_name") %in% c(row_side_vars,col_side_vars))){
-    ont <- add_ancestor(ont)
+    ont <- add_ancestors(ont)
   }
   annot <- data.table::data.table(ont@elementMetadata)
   #### Heatmaply version ####

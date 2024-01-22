@@ -23,9 +23,9 @@ get_monarch <- function(queries=NULL,
                         rbind=FALSE
                         ){
   files <- get_monarch_files(domain=domain,
-                                subdir=subdir,
-                                maps=maps,
-                                queries=queries) 
+                             subdir=subdir,
+                             maps=maps,
+                             queries=queries) 
   #### Download and prepare maps ####
   messager("Importing",nrow(files),"Monarch files.")
   dat_list <- lapply(stats::setNames(seq(nrow(files)),

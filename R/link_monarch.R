@@ -6,7 +6,7 @@
 #'
 #' @export
 #' @examples
-#' dat <- link_monarch()
+#' dat <- link_monarch(maps = list(c("gene","disease")))
 link_monarch <- function(maps = list(
                                     c("variant","disease"),
                                     c("variant","phenotype"),

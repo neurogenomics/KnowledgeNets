@@ -200,6 +200,8 @@ NULL
 #' 
 #' @description
 #' Functions to cache objects in order to speed up processes the second time. 
+#' @param obj R object.
+#' @param path File name to save to.
 #' @param save_dir Path to cache directory.
 #' @inheritParams base::unlink
 #' @family cache_ 

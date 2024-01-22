@@ -20,7 +20,7 @@ plot_upheno_heatmap <- function(plot_dat,
   ### Subset phenotypes
   if(!is.null(hpo_ids)) plot_dat <- plot_dat[id1 %in% unique(hpo_ids)]
   plot_dat[,hpo_id:=id1][,label1:=gsub(" (HPO)","",label1,fixed = TRUE)]
-  plot_dat <- add_ancestor(plot_dat)
+  plot_dat <- add_ancestors(plot_dat)
   data.table::setkeyv(plot_dat,"label1")
 
   ### Plot

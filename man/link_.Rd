@@ -57,6 +57,6 @@ Construct a knowledge graph by iteratively linking together pairs of concepts
 
 }}
 \examples{
-dat <- link_monarch()
+dat <- link_monarch(maps = list(c("gene","disease")))
 }
 \concept{link_}

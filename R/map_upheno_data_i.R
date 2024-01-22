@@ -24,7 +24,7 @@ map_upheno_data_i <- function(pheno_map_method,
       pheno_map <- get_upheno(file = "bestmatches")
       pheno_map[,db1:=gsub("*:.*","",basename(id1))]
     } else if(pheno_map_method=="monarch"){
-      pheno_map <- get_monarch("phenotype_to_phenotype") |>
+      pheno_map <- get_monarch("phenotype_phenotype") |>
         data.table::setnames(c("label_x","label_y"),c("label1","label2"))
       pheno_map[,id1:=gsub("_",":",basename(p1))
       ][,id2:=gsub("_",":",basename(p2))]
@@ -43,7 +43,7 @@ map_upheno_data_i <- function(pheno_map_method,
 
   ## Gene-phenotype associations across 8 species
   {
-    genes <- get_monarch("phenotype_to_gene")
+    genes <- get_monarch(queries = "phenotype_to_gene")
     data.table::setkeyv(genes,"object")
     messager("Unique species with genes:",
              data.table::uniqueN(genes$subject_taxon_label))
