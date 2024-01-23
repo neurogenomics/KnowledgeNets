@@ -21,7 +21,7 @@ map_mondo <- function(dat,
                       allow.cartesian = FALSE,
                       save_dir=cache_dir()
                       ){
-  db <- subject <- NULL;
+  object_db <- subject <- NULL;
 
   if(output_col %in% names(dat)){
     messager("output_col already exists. Returning original dat.")
@@ -38,11 +38,12 @@ map_mondo <- function(dat,
   # sort(table(map$db))
   if(all(to!="mondo")){
     #### Check to option ####
-    if(any(!tolower(to) %in% tolower(unique(map$db)))){
-      stop("to must be one of: ",paste(sort(unique(map$db)),collapse=", "))
+    if(any(!tolower(to) %in% tolower(unique(map$object_db)))){
+      stop("to must be one of: ",paste(sort(unique(map$object_db)),
+                                       collapse=", "))
     }
     to_list <- to
-    map <- map[db %in% to_list]
+    map <- map[object_db %in% to_list]
   } else{
     map <- map[grepl("^MONDO",subject)]
   }
@@ -50,7 +51,7 @@ map_mondo <- function(dat,
   messager("Mapping",input_col,"-->",output_col)
   cols <- c(key,value)
   if(isTRUE(add_name)){
-    cols <- c(cols,"subject_label","disease_label")
+    cols <- c(cols,"subject_label","label")
   }
   dat2 <- data.table::merge.data.table(
     dat,

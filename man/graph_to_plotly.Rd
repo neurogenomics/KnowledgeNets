@@ -10,12 +10,13 @@ graph_to_plotly(
   layout_func = igraph::layout.fruchterman.reingold,
   dim = 3,
   id_col = "name",
-  label_col = "hpo_name",
+  label_var = "hpo_name",
   seed = 2023
 )
 }
 \arguments{
-\item{g}{\link[tidygraph]{tbl_graph} object.}
+\item{g}{ggnetwork object 
+(or an igraph/tbl_graph to be converted to ggnetwork format).}
 
 \item{ont}{An ontology of class \link[simona]{ontology_DAG}.}
 
@@ -26,7 +27,7 @@ graph_to_plotly(
 \item{id_col}{Column containing the unique identifier for each node 
 in a graph (e.g. "name").}
 
-\item{label_col}{Column containing the label for each node in a graph
+\item{label_var}{Column containing the label for each node in a graph
 (e.g. "hpo_name").}
 
 \item{seed}{Set the seed for reproducible clustering.}

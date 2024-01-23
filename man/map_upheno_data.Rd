@@ -62,5 +62,7 @@ the species-specific phenotype-gene mappings.}
 }
 }
 \examples{
+\dontrun{
 pheno_map_genes_match <- map_upheno_data()
+}
 }

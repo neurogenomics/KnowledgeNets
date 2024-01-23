@@ -20,7 +20,9 @@
 #'
 #' @export
 #' @examples
+#' \dontrun{
 #' pheno_map_genes_match <- map_upheno_data()
+#' }
 map_upheno_data <- function(pheno_map_method=c("upheno","monarch"),
                             gene_map_method=c("monarch"),
                             keep_nogenes=FALSE,

@@ -1,5 +1,7 @@
-#' @describeIn utils_ utils_
-#' Save a plot using \pkg{grDevices}.
+#' @describeIn plot_ plot_
+#' Save a plot using \pkg{grDevices} or \link[visNetwork]{visSave}.
+#' 
+#' @export
 plot_save <- function(plt,
                       path,
                       width=7,
@@ -7,6 +9,8 @@ plot_save <- function(plt,
   requireNamespace("grDevices")
   messager("Saving plot -->",path)
   dir.create(dirname(path), recursive = TRUE, showWarnings = FALSE)
+  
+  if(is.null(path)) return(NULL)
   
   if(endsWith(path,".pdf")){
     {
@@ -24,5 +28,10 @@ plot_save <- function(plt,
       methods::show(plt)
       grDevices::dev.off()
     }
+  } else if(endsWith(path,".html")){
+    visNetwork::visSave(plt,
+                        file = path,
+                        selfcontained = TRUE,
+                        background = "transparent")
   }
 }

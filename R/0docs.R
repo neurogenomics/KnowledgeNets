@@ -56,11 +56,14 @@ NULL
 #' @param show_plot Print the plot after it's been generated.
 #' @param save_path Path to save interactive plot to
 #' as a self-contained HTML file.
+#' @param interactive Make the plot interactive.
 #' @param verbose Print messages.
 #' @param id_col Column containing the unique identifier for each node 
 #' in a graph (e.g. "name").
-#' @param label_col Column containing the label for each node in a graph
+#' @param label_var Column containing the label for each node in a graph
 #'  (e.g. "hpo_name").
+#' @param size_var Column to scale node size by.
+#' @param colour_var Column to color nodes by.
 #' @param ... Additional arguments passed to plot-specific functions.
 #' @import simona
 #' @family plot_ 
@@ -149,6 +152,16 @@ NULL
 #' @param use_simona Use \link[simona]{dag_filter} to filter terms.
 #' @param keep_chr Which chromosomes to keep.
 #' @param grlist Named list of \link[GenomicRanges]{GRanges} objects.
+#' @param filters A named list of filters to apply to the data. 
+#' Names should be name of the metadata column, and values should be a vector of 
+#' valid options. For example, \code{list("type" = c("gene","variant"))} will
+#' return any rows where the "type" column contains either "gene" or "variant".
+#' @param keep_descendants Terms whose descendants should be kept 
+#' (including themselves).
+#'  Set to \code{NULL} (default) to skip this filtering step.
+#' @param remove_descendants Terms whose descendants should be removed 
+#' (including themselves).
+#'  Set to \code{NULL} (default) to skip this filtering step.
 #' @inheritParams plot_
 #' @inheritParams get_
 #' @import simona

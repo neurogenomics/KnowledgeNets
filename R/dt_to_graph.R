@@ -2,6 +2,10 @@ dt_to_graph <- function(dat,
                         from_pattern="subject",
                         to_pattern="object",
                         add_hover=FALSE){
+  if(methods::is(dat,"tbl_graph")) {
+    messager("Input is already a tbl_graph. Returning input.")
+    return(dat)
+  }
  make_nodes <- function(dat,
                         pattern){
    cols <- grep(pattern,names(dat), value = TRUE)
@@ -30,7 +34,7 @@ dt_to_graph <- function(dat,
   edge_cols <- c(
     from_pattern,to_pattern,
     # paste0(c(from_pattern,to_pattern),"_category"),
-    grep(paste(c(from_pattern,from_pattern),collapse="|"),
+    grep(paste(c(from_pattern,to_pattern),collapse="|"),
          names(dat), value = TRUE, invert = TRUE)
   )|> unique()
   edge_cols <- edge_cols[edge_cols %in% names(dat)]

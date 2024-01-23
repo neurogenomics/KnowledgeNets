@@ -3,7 +3,6 @@
 #'
 #' Construct a knowledge graph by iteratively linking together pairs of concepts
 #'  across  multiple Monarch datasets.
-#'
 #' @export
 #' @examples
 #' dat <- link_monarch(maps = list(c("gene","disease")))
@@ -16,7 +15,7 @@ link_monarch <- function(maps = list(
                          filters=
                            list(
                              phenotype=NULL,
-                             db=NULL,#c("HP"),
+                             subject_db=NULL,#c("HP"),
                              gene=NULL
                            ),
                          as_graph=TRUE,
@@ -31,21 +30,14 @@ link_monarch <- function(maps = list(
                              subdir = subdir) 
   g <- link_monarch_graph(files=files,
                           maps=maps,
+                          as_graph=as_graph,
                           ...)
-  for(nm in names(filters)){
-    f <- filters[[nm]]
-    if(is.null(f)){
-      next
-    }
-    ## filter just that column in the nodes of the graph
-    g|> 
-      tidygraph::activate("nodes") |>
-      tidygraph::filter(get(eval(nm)) %in% f)
-  }
-  if(isFALSE(as_graph)){
-   dat <- graph_to_dt(g)
-   return(dat)
+  if(isTRUE(as_graph)){
+    g <- filter_graph(g,
+                      filters=filters)
   } else {
-    return(g)
+    g <- filter_dt(dat=g,
+                   filters=filters)
   }
+  return(g)
 }

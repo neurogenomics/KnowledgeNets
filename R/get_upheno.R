@@ -46,25 +46,22 @@ get_upheno <- function(file=c("ontology",
       data.table::fread(x)
     }) |> `names<-`(gsub("-bestmatches.tsv","",basename(URLs))) |>
       data.table::rbindlist(idcol = "map", fill = TRUE) |>
-      `names<-`(c("map","id1","label1","id2",
-                  "label2","equivalence_score","subclass_score"))
-    add_db(dat = pheno_map, 
-           input_col = "id2",
-           output_col = "db2") 
-    return(pheno_map)
+      `names<-`(c("map",
+                  "subject","subject_label",
+                  "object","object_label",
+                  "equivalence_score","subclass_score"))
   }
   if (file=="upheno_mapping"){
-    id1 <- id2 <- p1 <- p2 <- NULL;
-    pheno_map <- get_monarch("phenotype_to_phenotype")
-    pheno_map[,id1:=gsub("_",":",basename(p1))
-              ][,id2:=gsub("_",":",basename(p2))]
-    add_db(dat = pheno_map, 
-           input_col = "id1",
-           output_col = "db1") 
-    add_db(dat = pheno_map, 
-           input_col = "id2",
-           output_col = "db2")  
-    data.table::setkeyv(pheno_map,"id1")
-    return(pheno_map)
+    subject <- object <- p1 <- p2 <- NULL;
+    pheno_map <- get_monarch(queries = "phenotype_phenotype")
+    pheno_map[,subject:=gsub("_",":",basename(p1))
+              ][,object:=gsub("_",":",basename(p2))] 
+    data.table::setkeyv(pheno_map,"subject")
   }
+  
+  add_db(dat = pheno_map, 
+         input_col = "subject")
+  add_db(dat = pheno_map, 
+         input_col = "object") 
+  return(pheno_map)
 }

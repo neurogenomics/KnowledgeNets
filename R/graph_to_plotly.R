@@ -15,7 +15,7 @@ graph_to_plotly <- function(g,
                             layout_func = igraph::layout.fruchterman.reingold,
                             dim = 3,
                             id_col="name",
-                            label_col="hpo_name",
+                            label_var="hpo_name",
                             seed = 2023){
 
   requireNamespace("igraph")
@@ -66,8 +66,8 @@ graph_to_plotly <- function(g,
     by.y=id_col
   )
 
-  if(!label_col %in% names(vdf)){
-    vdf[[label_col]] <- map_ontology_terms(ont,
+  if(!label_var %in% names(vdf)){
+    vdf[[label_var]] <- map_ontology_terms(ont,
                                            terms = vdf[[id_col]])
   }
   return(list(vertices=vdf,

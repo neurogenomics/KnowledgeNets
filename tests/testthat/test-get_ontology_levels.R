@@ -11,7 +11,7 @@ test_that("get_ontology_levels works", {
                                            absolute = TRUE)
   testthat::expect_length(lvls1, length(terms1))
   testthat::expect_equal(min(lvls1),0)
-  testthat::expect_equal(max(lvls1),16) ## Increased from 14 to 16 in 2023 version
+  testthat::expect_equal(max(lvls1),4) ## Increased from 14 to 16 in 2023 version
 
   #### Using all descendants ####
   terms2 <- simona::dag_offspring(hpo,
@@ -19,8 +19,8 @@ test_that("get_ontology_levels works", {
   lvls2 <- KGExplorer::get_ontology_levels(ont=hpo,
                                            terms = terms2)
   testthat::expect_length(lvls2, length(terms2))
-  testthat::expect_equal(min(lvls2),0)
-  testthat::expect_equal(max(lvls2),4)
+  testthat::expect_equal(min(lvls2),4)
+  testthat::expect_equal(max(lvls2),9)
 
   #### Using relative levels ####
   lvls3 <- get_ontology_levels(ont=hpo,
@@ -35,8 +35,8 @@ test_that("get_ontology_levels works", {
                                absolute = TRUE,
                                reverse = FALSE)
   testthat::expect_length(lvls4, length(terms1))
-  testthat::expect_equal(min(lvls4),1)
-  testthat::expect_equal(max(lvls4),17)
+  testthat::expect_equal(min(lvls4),0)
+  testthat::expect_equal(max(lvls4),4)
 
   #### Visual confirmation of correct hierarchy ####
   # ontologyPlot::onto_plot(ontology = hpo,

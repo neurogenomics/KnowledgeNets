@@ -21,18 +21,21 @@
 #' }
 get_monarch_kg <- function(as_graph=TRUE,
                            save_dir=cache_dir(),
+                           force_new=FALSE,
                            ...){
   files <- get_monarch_files(subdir = "monarch-kg/latest/",
                              queries = "\\.tsv\\.gz")
   path <- file.path(
     save_dir, 
     paste0(gsub("\\.tsv\\.gz","",basename(files$url[1])),".rds"))
-  if(file.exists(path)){
+  if(file.exists(path) & 
+     isFALSE(force_new)){
     messager("Importing",path)
     g <- readRDS(path)
     return(g)
   } else {
     d <- data.table::fread(files$url[1],
+                           tmpdir = save_dir,
                            ...)
     if(isFALSE(as_graph))  return(d)
     g <- dt_to_kg(d)

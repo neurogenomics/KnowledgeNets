@@ -37,9 +37,9 @@
 get_ontology_levels <- function(ont,
                                 terms = NULL,
                                 remove_terms = TRUE,
-                                method=c("height","depth"),
+                                method=c("depth","height"),
                                 absolute = TRUE,
-                                reverse = TRUE) {
+                                reverse = FALSE) {
   #### Check inputs ####
   if(!methods::is(ont,"ontology_DAG")){
     stopper("Input must be an ontology object.")

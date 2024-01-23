@@ -27,7 +27,9 @@ Generate multiple kinds of plots summarising mappings of phenotypes and genes
 between the HPO and various non-human ontologies within uPheno.
 }
 \examples{
+\dontrun{
 pheno_map_genes_match <- map_upheno_data()
 upheno_plots <- plot_upheno(
   pheno_map_genes_match = pheno_map_genes_match)
+}
 }

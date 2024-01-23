@@ -38,7 +38,9 @@
 #' @export
 #' @import data.table 
 #' @examples
+#' \dontrun{
 #' res <- map_upheno()
+#' }
 map_upheno <- function(pheno_map_method=c("upheno","monarch"),
                        gene_map_method=c("monarch"),
                        subset_db1=c("HP"),

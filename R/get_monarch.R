@@ -20,7 +20,8 @@ get_monarch <- function(queries=NULL,
                         maps=NULL,
                         domain="https://data.monarchinitiative.org",
                         subdir="latest/tsv/all_associations/",
-                        rbind=FALSE
+                        rbind=FALSE,
+                        save_dir=cache_dir()
                         ){
   files <- get_monarch_files(domain=domain,
                              subdir=subdir,
@@ -33,7 +34,8 @@ get_monarch <- function(queries=NULL,
     messager("-",paste0(i,"/",nrow(files),":"),
              files[i,]$name) 
     tryCatch({
-      data.table::fread(files[i,]$url)
+      data.table::fread(files[i,]$url, 
+                        tmpdir = save_dir)
     }, error=function(e){messager(e);NULL})
   }) 
   ### Bind

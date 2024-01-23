@@ -4,6 +4,10 @@
 #' Map Monarch gene IDs to HGNC gene symbols, within or across species.
 #' @param dat \link[data.table]{data.table} with genes.
 #' @param gene_col Name of the gene column in \code{dat}.
+#' @param map_by_merge Map orthologs by merging the node data such that the 
+#' orthologous genes will appear as a new column (\code{TRUE}). 
+#' Otherwise, the orthologs will be added as new nodes to the graph 
+#' (\code{FALSE}).
 #' @inheritParams data.table::merge.data.table
 #' @returns Mapped \code{dat}
 #'
@@ -13,46 +17,42 @@
 #' dt2 <- map_genes_monarch(dat=dat, gene_col="gene")
 map_genes_monarch <- function(dat,
                               gene_col,
+                              as_graph=methods::is(dat,"tbl_graph"),
+                              map_by_merge=FALSE,
                               all.x=FALSE){
-  subject <- hgnc <- hgnc_label <- gene <- gene_label <- subject_taxon_label <-
-    NULL;
-
   #### Prepare orthology map ####
-  {
-    homol <- get_monarch("gene_homolog")[[1]]
-    messager("Unique species with orthologs:",
-             data.table::uniqueN(homol$subject_taxon_label))
-    ## Subset to only convert human --> non-human
-    homol <- homol[grep("^HGNC",subject),] |>
-      data.table::setnames(
-        c("subject","subject_label","object","object_label"),
-        c("hgnc","hgnc_label","gene","gene_label"))
-    ## Add human-to-human back into map
-    hhomol <- (homol[subject_taxon_label=="Homo sapiens",
-                     c("hgnc","hgnc_label",
-                        "subject_taxon","subject_taxon_label")] |> unique()
-    )[,gene:=hgnc][,gene_label:=hgnc_label]
-    homol <- data.table::rbindlist(list(homol,hhomol),fill=TRUE)
-    ## Add HGNC IDs
-    hhomol[,gene:=hgnc_label]
-    homol <- data.table::rbindlist(list(homol,hhomol),fill=TRUE)
-    ## Make unique
-    homol <- unique(homol)
-    messager("Unique orthologs:",
-             formatC(data.table::uniqueN(homol$gene),big.mark = ","))
-  }
-  {
-    dt_homol <- data.table::merge.data.table(
+  homol <- get_monarch_homol(as_graph = as_graph)
+  
+  if(!is.null(dat)){
+    if(isTRUE(as_graph)){ 
+      if(map_by_merge){
+        dat_homol <- data.table::merge.data.table(
+          graph_to_dt(dat, what = "nodes"),
+          graph_to_dt(homol),
+          by.x="id",
+          by.y="object"
+        )
+      } else {
+        dat_homol <- tidygraph::graph_join(dat,homol)
+      }
+      
+      return(dat_homol)
+    } else{
+      dat_homol <- data.table::merge.data.table(
       dat,
       homol[,c("hgnc","hgnc_label","gene")],
       by.x=gene_col,
       by.y="gene",
       all.x = all.x)
-    messager(formatC(nrow(dt_homol),big.mark = ","),"/",
+    messager(formatC(nrow(dat_homol),big.mark = ","),"/",
              formatC(nrow(dat),big.mark = ","),
              "rows remain after gene orthology mapping.")
+    return(dat_homol)
+    }
+  } else {
+    return(homol)
   }
-  return(dt_homol)
+  
 }
 ## Orthogene
 # else if(gene_map_method=="orthogene"){

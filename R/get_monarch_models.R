@@ -23,18 +23,21 @@ get_monarch_models <- function(maps = list(
                                    gene=NULL,
                                    variant=NULL
                                ),
-                               to=c("OMIM","Orphanet","DECIPHER"),
+                               input_col="object",
+                               to=NULL,#c("OMIM","Orphanet","DECIPHER"),
                                map_orthologs=TRUE,
+                               as_graph=FALSE,
                                ...){
   dat <- link_monarch(maps = maps,
                       filters = filters,
+                      as_graph = as_graph,
                       ...) 
   messager("Model species:",data.table::uniqueN(dat$subject_taxon_label))
   #### Map disease IDs ####
   if(length(to)>0 &&
-     "disease" %in% names(dat)){
-    dat <- map_mondo(dat = dat[,-c("disease_label")],
-                     input_col="disease",
+     input_col %in% names(dat)){
+    dat <- map_mondo(dat = dat,
+                     input_col=input_col,
                      output_col="disease_id",
                      to=to)
   }

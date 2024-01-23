@@ -12,14 +12,14 @@ plot_upheno_heatmap <- function(plot_dat,
                                height = 15,
                                width = 10){
   requireNamespace("ComplexHeatmap")
-  id1 <- hpo_id <- label1 <- NULL;
+  subject <- hpo_id <- label1 <- NULL;
   set.seed(2023)
   value.var <- match.arg(value.var)
   # hpo_ids <- MultiEWCE::example_targets$top_targets$hpo_id
 
   ### Subset phenotypes
-  if(!is.null(hpo_ids)) plot_dat <- plot_dat[id1 %in% unique(hpo_ids)]
-  plot_dat[,hpo_id:=id1][,label1:=gsub(" (HPO)","",label1,fixed = TRUE)]
+  if(!is.null(hpo_ids)) plot_dat <- plot_dat[subject %in% unique(hpo_ids)]
+  plot_dat[,hpo_id:=subject][,label1:=gsub(" (HPO)","",label1,fixed = TRUE)]
   plot_dat <- add_ancestors(plot_dat)
   data.table::setkeyv(plot_dat,"label1")
 
@@ -40,7 +40,7 @@ plot_upheno_heatmap <- function(plot_dat,
   #### Get clusters from ontology ####
   if(isTRUE(cluster_from_ontology)){
     ids <- map_ontology_terms(ont = ont,
-                              terms = plot_dat$id1,
+                              terms = plot_dat$subject,
                               keep_order = FALSE)
     ids <- ids[ids %in% rownames(X)]
     ## best to do this on the entire HPO, then subset

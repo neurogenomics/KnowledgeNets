@@ -46,16 +46,15 @@ get_mondo_maps <- function(map_types=c("default",
     map <- data.table::fread(path,
                              skip = "subject",
                              tmpdir = save_dir)
+    data.table::setnames(map,
+                         gsub("_id$","",names(map)))
     map[,file:=basename(path)]
-    map[,map_type:="default"]
-    map[,to:=data.table::tstrsplit(basename(file),"_|[.]",keep=3)]
     add_db(dat=map,
-           input_col="subject_id",
-           output_col="from")
+           input_col="subject",
+           output_col="subject_db")
     add_db(dat=map,
-           input_col="object_id",
-           output_col="db")
-    map[,to:=db]
+           input_col="object",
+           output_col="object_db")
   } else {
     files <- get_mondo_maps_files(save_dir = save_dir,
                                   map_types = map_types,
@@ -71,17 +70,16 @@ get_mondo_maps <- function(map_types=c("default",
                         skip="subject_id",
                         tmpdir = save_dir)
     }) |> data.table::rbindlist(fill = TRUE, idcol = "file")
-    map[,map_type:=data.table::tstrsplit(basename(file),"_",keep=2)]
-    map[,to:=data.table::tstrsplit(basename(file),"_|[.]",keep=3)]
+    data.table::setnames(map,
+                         gsub("_id$","",names(map)))
     add_db(dat=map,
-           input_col="object_id",
-           output_col="db")
+           input_col="object",
+           output_col="object_db")
   }
-  ## Fix inconsistency with other Monarch data files: 
-  ##  e.g. subject --> subject
-  data.table::setnames(map,gsub("_id$","",names(map)))
   #### Sort mappings by confidence #### 
-  map[,map_type:=factor(map_type,levels = map_type_order,ordered = TRUE)]
+  map[,map_type:=data.table::tstrsplit(predicate,keep = 2,split=":")]
+  map[,map_type:=factor(tolower(map_type),
+                        levels = map_type_order, ordered = TRUE)]
   data.table::setorderv(map,cols = "map_type")
   #### Select the top mapping per ID ####
   if(is.numeric(top_n)){
@@ -93,6 +91,6 @@ get_mondo_maps <- function(map_types=c("default",
              paste0("top_n=",top_n,"."))
   } 
   #### Fill in label with any available info #####
-  map[,disease_label:=data.table::fcoalesce(object_label,subject_label)]
+  map[,label:=data.table::fcoalesce(object_label,subject_label)]
   return(map) 
 }

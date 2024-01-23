@@ -1,4 +1,4 @@
-map_upheno_data_i <- function(pheno_map_method,
+map_upheno_data_i2 <- function(pheno_map_method,
                               gene_map_method,
                               keep_nogenes,
                               fill_scores,
@@ -21,9 +21,8 @@ map_upheno_data_i <- function(pheno_map_method,
   {
     if(pheno_map_method=="upheno"){
       pheno_map <- get_upheno(file = "bestmatches")
-      names(pheno_map) <-gsub("^subject","id1",names(pheno_map))
-      names(pheno_map) <-gsub("^object","id2",names(pheno_map))
-      pheno_map[,db1:=gsub("*:.*","",basename(id1))]
+      pheno_map[,subject_category:="phenotype"][,object_category:="phenotype"]
+      pheno_map <- dt_to_graph(pheno_map) 
     } else if(pheno_map_method=="monarch"){
       pheno_map <- get_monarch("phenotype_to_phenotype") |>
         data.table::setnames(c("label_x","label_y"),c("label1","label2"))
@@ -35,9 +34,10 @@ map_upheno_data_i <- function(pheno_map_method,
     }
     #### Filter data ####
     if(!is.null(terms)){
-      pheno_map <- pheno_map[id1 %in% terms,]
-      if(nrow(pheno_map)==0){
-        stop("No terms found in pheno_map")
+      pheno_map <- filter_graph(pheno_map,
+                                filters=list(id=terms))
+      if(length(pheno_map)==0){
+        stop("No terms found in pheno_map.")
       }
     }
   }
@@ -46,62 +46,70 @@ map_upheno_data_i <- function(pheno_map_method,
   {
     genes <- get_monarch(maps = list(c("phenotype","gene")),
                          rbind=TRUE)
-    data.table::setkeyv(genes,"object")
-    messager("Unique species with genes:",
-             data.table::uniqueN(genes$subject_taxon_label))
-    ## Create an ID-label map for each phenotype
-    genes_map <- genes[,c("object","object_label",
-                          "subject_taxon","subject_taxon_label")] |> unique()
-    genes_map <- genes_map[,.SD[1], by="object"]
-    add_db(genes_map,
-           input_col = "object",
-           output_col = "db")
+    genes[,subject_category:="gene"][,object_category:="phenotype"]
+    genes <- add_db(genes,
+                    input_col = "subject")
+    genes <- add_db(genes,
+                    input_col = "object")
+    genes <- dt_to_graph(dat = genes)
     ## Create an db-species map for each Ontology
-    species_map <- genes_map[,.SD[1], keyby="db"][,.(db,subject_taxon_label)]
+    species_map <- graph_to_dt(genes,
+                               what = "nodes")[category=="gene",.SD[1],
+                                               keyby="db"][,.(db,taxon_label)]
   }
   
   #### Map non-human genes onto human orthologs ####
   {
     genes_homol <- map_genes_monarch(dat=genes,
-                                     gene_col="subject")
-    names(genes_homol) <- gsub("subject","gene",names(genes_homol))
-    messager(data.table::uniqueN(genes_homol$gene_taxon_label),"/",
-             data.table::uniqueN(genes$subject_taxon_label),
-             "species remain after cross-species gene mapping.")
+                                     gene_col="subject") 
+    nodes <- graph_to_dt(genes_homol,
+                         what = "nodes") 
+    # dat_homol <- genes_homol|>
+    #   tidygraph::activate("nodes")|>
+    #   tidygraph::filter(
+    #     tidygraph::node_is_adjacent(to= nodes[,.I[category=="phenotype"]]) &
+    #     tidygraph::node_is_adjacent(to= nodes[,.I[db %in% c("HGNC") ]])
+    #     # tidygraph::node_is_connected(nodes[,.I[db %in% c("HGNC") ]], any=TRUE)
+    #       # tidygraph::node_distance_to(nodes[,.I[db %in% c("HGNC") ]])<2
+    #     )
+    dat_homol <- genes_homol|>
+      tidygraph::activate("edges")|>
+      tidygraph::filter(
+        tidygraph::edge_is_between(
+          from= nodes[,.I[category=="phenotype"]],
+          to= nodes[,.I[category=="gene" & db %in% c("HGNC") ]],
+          ignore_dir=TRUE)
+        )
+    report_filter(g1=genes_homol,
+                 g2=dat_homol,
+                 cols = "taxon_label",
+                 suffix= "species remain after cross-species gene mapping.")
   }
   
   #### Map non-human phenotypes onto human phenotypes ####
   #### Merge nonhuman ontology genes with human HPO genes ####
   {
-    pheno_map_genes <- data.table::merge.data.table(
-      pheno_map,
-      genes_homol,
-      by.x="id1",
-      by.y="object",
-      all.x = keep_nogenes,
-      allow.cartesian = TRUE) |>
-      #### Merge nonhuman ontology genes with human HPO genes ####
-    data.table::merge.data.table(
-      genes_homol,
-      by.x="id2",
-      by.y="object",
-      all.y = keep_nogenes,
-      suffixes = c(1,2),
-      allow.cartesian = TRUE
-    )
+    pheno_map_genes <- tidygraph::graph_join(pheno_map,
+                                             dat_homol) 
+    # g <- pheno_map_genes|> 
+    #   tidygraph::activate(edges)|>
+    #   tidygraph::sample_n(100)|> 
+    #   tidygraph::activate(nodes)|>
+    #   tidygraph::filter(!tidygraph::node_is_isolated())
+    # plot_graph_visnetwork(g)
     ## Fill in missing species for those without gene data
-    # pheno_map_genes[
-    #   is.na(gene_taxon_label1),
-    #   gene_taxon_label1:=species_map[db1]$subject_taxon_label]
-    # pheno_map_genes[
-    #   is.na(gene_taxon_label2),
-    #   gene_taxon_label2:=species_map[db2]$subject_taxon_label]
+    pheno_map_genes[
+      is.na(gene_taxon_label1),
+      gene_taxon_label1:=species_map[db1]$subject_taxon_label]
+    pheno_map_genes[
+      is.na(gene_taxon_label2),
+      gene_taxon_label2:=species_map[db2]$subject_taxon_label]
     ## Add gene counts
-    # pheno_map_genes[,n_genes_db1:=data.table::uniqueN(gene_label1), by="id1"]
-    # pheno_map_genes[,n_genes_db2:=data.table::uniqueN(gene_label2), by="id2"]
+    pheno_map_genes[,n_genes_db1:=data.table::uniqueN(gene_label1), by="id1"]
+    pheno_map_genes[,n_genes_db2:=data.table::uniqueN(gene_label2), by="id2"]
     ## Report
-    messager(data.table::uniqueN(pheno_map_genes$subject_taxon_label2),"/",
-             data.table::uniqueN(genes_homol$subject_taxon_label),
+    messager(data.table::uniqueN(pheno_map_genes$gene_taxon_label2),"/",
+             data.table::uniqueN(genes_homol$gene_taxon_label),
              "species remain after cross-species phenotype mapping.")
     ## Remove
     # remove(genes_human,genes_nonhuman,pheno_map)

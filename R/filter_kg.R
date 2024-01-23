@@ -4,8 +4,10 @@
 #' types of nodes (e.g. Disease <--> Cell).
 #' @export
 #' @examples
+#' \dontrun{
 #' g <- get_monarch_kg()
 #' g2 <- filter_kg(g)
+#' }
 filter_kg <- function(g,
                       from_categories = paste0("biolink:",
                                                   c("Disease",
@@ -14,11 +16,11 @@ filter_kg <- function(g,
                                                     "AnatomicalEntity",
                                                     "Cell")
                                                   ),
-                              to_categories = from_categories,
-                              edge_categories = NULL,
-                              dbs=NULL,# c("mondo","HP","CL")
-                              rm_isolated=TRUE,
-                              as_dt=FALSE){
+                      to_categories = from_categories,
+                      edge_categories = NULL,
+                      dbs=NULL,# c("mondo","HP","CL")
+                      rm_isolated=TRUE,
+                      as_dt=FALSE){
   category <- db <- NULL;
   len1 <- length(g)
   nodes <- g|> tidygraph::activate("nodes")|>data.table::as.data.table()

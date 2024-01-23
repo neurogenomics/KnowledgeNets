@@ -15,7 +15,7 @@ get_monarch_files <- function(maps=NULL,
                               domain="https://data.monarchinitiative.org",
                               subdir="latest/tsv/all_associations/",
                               omit=c("...","md5sums","index.html")){
-  name <- from <- to <- NULL;
+  name <- subject <- object <- NULL;
 
   html <- rvest::read_html(paste(domain,subdir,sep="/"))
   links <- rvest::html_elements(html,"a")
@@ -29,19 +29,22 @@ get_monarch_files <- function(maps=NULL,
   #### Steps specific to associations files ####
   if(grepl("_associations",subdir)){
     #### Add from/to cols ####
-    files[,c("from","to"):=data.table::tstrsplit(gsub("\\..*","",name),"_")]
+    files[,c("subject","object"):=data.table::tstrsplit(gsub("\\..*","",name),
+                                                        "_")]
     #### Subset using maps ####
     if(!is.null(maps)){
+      messager("Filtering with `maps`.")
       files <- lapply(maps, function(m){
         if(!is.null(m)){
-          files[(from==m[1] & to==m[2]) | 
-                (from==m[2] & to==m[1])]
+          files[(subject==m[1] & object==m[2]) | 
+                (subject==m[2] & object==m[1])]
         } 
       }) |> data.table::rbindlist() |> unique()
     } 
   }  
   #### Subset using queries ####
   if(!is.null(queries)){
+    messager("Filtering with `queries`.")
     bool <- lapply(queries, function(q){
       if(!is.null(q)){
         regex <- paste(paste0("*.",q,".*"),collapse = "&") 
@@ -52,6 +55,7 @@ get_monarch_files <- function(maps=NULL,
   }
   #### Report ####
   messager("Files found:",nrow(files))
+  if(nrow(files)==0) stop("No files found.")
   #### Return ####
   return(files)
 }

@@ -1,4 +1,12 @@
-#' @describeIn utils_ utils_
+#' @describeIn add_ add_
+#' Extract a database identifier from an ID column and add it
+#' as a separate column.
+#' @param dat data.table or tbl_graph.
+#' @param input_col Column containing IDs.
+#' @param output_col Column to add.
+#' @inheritParams data.table::tstrsplit
+#' @inheritParams base::strsplit
+#' @export
 add_db <- function(dat,
                    input_col,
                    output_col=paste0(input_col,"_db"),
