@@ -1,6 +1,6 @@
 make_rannot <- function(annot,
                         row_side_vars){
-  annot_i <- annot[,row_side_vars,with=FALSE]
+  annot_i <- data.table::copy(annot)[,row_side_vars,with=FALSE]
   col <- map_colors(annot_i,
                     as = "vector") 
   ra <- ComplexHeatmap::HeatmapAnnotation(

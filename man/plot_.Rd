@@ -124,17 +124,19 @@ plot_ontology_graphviz(ont, ...)
 
 plot_ontology_heatmap(
   ont,
-  to = "similarity",
+  annot = data.table::data.table(ont@elementMetadata),
+  X = ontology_to(ont, to = "similarity"),
+  fontsize = ont@n_terms * 4e-04,
+  row_labels = ont@terms,
+  column_labels = row_labels,
+  name = NULL,
   row_side_vars = c("ancestor_name"),
   col_side_vars = c("IC", "depth", "n_children", "n_offspring", "n_connected_leaves"),
   col = pals::gnuplot(),
-  row_labels = ont@elementMetadata$name,
-  column_labels = row_labels,
   show_plot = TRUE,
-  save_plot = tempfile(fileext = "plot_ontology_heatmap.pdf"),
+  save_path = tempfile(fileext = "plot_ontology_heatmap.pdf"),
   height = 12,
   width = height * 1.1,
-  fontsize = ont@n_terms * 4e-04,
   seed = 2023,
   types = c("heatmaply", "ComplexHeatmap")[2],
   ...
@@ -160,6 +162,10 @@ plot_upheno_heatmap(
 )
 }
 \arguments{
+\item{x}{: Number. Default to undefined. This gives a node an initial x position. When using the hierarchical layout, either the x or y position is set by the layout engine depending on the type of view. The other value remains untouched. When using stabilization, the stabilized position may be different from the initial one. To lock the node to that position use the physics or fixed options.}
+
+\item{y}{: Number. Default to undefined. This gives a node an initial y position. When using the hierarchical layout, either the x or y position is set by the layout engine depending on the type of view. The other value remains untouched. When using stabilization, the stabilized position may be different from the initial one. To lock the node to that position use the physics or fixed options.}
+
 \item{g}{ggnetwork object 
 (or an igraph/tbl_graph to be converted to ggnetwork format).}
 
@@ -172,7 +178,7 @@ plot_upheno_heatmap(
 
 \item{interactive}{Make the plot interactive.}
 
-\item{show_plot}{Print the plot after generating it.}
+\item{show_plot}{Print the plot after it's been generated.}
 
 \item{...}{
   Arguments passed on to \code{\link[ggplot2:aes]{ggplot2::aes}}, \code{\link[simona:dag_viz]{simona::dag_circular_viz}}, \code{\link[simona:dag_viz]{simona::dag_graphviz}}, \code{\link[base:plot]{base::plot}}, \code{\link[simona:dag_viz]{simona::dag_graphviz}}
@@ -207,11 +213,6 @@ scalar, or a named vector that contains a subset of terms that need to be custom
 The full set of parameters can be found at \url{https://graphviz.org/docs/edges/}.
 If the parameter is set to a named vector, it can be named by relation types \code{c("is_a" = ...)},
 or directly relations \code{c("a -> b" = ...)}. Please see the vignette for details.}
-    \item{\code{x}}{the coordinates of points in the plot. Alternatively, a
-      single plotting structure, function or \emph{any \R object with a
-        \code{plot} method} can be provided.}
-    \item{\code{y}}{the y coordinates of points in the plot, \emph{optional}
-    if \code{x} is an appropriate structure.}
   }}
 
 \item{layout_func}{Layout function for the graph.}
@@ -266,9 +267,73 @@ as a self-contained HTML file.}
 
 \item{preferred_palettes}{Preferred palettes to use for each column.}
 
-\item{width}{Width of the heatmap body.}
+\item{selectedBy}{: Custom option. Character or a named list. Add a multiple selection based on column of node data.frame creating an HTML select element. Not available for DOT and Gephi.
+\itemize{
+ \item{"variable"}{ : Character. Column name of selection variable.}
+ \item{"values}{ : Optional. Vector of possible values. Default to all values in nodes data.frame.}
+ \item{"selected"}{ : Optional. Integer/Character. Initial selection. Default to NULL}
+ \item{"style"}{ : Optional. Character. HTML style of list. Default to 'width: 150px; height: 26px'.}
+ \item{"multiple"}{ : Optional. Boolean. Default to FALSE. If TRUE, you can affect multiple groups per nodes using a comma ("gr1,gr2")}
+ \item{"hideColor"}{ : Optional. String. Color for hidden nodes/edges. Use a rgba definition. Default to rgba(200,200,200,0.5)}
+ \item{"main"}{ : Optional. Default to "Select by variable"}
+ \item{"sort"}{ : Optional. If values is NULL, sort all possible values ?. Default to TRUE}
+ \item{"highlight"}{ : Optional. Boolean. Run highlightNearest if defined on each selected node ? Default to FALSE}
+}}
 
-\item{height}{Height of the heatmap body.}
+\item{layout}{: Character Name of igraph layout function to use. Default to "layout_nicely"}
+
+\item{solver}{: String. Default to 'barnesHut'.    You can select your own solver. Possible options: 'barnesHut', 'repulsion', 'hierarchicalRepulsion', 'forceAtlas2Based'. When setting the hierarchical layout, the hierarchical repulsion solver is automaticaly selected, regardless of what you fill in here.}
+
+\item{physics}{: Boolean. Default to FALSE. Enabled physics on nodes ?}
+
+\item{forceAtlas2Based}{named list of options
+\itemize{
+ \item{"theta"}{ : Number. Default to 0.5. This parameter determines the boundary between consolidated long range forces and individual short range forces. To oversimplify higher values are faster but generate more errors, lower values are slower but with less errors.}
+ \item{"gravitationalConstant"}{ : Number. Default to -50. Gravity attracts. We like repulsion. So the value is negative. If you want the repulsion to be stronger, decrease the value (so -10000, -50000).}
+ \item{"centralGravity"}{ : Number. Default to 0.01. There is a central gravity attractor to pull the entire network back to the center.}
+ \item{"springLength"}{ : Number. Default to 100. The edges are modelled as springs. This springLength here is the the rest length of the spring.}
+ \item{"springConstant"}{ : Number. Default to 0.08. This is how 'sturdy' the springs are. Higher values mean stronger springs.}
+ \item{"damping"}{ : Number. Default to 0.4. Accepted range: [0 .. 1]. The damping factor is how much of the velocity from the previous physics simulation iteration carries over to the next iteration.}
+ \item{"avoidOverlap"}{ : Number. Default to 0. Accepted range: [0 .. 1]. When larger than 0, the size of the node is taken into account. The distance will be calculated from the radius of the encompassing circle of the node for both the gravity model. Value 1 is maximum overlap avoidance.}
+}}
+
+\item{scaling}{: Named list.  If the value option is specified, the size of the nodes will be scaled according to the properties in this object.
+\itemize{
+ \item{"min"}{ :  Number. Default to 10. If nodes have a value, their sizes are determined by the value, the scaling function and the min max values.}
+ \item{"max"}{ : Number. Default to 30. This is the maximum allowed size when the nodes are scaled using the value option.}
+ \item{"label"}{ : Named list or Boolean. Default to Named list. This can be false if the label is not allowed to scale with the node. If true it will scale using default settigns. For further customization, you can supply an object.
+   \itemize{
+     \item{"enabled"}{ : Boolean. Default to false. Toggle the scaling of the label on or off. If this option is not defined, it is set to true if any of the properties in this object are defined.}
+     \item{"min"}{ : Number. Default to 14. The minimum font-size used for labels when scaling.}
+     \item{"max"}{ : Number. Default to 30. The maximum font-size used for labels when scaling.}
+     \item{"maxVisible"}{ :   Number. Default to 30. When zooming in, the font is drawn larger as well. You can limit the perceived font size using this option. If set to 30, the font will never look larger than size 30 zoomed at 100\%.}
+     \item{"drawThreshold"}{ : Number. Default to 5. When zooming out, the font will be drawn smaller. This defines a lower limit for when the font is drawn. When using font scaling, you can use this together with the maxVisible to first show labels of important nodes when zoomed out and only show the rest when zooming in.}
+   }
+ }
+ \item{"customScalingFunction"}{ : Function. If nodes have value fields, this function determines how the size of the nodes are scaled based on their values.}
+}}
+
+\item{smooth}{: Boolean. Default to FALSE. Use smooth edges ?}
+
+\item{add_visExport}{Add PDF download button.}
+
+\item{width}{: Number. Default to 1. The width of the edge. If value is set, this is not used.}
+
+\item{height}{: String. Default to "100\%". The height of the network in pixels or as a percentage.}
+
+\item{randomSeed}{: Number. The nodes are randomly positioned initially. This means that the settled result is different every time. If you provide a random seed manually, the layout will be the same every time.}
+
+\item{main}{: For add a title. Character or a named list.
+\itemize{
+ \item{"text"}{ : Character. Title.}
+ \item{"style"}{ : Optional. Character. HTML style of title. Default to 'font-family:Georgia, Times New Roman, Times, serif;font-weight:bold;font-size:20px;text-align:center;'.}
+}}
+
+\item{submain}{: For add a subtitle. Character or a named list.
+\itemize{
+ \item{"text"}{ : Character. Subtitle.}
+ \item{"style"}{ : Optional. Character. HTML style of submain. Default to 'font-family:Georgia, Times New Roman, Times, serif;font-size:12px;text-align:center;'.}
+}}
 
 \item{ont}{An ontology of class \link[simona]{ontology_DAG}.}
 
@@ -277,9 +342,13 @@ as a self-contained HTML file.}
 
 \item{types}{Types of graph to produce. Can be one or more.}
 
-\item{to}{Character vector of database(s) to map IDs to.
-When not \code{"mondo"}, can supply multiple alternative databases to map to
- (e.g. \code{c("OMIM","Orphanet","DECIPHER")}).}
+\item{fontsize}{Axis labels font size.}
+
+\item{row_labels}{Optional row labels which are put as row names in the heatmap.}
+
+\item{column_labels}{Optional column labels which are put as column names in the heatmap.}
+
+\item{name}{Name of the heatmap. By default the heatmap name is used as the title of the heatmap legend.}
 
 \item{row_side_vars}{Variables to include in row-side
 metadata annotations.}
@@ -288,14 +357,6 @@ metadata annotations.}
 metadata annotations.}
 
 \item{col}{A vector of colors if the color mapping is discrete or a color mapping  function if the matrix is continuous numbers (should be generated by \code{\link[circlize]{colorRamp2}}). If the matrix is continuous, the value can also be a vector of colors so that colors can be interpolated. Pass to \code{\link[ComplexHeatmap]{ColorMapping}}. For more details and examples, please refer to \url{https://jokergoo.github.io/ComplexHeatmap-reference/book/a-single-heatmap.html#colors} .}
-
-\item{row_labels}{Optional row labels which are put as row names in the heatmap.}
-
-\item{column_labels}{Optional column labels which are put as column names in the heatmap.}
-
-\item{save_plot}{Path to save plot to.}
-
-\item{fontsize}{Axis labels font size.}
 
 \item{save_dir}{Directory to save cached data.}
 

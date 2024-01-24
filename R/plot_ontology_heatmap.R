@@ -8,9 +8,7 @@
 #' metadata annotations.
 #' @param col_side_vars Variables to include in column-side
 #' metadata annotations.
-#' @param fontsize Axis labels font size.
-#' @param show_plot Print the plot after generating it.
-#' @param save_plot Path to save plot to.
+#' @param fontsize Axis labels font size. 
 #' @param seed Set the seed for reproducible clustering.
 #' @inheritParams map_
 #' @inheritParams ComplexHeatmap::Heatmap
@@ -18,12 +16,18 @@
 #' @returns Plot
 #'
 #' @export
-#' @importFrom stats cor
 #' @examples
 #' ont <- get_ontology("hpo", terms=2)
 #' hm <- plot_ontology_heatmap(ont)
 plot_ontology_heatmap <- function(ont,
-                                  to = "similarity",
+                                  annot = data.table::data.table(
+                                    ont@elementMetadata
+                                    ),
+                                  X = ontology_to(ont, to = "similarity"),  
+                                  fontsize = ont@n_terms*4e-4,
+                                  row_labels = ont@terms,
+                                  column_labels = row_labels,
+                                  name = NULL,
                                   row_side_vars = c("ancestor_name"),
                                   col_side_vars = c("IC",
                                                     "depth",
@@ -31,14 +35,11 @@ plot_ontology_heatmap <- function(ont,
                                                     "n_offspring",
                                                     "n_connected_leaves"),
                                   col = pals::gnuplot(),
-                                  row_labels = ont@elementMetadata$name,
-                                  column_labels = row_labels,
                                   show_plot = TRUE,
-                                  save_plot = tempfile(
+                                  save_path = tempfile(
                                     fileext = "plot_ontology_heatmap.pdf"),
                                   height = 12,
-                                  width = height*1.1,
-                                  fontsize = ont@n_terms*4e-4,
+                                  width = height*1.1, 
                                   # row_km = 3,
                                   # column_km = row_km,
                                   # row_km_repeats = 1000,
@@ -48,16 +49,16 @@ plot_ontology_heatmap <- function(ont,
                                             "ComplexHeatmap")[2],
                                   ...
                                   ){ 
-  if(!is.null(seed)) set.seed(seed)
-  X <- ontology_to(ont, to = "similarity")
+  if(!is.null(seed)) set.seed(seed) 
   ## Check if we need to add ancestors
-  if(any(c("ancestor","ancestor_name") %in% c(row_side_vars,col_side_vars))){
+  if(any(c("ancestor","ancestor_name") %in% c(row_side_vars,col_side_vars))
+     && !is.null(ont)){
     ont <- add_ancestors(ont)
-  }
-  annot <- data.table::data.table(ont@elementMetadata)
+  } 
   #### Heatmaply version ####
   if("heatmaply" %in% types){
     requireNamespace("heatmaply")
+    messager("Creating heatmap: heatmaply")
     X[is.na(X)] <- 0
     hm <- heatmaply::heatmaply(X,
                                row_side_colors = annot[,row_side_vars,
@@ -77,13 +78,13 @@ plot_ontology_heatmap <- function(ont,
   } else {
     requireNamespace("ComplexHeatmap")
     requireNamespace("grid")
-
+    messager("Creating heatmap: ComplexHeatmap")
     ra <- make_rannot(annot = annot,
                       row_side_vars = row_side_vars)
     ca <- make_cannot(annot = annot,
                       col_side_vars = col_side_vars)
     hm <- ComplexHeatmap::Heatmap(matrix = X,
-                                  name = to,
+                                  name = name,
                                   col = col,
                                   right_annotation = ra,
                                   top_annotation = ca,
@@ -110,9 +111,9 @@ plot_ontology_heatmap <- function(ont,
                                   ...)
     # ComplexHeatmap::row_order(hm)
     #### Save plot ####
-    if(!is.null(save_plot)){
+    if(!is.null(save_path)){
       plot_save(plt = hm, 
-                path = save_plot, 
+                path = save_path, 
                 height = height, 
                 width = width)
     }
@@ -120,7 +121,7 @@ plot_ontology_heatmap <- function(ont,
   #### Show plot ####
   if(isTRUE(show_plot)) {
     methods::show(hm)
-    if(file.exists(save_plot)) utils::browseURL(save_plot)
+    if(file.exists(save_path)) utils::browseURL(save_path)
   }
   #### Return ####
   return(hm)

@@ -1,6 +1,14 @@
 #' @describeIn plot_ plot_
 #' Plot graph using visNetwork.
+#' @param add_visExport Add PDF download button.
 #' @inheritParams map_colors
+#' @inheritParams visNetwork::visIgraph
+#' @inheritParams visNetwork::visIgraphLayout
+#' @inheritParams visNetwork::visPhysics
+#' @inheritParams visNetwork::visNodes
+#' @inheritParams visNetwork::visEdges
+#' @inheritParams visNetwork::visOptions
+#' @inheritParams visNetwork::visNetwork
 #' @export
 #' @examples
 #' ont <- get_ontology("hpo", terms=10)

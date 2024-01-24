@@ -1,5 +1,6 @@
 make_cannot <- function(annot,
                         col_side_vars){
+  annot <- data.table::copy(annot)
   col <- map_colors(annot,
                     columns = col_side_vars,
                     as = "function")
