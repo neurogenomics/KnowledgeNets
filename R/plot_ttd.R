@@ -1,3 +1,6 @@
+#' @describeIn plot_ plot_
+#' Plot TTD.
+#' @export
 plot_ttd <- function(dat_sub){
   requireNamespace("ggplot2")
   requireNamespace("scales")

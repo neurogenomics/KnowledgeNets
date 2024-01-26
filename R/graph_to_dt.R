@@ -38,11 +38,17 @@ graph_to_dt <- function(g,
                          new = prefixes)
     v1 <- data.table::copy(tmp$vertices) 
     data.table::setnames(v1,
-                         gsub("_id$","",paste(prefixes[1],names(v1),sep="_")))
+                         paste(prefixes[1],names(v1),sep="_"))
+    data.table::setnames(v1,
+                         paste0(prefixes[1],"_",id_col),
+                         prefixes[1])
     # v1[[prefixes[1]]] <- rownames(v1)
     v2 <- data.table::copy(tmp$vertices) 
     data.table::setnames(v2,
-                         gsub("_id$","",paste(prefixes[2],names(v2),sep="_")))
+                         paste(prefixes[2],names(v2),sep="_"))
+    data.table::setnames(v2,
+                         paste0(prefixes[2],"_",id_col),
+                         prefixes[2])
     # v2[[prefixes[2]]] <- rownames(v2)
     obj <- merge(edges, 
                  v1,
