@@ -22,12 +22,57 @@ library(pkg, character.only = TRUE)
 library(`r pkg`)
 ```
 
-# Examples
+# Use cases
 
-```{r}
+## Extract disease/phenotype-cell type associations
+
+```{r, eval=FALSE}
+g <- get_monarch_kg()
+g2 <- filter_kg(g, 
+                to_categories = c("biolink:Disease",
+                                  "biolink:PhenotypicFeature"),
+                from_categories = "biolink:Cell")
+plot_graph_visnetwork(g2, 
+                      selectedBy = "id",
+                      label_var = "name",
+                      layout = "layout_nicely",
+                      colour_var = "category")
 
 ```
 
+## Assess known animal models of human phenotypes
+
+```{r, eval=FALSE}
+dat <- map_upheno_data()
+upheno_plots <- plot_upheno(dat)
+```
+
+## Link diseases to phenotypes to genes to variants 
+
+```{r, eval=FALSE}
+gm <- link_monarch(maps = list(
+  c("variant","disease"),
+  c("variant","phenotype"),
+  c("variant","gene")
+))
+gm2 <- tidygraph::graph_join(gm,g)
+gm2 <- filter_graph(gm2,
+                    node_filters = list(category=c("disease",
+                                                   "phenotype",
+                                                   "phenotypicfeature",
+                                                   "gene","variant")))
+gm3 <- filter_graph(g = gm2,
+                    size=20000)
+igraph::vertex_attr(gm3,"category") <- 
+  tolower(gsub("biolink:","",igraph::vertex_attr(gm3,"category")))
+igraph::vertex_attr(gm3,"name") <- igraph::vertex_attr(gm3,"id")
+
+plot_graph_visnetwork(gm3, 
+                      selectedBy = "category",
+                      label_var = "name",
+                      layout = "layout_nicely",
+                      colour_var = "category")
+```
 
 # Session Info 
 

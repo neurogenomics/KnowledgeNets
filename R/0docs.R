@@ -1,3 +1,4 @@
+#### utils_ ####
 #' @title Utility functions
 #' 
 #' @description
@@ -8,6 +9,7 @@
 #' @name utils_
 NULL
 
+#### query_ ####
 #' @title Query functions
 #' 
 #' @description
@@ -21,7 +23,7 @@ NULL
 #' @name query_
 NULL
 
-
+#### plot_ ####
 #' @title Plot functions
 #' 
 #' @description
@@ -72,6 +74,7 @@ NULL
 #' @name plot_
 NULL
 
+#### get_ ####
 #' @title Get functions
 #' 
 #' @param force_new Create a new file instead of using any cached files.
@@ -100,7 +103,7 @@ NULL
 #' \link[orthogene]{map_genes}.
 #' @param from The designated from column in from-to mapping or relations.
 #' @inheritParams add_
-#' @inheritParams convert_
+#' @inheritParams to_
 #' @inheritParams map_
 #' @inheritParams simona::dag_ancestors
 #' @inheritParams data.table::merge.data.table
@@ -113,7 +116,7 @@ NULL
 #' @import data.table
 NULL
 
-
+#### map_ ####
 #' @title Map functions
 #' 
 #' @description
@@ -129,8 +132,7 @@ NULL
 #' @param add_definitions logical, if TRUE, add mondo definition column.  
 #' @param gr A \link[GenomicRanges]{GRanges} object.
 #' @param build Genome build to use when mapping genomic coordinates.
-#' 
-#' @inheritParams convert_
+#' @inheritParams to_
 #' @inheritParams filter_
 #' @inheritParams data.table::merge.data.table
 #' @inheritParams VariantAnnotation::locateVariants
@@ -142,6 +144,7 @@ NULL
 NULL
 
 
+#### filter_ ####
 #' @title Filter functions
 #' 
 #' @description
@@ -152,10 +155,11 @@ NULL
 #' @param use_simona Use \link[simona]{dag_filter} to filter terms.
 #' @param keep_chr Which chromosomes to keep.
 #' @param grlist Named list of \link[GenomicRanges]{GRanges} objects.
-#' @param filters A named list of filters to apply to the data. 
+#' @param node_filters A named list of filters to apply to the node data. 
 #' Names should be name of the metadata column, and values should be a vector of 
 #' valid options. For example, \code{list("type" = c("gene","variant"))} will
 #' return any rows where the "type" column contains either "gene" or "variant".
+#' @param edge_filters A named list of filters to apply to the edge data. 
 #' @param keep_descendants Terms whose descendants should be kept 
 #' (including themselves).
 #'  Set to \code{NULL} (default) to skip this filtering step.
@@ -170,7 +174,8 @@ NULL
 #' @name filter_
 NULL
 
-#' @title Converter functions
+#### to_ ####
+#' @title To functions
 #' 
 #' @description
 #' Functions to convert one object type to another. 
@@ -184,12 +189,12 @@ NULL
 #' @inheritParams filter_
 #' @import tidygraph
 #' @import simona
-#' @family convert_ 
+#' @family to_ 
 #' @returns Converted data. 
-#' @name convert_
+#' @name to_
 NULL
 
-
+#### add_ ####
 #' @title Add functions
 #' 
 #' @description
@@ -209,6 +214,7 @@ NULL
 #' @name add_
 NULL
 
+#### cache_ ####
 #' @title Cache functions
 #' 
 #' @description
@@ -222,14 +228,15 @@ NULL
 #' @name cache_
 NULL
 
-
+#### link_ ####
 #' @title Link functions
 #' 
 #' @description
 #' Functions to merge data resources.
 #' @inheritParams get_
 #' @inheritParams map_
-#' @inheritParams convert_
+#' @inheritParams to_
+#' @inheritParams filter_
 #' @family link_ 
 #' @returns Merged data.
 #' 

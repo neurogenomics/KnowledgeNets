@@ -14,7 +14,13 @@ filter_chromosomes(grlist, keep_chr = paste0("chr", c(seq_len(22), "X", "Y")))
 
 filter_dt(dat, filters)
 
-filter_graph(g, filters)
+filter_graph(
+  g,
+  node_filters = list(),
+  edge_filters = list(),
+  rm_isolated = TRUE,
+  size = NULL
+)
 
 filter_kg(
   g,
@@ -42,13 +48,19 @@ filter_ontology(
 
 \item{keep_chr}{Which chromosomes to keep.}
 
-\item{filters}{A named list of filters to apply to the data. 
+\item{filters}{A named list, where each element in the list is the name of 
+a column in the data, and the vector within each element represents the 
+values to include in the final data.}
+
+\item{g}{ggnetwork object 
+(or an igraph/tbl_graph to be converted to ggnetwork format).}
+
+\item{node_filters}{A named list of filters to apply to the node data. 
 Names should be name of the metadata column, and values should be a vector of 
 valid options. For example, \code{list("type" = c("gene","variant"))} will
 return any rows where the "type" column contains either "gene" or "variant".}
 
-\item{g}{ggnetwork object 
-(or an igraph/tbl_graph to be converted to ggnetwork format).}
+\item{edge_filters}{A named list of filters to apply to the edge data.}
 
 \item{ont}{An ontology of class \link[simona]{ontology_DAG}.}
 
@@ -89,7 +101,7 @@ Remove non-standard chromosomes from a list of
 Filter a \link[data.table]{data.table}.
 
 \item \code{filter_graph()}: filter_
-Filter a tbl_graph.
+Filter a \link[tidygraph]{tbl_graph}.
 
 \item \code{filter_kg()}: filter_
 

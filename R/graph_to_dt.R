@@ -1,4 +1,4 @@
-#' @describeIn convert_ convert_
+#' @describeIn to_ to_
 #' @export
 #' @examples
 #' ont <- get_ontology("hp", terms=10)
@@ -39,11 +39,11 @@ graph_to_dt <- function(g,
     v1 <- data.table::copy(tmp$vertices) 
     data.table::setnames(v1,
                          gsub("_id$","",paste(prefixes[1],names(v1),sep="_")))
-    v1[[prefixes[1]]] <- rownames(v1)
+    # v1[[prefixes[1]]] <- rownames(v1)
     v2 <- data.table::copy(tmp$vertices) 
     data.table::setnames(v2,
                          gsub("_id$","",paste(prefixes[2],names(v2),sep="_")))
-    v2[[prefixes[2]]] <- rownames(v2)
+    # v2[[prefixes[2]]] <- rownames(v2)
     obj <- merge(edges, 
                  v1,
                  by="subject") |>

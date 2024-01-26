@@ -25,7 +25,9 @@
 #' upheno <- get_ontology(name="upheno")
 get_ontology <- function(name=c("mondo",
                                 "hpo",
-                                "upheno"),
+                                "upheno",
+                                "uberon",
+                                "cl"),
                          terms=NULL,
                          filetype="-base.obo",
                          method=c("github",
@@ -54,24 +56,29 @@ get_ontology <- function(name=c("mondo",
                                  save_dir=save_dir,
                                  force_new=force_new,
                                  ...)
-    } else if (name=="cellontology"){
+    } else if (name %in% c("cl","cellontology","cell-ontology") ){
       ont <- get_ontology_github(file=paste0(name,filetype), 
                                  repo="obophenotype/cell-ontology",
                                  save_dir=save_dir,
                                  force_new=force_new,
                                  ...)
-    }else if(name=="upheno"){
+    } else if(name=="upheno"){
+      get_ontology_robot()
       ont <- get_ontology_url(
-        "https://github.com/obophenotype/upheno-dev/raw/master/upheno.obo", 
+        # "https://github.com/obophenotype/upheno/raw/master/upheno.owl",
+        "https://purl.obolibrary.org/obo/upheno/v2/upheno.owl",
+        import_func = simona::import_owl,
         force_new = force_new, 
         save_dir = save_dir, 
         ...) 
-    }
+    } else if (name %in% c("uberon") ){
+      ont <- get_ontology_github(file=paste0(name,filetype), 
+                                 repo="obophenotype/uberon",
+                                 save_dir=save_dir,
+                                 force_new=force_new,
+                                 ...)
+    }  
   } 
-  
-  #### Subset ontology ####
-  ont <- filter_ontology(ont = ont, 
-                         terms = terms)
   #### Add metadata #### 
   if(isTRUE(add_metadata)) {
     ont <- add_ontology_metadata(ont,
@@ -79,6 +86,9 @@ get_ontology <- function(name=c("mondo",
                                  add_ancestors=add_ancestors, 
                                  add_ontology_levels=add_ontology_levels)
   }
+  #### Subset ontology ####
+  ont <- filter_ontology(ont = ont, 
+                         terms = terms) 
   #### Return ####
   return(ont)
 }

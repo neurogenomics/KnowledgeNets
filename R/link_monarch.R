@@ -12,7 +12,7 @@ link_monarch <- function(maps = list(
                                     c("variant","gene")
                          ),
                          queries=NULL,
-                         filters=
+                         node_filters=
                            list(
                              phenotype=NULL,
                              subject_db=NULL,#c("HP"),
@@ -34,10 +34,10 @@ link_monarch <- function(maps = list(
                           ...)
   if(isTRUE(as_graph)){
     g <- filter_graph(g,
-                      filters=filters)
+                      node_filters=node_filters)
   } else {
     g <- filter_dt(dat=g,
-                   filters=filters)
+                   filters=node_filters)
   }
   return(g)
 }

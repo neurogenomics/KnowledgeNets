@@ -1,5 +1,6 @@
 get_ontology_url <- function(URL,
                              save_dir=cache_dir(),
+                             import_func=simona::import_ontology,
                              force_new=FALSE,
                              ...){
   path <- file.path(save_dir,basename(URL))
@@ -8,7 +9,7 @@ get_ontology_url <- function(URL,
     ont <- readRDS(path)
     return(ont)
   }
-  ont <- simona::import_ontology(URL, ...)
+  ont <- import_func(URL, ...)
   saveRDS(ont, path)
   return(ont)
 }

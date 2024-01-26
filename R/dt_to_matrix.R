@@ -1,4 +1,4 @@
-#' @describeIn convert_ convert_
+#' @describeIn to_ to_
 #' @export
 #' @examples
 #' dt <- data.table::as.data.table(mtcars, keep.rownames = TRUE)

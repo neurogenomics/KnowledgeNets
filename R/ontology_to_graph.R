@@ -1,7 +1,7 @@
-#' @describeIn convert_ convert_
+#' @describeIn to_ to_
 #' @keywords internal
 ontology_to_graph <- function(ont,
-                                  ...){
+                              ...){
   name <- id <- NULL;
   
   g <- simona::dag_as_igraph(ont) |>

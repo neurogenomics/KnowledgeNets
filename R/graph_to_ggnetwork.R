@@ -1,4 +1,4 @@
-#' @describeIn convert_ convert_
+#' @describeIn to_ to_
 #' 
 #' @inheritDotParams ggnetwork::fortify
 #' @export

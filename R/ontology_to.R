@@ -1,4 +1,4 @@
-#' @describeIn convert_ convert_
+#' @describeIn to_ to_
 #' Convert ontology
 #'
 #' Convert an  \link[simona]{ontology_DAG} to
@@ -36,7 +36,8 @@ ontology_to <- function(ont,
                          terms = terms,
                          remove_terms = remove_terms)
   if(to=="adjacency"){
-    obj <- ontology_to_adjacency(ont)
+    g <- ontology_to_graph(ont)
+    obj <- igraph::as_adj(g)
   } else if(to=="adjacency_dist"){
     adj <- ontology_to(ont, to="adjacency")
     # obj <- stats::dist(adj) ### seems to take forever
@@ -94,7 +95,7 @@ ontology_to <- function(ont,
   #### Convert to sparse ####
   if(isTRUE(as_sparse)){
     if(methods::is(obj,"matrix")){
-      obj <- Matrix::Matrix(adj, sparse=TRUE)
+      obj <- Matrix::Matrix(obj, sparse=TRUE)
     }
   }
   ## Report

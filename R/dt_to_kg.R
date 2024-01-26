@@ -11,12 +11,13 @@ dt_to_kg <- function(d,
     d_sub <- d
   }
   message("object_label examples:")
-  methods::show(utils::head(d_sub$object_label))
+  methods::show(unique(utils::head(d_sub$object_label,100))[seq(5)])
   message("subject_label examples:")
-  methods::show(utils::head(d_sub$subject_label))
+  methods::show(unique(utils::head(d_sub$subhect_label,100))[seq(5)])
   if(as_tidygraph){
     d_sub <- dt_to_graph(d_sub,
                          add_hover=add_hover)
   }
+  igraph::vertex_attr(g,"name") <- igraph::vertex_attr(g,"id")
   d_sub
 } 

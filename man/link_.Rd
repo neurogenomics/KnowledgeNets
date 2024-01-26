@@ -8,7 +8,7 @@
 link_monarch(
   maps = list(c("variant", "disease"), c("variant", "phenotype"), c("variant", "gene")),
   queries = NULL,
-  filters = list(phenotype = NULL, subject_db = NULL, gene = NULL),
+  node_filters = list(phenotype = NULL, subject_db = NULL, gene = NULL),
   as_graph = TRUE,
   domain = "https://data.monarchinitiative.org",
   subdir = "latest/tsv/all_associations/",
@@ -28,9 +28,10 @@ For example, \code{list("gene_disease","variant_disease")} will return any
  "gene_disease" or "variant_disease".
 Passes to \link{get_monarch_files}.}
 
-\item{filters}{A named list, where each element in the list is the name of 
-a column in the data, and the vector within each element represents the 
-values to include in the final data.}
+\item{node_filters}{A named list of filters to apply to the node data. 
+Names should be name of the metadata column, and values should be a vector of 
+valid options. For example, \code{list("type" = c("gene","variant"))} will
+return any rows where the "type" column contains either "gene" or "variant".}
 
 \item{as_graph}{Return the object as a \link[tidygraph]{tbl_graph}.}
 

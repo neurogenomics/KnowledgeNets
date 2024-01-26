@@ -35,7 +35,7 @@ map_upheno_data_i2 <- function(pheno_map_method,
     #### Filter data ####
     if(!is.null(terms)){
       pheno_map <- filter_graph(pheno_map,
-                                filters=list(id=terms))
+                                node_filters=list(id=terms))
       if(length(pheno_map)==0){
         stop("No terms found in pheno_map.")
       }
