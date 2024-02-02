@@ -4,13 +4,13 @@
     <loc>/404.html</loc>
   </url>
   <url>
+    <loc>/articles/KGExplorer.html</loc>
+  </url>
+  <url>
     <loc>/articles/docker.html</loc>
   </url>
   <url>
     <loc>/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>/articles/templateR.html</loc>
   </url>
   <url>
     <loc>/authors.html</loc>
@@ -22,12 +22,63 @@
     <loc>/news/index.html</loc>
   </url>
   <url>
+    <loc>/reference/add_.html</loc>
+  </url>
+  <url>
+    <loc>/reference/cache_.html</loc>
+  </url>
+  <url>
+    <loc>/reference/filter_.html</loc>
+  </url>
+  <url>
+    <loc>/reference/get_.html</loc>
+  </url>
+  <url>
+    <loc>/reference/get_ontology_github.html</loc>
+  </url>
+  <url>
+    <loc>/reference/get_ontology_robot.html</loc>
+  </url>
+  <url>
+    <loc>/reference/graph_to_plotly.html</loc>
+  </url>
+  <url>
     <loc>/reference/index.html</loc>
   </url>
   <url>
-    <loc>/reference/messager.html</loc>
+    <loc>/reference/kde_surface.html</loc>
   </url>
   <url>
-    <loc>/reference/stopper.html</loc>
+    <loc>/reference/link_.html</loc>
+  </url>
+  <url>
+    <loc>/reference/map_.html</loc>
+  </url>
+  <url>
+    <loc>/reference/map_genes_dt.html</loc>
+  </url>
+  <url>
+    <loc>/reference/map_upheno_data.html</loc>
+  </url>
+  <url>
+    <loc>/reference/plot_.html</loc>
+  </url>
+  <url>
+    <loc>/reference/plot_upheno.html</loc>
+  </url>
+  <url>
+    <loc>/reference/query_.html</loc>
+  </url>
+  <url>
+    <loc>/reference/query_phenoscape.html</loc>
+  </url>
+  <url>
+    <loc>/reference/query_ubergraph.html</loc>
+  </url>
+  <url>
+    <loc>/reference/to_.html</loc>
+  </url>
+  <url>
+    <loc>/reference/utils_.html</loc>
   </url>
 </urlset>
