@@ -11,7 +11,7 @@
 #' @inheritParams visNetwork::visNetwork
 #' @export
 #' @examples
-#' ont <- get_ontology("hpo", terms=10)
+#' ont <- get_ontology("hp", terms=10)
 #' g <- ontology_to(ont, to="tbl_graph")
 #' out <- plot_graph_visnetwork(g)
 plot_graph_visnetwork <- function(g,

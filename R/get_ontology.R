@@ -1,9 +1,11 @@
-#' @describeIn get_ get_
+#' @describeIn get_ get_ontology
 #' Get ontology
 #' 
-#' Import an up-to-date ontology directly from from the creators.
+#' Import an up-to-date ontology directly from from the creators or via the
+#' \href{https://www.ebi.ac.uk/ols4}{EBML-EBI Ontology Lookup Service} API.
 #' @param name
 #' \itemize{
+#' \item{<...>}{Any ontology name from \link{get_ols_options}}
 #' \item{"mondo"}{
 #' Import the \href{https://mondo.monarchinitiative.org/}{Mondo} ontology.
 #' \href{https://github.com/monarch-initiative/mondo/release}{
@@ -13,7 +15,8 @@
 #' \href{https://github.com/obophenotype/human-phenotype-ontology/release}{
 #' GitHub.}}
 #' }
-#' @param filetype File type to search for.
+#' @param method Whether to import ontology via the \code{rols} package or
+#' via the \link{get_ontology_github}/link{get_ontology_url} functions. 
 #' @param add_metadata Add metadata to the resulting ontology object.
 #' @inheritDotParams get_ontology_github
 #' @returns \link[simona]{ontology_DAG}
@@ -21,17 +24,18 @@
 #' @export
 #' @examples
 #' mondo <- get_ontology(name="mondo")
-#' hpo <- get_ontology(name="hpo")
-#' upheno <- get_ontology(name="upheno")
+#' \dontrun{
+#'   hp <- get_ontology(name="hp")
+#'   upheno <- get_ontology(name="upheno")
+#' }
 get_ontology <- function(name=c("mondo",
-                                "hpo",
+                                "hp",
                                 "upheno",
                                 "uberon",
                                 "cl"),
+                         method=c("rols",
+                                  "github"), 
                          terms=NULL,
-                         filetype="-base.obo",
-                         method=c("github",
-                                  "bioportal"),
                          add_metadata=TRUE,
                          add_ancestors=2,
                          add_n_edges=TRUE,
@@ -39,40 +43,57 @@ get_ontology <- function(name=c("mondo",
                          save_dir=cache_dir(),
                          force_new=FALSE,
                          ...){ 
-  name <- match.arg(name)
-  method <- match.arg(method)
+  name <- name[1]
+  method <- match.arg(method) 
   
-  if(method=="github"){
+  ol <- rols::Ontologies()
+  rols_opts <- get_ols_options(ol=ol)
+  if(method=="rols" && 
+     !name %in% rols_opts){
+    messager("Ontology not found via 'rols.' Trying method='github'.'")
+    method <- "github"
+  }
+  #### via EMBL-EBI Ontology Lookup Service ####
+  if(method=="rols"){ 
+    ol_ont <- ol[[name]]
+    get_ontology_robot()
+    ont <- get_ontology_url(
+      URL = ol_ont@config$fileLocation,
+      force_new = force_new, 
+      save_dir = save_dir, 
+      ...) 
+  #### Via manually coded functions ####
+  } else if(method=="github"){
     if(name=="mondo"){
-      ont <- get_ontology_github(file=paste0(name,filetype), 
+      ont <- get_ontology_github(name=name, 
                                  repo="monarch-initiative/mondo",
                                  save_dir=save_dir,
                                  force_new=force_new,
                                  ...)
     } else if(name %in% c("hp","hpo")){
       if(name=="hpo") name <- "hp"
-      ont <- get_ontology_github(file=paste0(name,filetype), 
+      ont <- get_ontology_github(name=name, 
                                  repo="obophenotype/human-phenotype-ontology",
                                  save_dir=save_dir,
                                  force_new=force_new,
                                  ...)
     } else if (name %in% c("cl","cellontology","cell-ontology") ){
-      ont <- get_ontology_github(file=paste0(name,filetype), 
+      ont <- get_ontology_github(name=name, 
                                  repo="obophenotype/cell-ontology",
                                  save_dir=save_dir,
                                  force_new=force_new,
                                  ...)
     } else if(name=="upheno"){
       get_ontology_robot()
-      ont <- get_ontology_url(
+      ont <- get_ontology_url(URL = 
         # "https://github.com/obophenotype/upheno/raw/master/upheno.owl",
         "https://purl.obolibrary.org/obo/upheno/v2/upheno.owl",
-        import_func = simona::import_owl,
+        # import_func = simona::import_owl,
         force_new = force_new, 
         save_dir = save_dir, 
         ...) 
     } else if (name %in% c("uberon") ){
-      ont <- get_ontology_github(file=paste0(name,filetype), 
+      ont <- get_ontology_github(name=name, 
                                  repo="obophenotype/uberon",
                                  save_dir=save_dir,
                                  force_new=force_new,

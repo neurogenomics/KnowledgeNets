@@ -13,7 +13,7 @@
 #' @export
 #' @inheritParams simona::dag_offspring
 #' @examples 
-#' ont <- get_ontology("hpo")
+#' ont <- get_ontology("hp")
 #' ont2 <- add_ancestors(ont)
 add_ancestors <- function(ont,
                           lvl=2, 

@@ -5,6 +5,8 @@
 #' @inheritDotParams get_data
 #' @keywords internal 
 get_ontology_robot <- function(...){
+  simona_opt <- utils::getFromNamespace(x = "simona_opt",
+                                        ns = "simona")
   robot <- get_data(file = "robot.jar",
                     repo = "ontodev/robot",
                     ...)

@@ -1,15 +1,15 @@
-#' @describeIn get_ get_
-#' 
-#' Get ontology from GitHub
+#' Get ontology from GitHub and import it via \link[simona]{import_ontology}.
+#' @param filetype File type to search for.
+#' @inheritParams get_
 #' @inheritDotParams simona::import_ontology
 #' @inheritParams piggyback::pb_download_url  
 #' @returns \link[simona]{ontology_DAG}
 #'
-#' @export
-#' @examples
-#' mondo <- get_ontology_github()
-get_ontology_github <- function(file="mondo-base.obo", 
-                                repo="monarch-initiative/mondo",
+#' @keywords internal
+get_ontology_github <- function(name,
+                                repo,
+                                filetype="-base.obo",
+                                file=paste0(name,filetype),  
                                 tag="latest",
                                 save_dir=cache_dir(),
                                 force_new=FALSE,

@@ -5,7 +5,7 @@
 %   R/get_medgen_maps.R, R/get_metadata_omim.R, R/get_metadata_orphanet.R,
 %   R/get_monarch.R, R/get_monarch_files.R, R/get_monarch_kg.R,
 %   R/get_monarch_models.R, R/get_mondo_maps.R, R/get_mondo_maps_files.R,
-%   R/get_ontology.R, R/get_ontology_dict.R, R/get_ontology_github.R,
+%   R/get_ols_options.R, R/get_ontology.R, R/get_ontology_dict.R,
 %   R/get_ontology_levels.R, R/get_pli.R, R/get_prevalence.R, R/get_ttd.R,
 %   R/get_upheno.R, R/get_version.R
 \name{get_}
@@ -27,9 +27,9 @@
 \alias{get_monarch_models}
 \alias{get_mondo_maps}
 \alias{get_mondo_maps_files}
+\alias{get_ols_options}
 \alias{get_ontology}
 \alias{get_ontology_dict}
-\alias{get_ontology_github}
 \alias{get_ontology_levels}
 \alias{get_pli}
 \alias{get_prevalence}
@@ -132,11 +132,12 @@ get_mondo_maps(
 
 get_mondo_maps_files(map_types, map_to, save_dir)
 
+get_ols_options(ol = rols::Ontologies())
+
 get_ontology(
-  name = c("mondo", "hpo", "upheno", "uberon", "cl"),
+  name = c("mondo", "hp", "upheno", "uberon", "cl"),
+  method = c("rols", "github"),
   terms = NULL,
-  filetype = "-base.obo",
-  method = c("github", "bioportal"),
   add_metadata = TRUE,
   add_ancestors = 2,
   add_n_edges = TRUE,
@@ -147,15 +148,6 @@ get_ontology(
 )
 
 get_ontology_dict(ont, from = "id", to = "name", include_self = FALSE)
-
-get_ontology_github(
-  file = "mondo-base.obo",
-  repo = "monarch-initiative/mondo",
-  tag = "latest",
-  save_dir = cache_dir(),
-  force_new = FALSE,
-  ...
-)
 
 get_ontology_levels(
   ont,
@@ -195,6 +187,7 @@ get_version(obj, return_version = FALSE, verbose = TRUE)
 \item{annotate}{Add variant annotations with \link{map_variants}.}
 
 \item{name}{\itemize{
+\item{<...>}{Any ontology name from \link{get_ols_options}}
 \item{"mondo"}{
 Import the \href{https://mondo.monarchinitiative.org/}{Mondo} ontology.
 \href{https://github.com/monarch-initiative/mondo/release}{
@@ -240,7 +233,7 @@ Passes to \link{get_monarch_files}.}
 \item{run_map_mondo}{Run \link{map_mondo} to map MONDO IDs to disease IDs.}
 
 \item{...}{
-  Arguments passed on to \code{\link[=link_monarch]{link_monarch}}, \code{\link[data.table:fread]{data.table::fread}}, \code{\link[data.table:fread]{data.table::fread}}, \code{\link[=get_ontology_github]{get_ontology_github}}, \code{\link[simona:import_obo]{simona::import_ontology}}
+  Arguments passed on to \code{\link[=link_monarch]{link_monarch}}, \code{\link[data.table:fread]{data.table::fread}}, \code{\link[data.table:fread]{data.table::fread}}, \code{\link[=get_ontology_github]{get_ontology_github}}
   \describe{
     \item{\code{node_filters}}{A named list of filters to apply to the node data. 
 Names should be name of the metadata column, and values should be a vector of 
@@ -254,7 +247,8 @@ return any rows where the "type" column contains either "gene" or "variant".}
     \item{\code{nrows}}{ The maximum number of rows to read. Unlike \code{read.table}, you do not need to set this to an estimate of the number of rows in the file for better speed because that is already automatically determined by \code{fread} almost instantly using the large sample of lines. \code{nrows=0} returns the column names and typed empty columns determined by the large sample; useful for a dry run of a large file or to quickly check format consistency of a set of files before starting to read any of them. }
     \item{\code{header}}{ Does the first data line contain column names? Defaults according to whether every non-empty field on the first data line is type character. If so, or TRUE is supplied, any empty column names are given a default name. }
     \item{\code{na.strings}}{ A character vector of strings which are to be interpreted as \code{NA} values. By default, \code{",,"} for columns of all types, including type \code{character} is read as \code{NA} for consistency. \code{,"",} is unambiguous and read as an empty string. To read \code{,NA,} as \code{NA}, set \code{na.strings="NA"}. To read \code{,,} as blank string \code{""}, set \code{na.strings=NULL}. When they occur in the file, the strings in \code{na.strings} should not appear quoted since that is how the string literal \code{,"NA",} is distinguished from \code{,NA,}, for example, when \code{na.strings="NA"}. }
-    \item{\code{stringsAsFactors}}{ Convert all character columns to factors? }
+    \item{\code{stringsAsFactors}}{ Convert all or some character columns to factors? Acceptable inputs are \code{TRUE}, \code{FALSE}, or a decimal value between 0.0 and 1.0. For \code{stringsAsFactors = FALSE}, all string columns are stored as \code{character} vs. all stored as \code{factor} when \code{TRUE}. When \code{stringsAsFactors = p} for \code{0 <= p <= 1}, string columns \code{col} are stored as \code{factor} if \code{uniqueN(col)/nrow < p}. 
+  }
     \item{\code{skip}}{ If 0 (default) start on the first line and from there finds the first row with a consistent number of columns. This automatically avoids irregular header information before the column names row. \code{skip>0} means ignore the first \code{skip} rows manually. \code{skip="string"} searches for \code{"string"} in the file (e.g. a substring of the column names row) and starts on that line (inspired by read.xls in package gdata). }
     \item{\code{select}}{ A vector of column names or numbers to keep, drop the rest. \code{select} may specify types too in the same way as \code{colClasses}; i.e., a vector of \code{colname=type} pairs, or a \code{list} of \code{type=col(s)} pairs. In all forms of \code{select}, the order that the columns are specified determines the order of the columns in the result. }
     \item{\code{drop}}{ Vector of column names or numbers to drop, keep the rest. }
@@ -281,10 +275,9 @@ return any rows where the "type" column contains either "gene" or "variant".}
     \item{\code{autostart}}{ Deprecated and ignored with warning. Please use \code{skip} instead. }
     \item{\code{tmpdir}}{ Directory to use as the \code{tmpdir} argument for any \code{tempfile} calls, e.g. when the input is a URL or a shell command. The default is \code{tempdir()} which can be controlled by setting \code{TMPDIR} before starting the R session; see \code{\link[base:tempfile]{base::tempdir}}. }
     \item{\code{tz}}{ Relevant to datetime values which have no Z or UTC-offset at the end, i.e. \emph{unmarked} datetime, as written by \code{\link[utils:write.table]{utils::write.csv}}. The default \code{tz="UTC"} reads unmarked datetime as UTC POSIXct efficiently. \code{tz=""} reads unmarked datetime as type character (slowly) so that \code{as.POSIXct} can interpret (slowly) the character datetimes in local timezone; e.g. by using \code{"POSIXct"} in \code{colClasses=}. Note that \code{fwrite()} by default writes datetime in UTC including the final Z and therefore \code{fwrite}'s output will be read by \code{fread} consistently and quickly without needing to use \code{tz=} or \code{colClasses=}. If the \code{TZ} environment variable is set to \code{"UTC"} (or \code{""} on non-Windows where unset vs `""` is significant) then the R session's timezone is already UTC and \code{tz=""} will result in unmarked datetimes being read as UTC POSIXct. For more information, please see the news items from v1.13.0 and v1.14.0. }
-    \item{\code{robot_jar}}{The path of the \code{robot.jar} file. It can be downloaded from https://github.com/ontodev/robot/releases.
-Internally, the file is converted to the obo format and parsed by \code{import_obo()}. The value of \code{robot_jar} can be
-set as a global option \code{simona_opt$robot_jar = ...}.}
-    \item{\code{JAVA_ARGS}}{Options for \code{java}. For example you can set \code{-Xmx20G} if you want to increase the memory to 20G for java.}
+    \item{\code{filetype}}{File type to search for.}
+    \item{\code{repo}}{Repository name in format "owner/repo". Defaults to \code{guess_repo()}.}
+    \item{\code{tag}}{tag for the GitHub release to which this data should be attached.}
   }}
 
 \item{g}{ggnetwork object 
@@ -335,16 +328,16 @@ Set to \code{NULL} to skip this step.}
 \item{top_by}{Grouping columns when selecting \code{top_n} rows per grouping.
 Can be a character vector of one or more column names.}
 
-\item{terms}{Term IDs to include. Can alternatively be an integer, 
-which will be used to randomly sample N terms from the data.}
-
-\item{filetype}{File type to search for.}
+\item{ol}{An \link[rols]{Ontologies} object.}
 
 \item{method}{Compute ontology levels using:
 \itemize{
  \item{"height" (default)} \link[simona]{dag_height}.
  \item{"depth"} \link[simona]{dag_depth}.
 }}
+
+\item{terms}{Term IDs to include. Can alternatively be an integer, 
+which will be used to randomly sample N terms from the data.}
 
 \item{add_metadata}{Add metadata to the resulting ontology object.}
 
@@ -355,27 +348,6 @@ which will be used to randomly sample N terms from the data.}
 \item{add_ontology_levels}{Add the ontology level for each term.}
 
 \item{include_self}{For \code{dag_offspring()} and \code{dag_ancestors()}, this controls whether to also include the query term itself.}
-
-\item{file}{Can be one of the following:
-\itemize{
-\item{"ontology"}{Creates an \link[simona]{ontology_DAG} R object by
- importing the OBO file directly from the official
- \href{https://github.com/obophenotype/upheno}{uPheno GitHub repository}.}
-\item{"bestmatches"}{Returns a merged table with the best matches between
- human and non-human homologous phenotypes (from multiple species).
- Distributed by the official
- \href{https://github.com/obophenotype/upheno/tree/master/mappings}{
- uPheno GitHub repository}.}
-\item{"upheno_mapping"}{Return a merged table with matches between human
-and non-human homologous phenotypes (from multiple species).
-Distributed by the
- \href{https://data.monarchinitiative.org/upheno2/current/upheno-release/all/index.html}{
- Monarch Initiative server}.}
-}}
-
-\item{repo}{Repository name in format "owner/repo". Defaults to \code{guess_repo()}.}
-
-\item{tag}{tag for the GitHub release to which this data should be attached.}
 
 \item{remove_terms}{Character vector of term IDs to exclude.}
 
@@ -393,6 +365,23 @@ are larger than the child terms.}
 
 \item{run_map_genes}{Map genes to standardised HGNC symbols using 
 \link[orthogene]{map_genes}.}
+
+\item{file}{Can be one of the following:
+\itemize{
+\item{"ontology"}{Creates an \link[simona]{ontology_DAG} R object by
+ importing the OBO file directly from the official
+ \href{https://github.com/obophenotype/upheno}{uPheno GitHub repository}.}
+\item{"bestmatches"}{Returns a merged table with the best matches between
+ human and non-human homologous phenotypes (from multiple species).
+ Distributed by the official
+ \href{https://github.com/obophenotype/upheno/tree/master/mappings}{
+ uPheno GitHub repository}.}
+\item{"upheno_mapping"}{Return a merged table with matches between human
+and non-human homologous phenotypes (from multiple species).
+Distributed by the
+ \href{https://data.monarchinitiative.org/upheno2/current/upheno-release/all/index.html}{
+ Monarch Initiative server}.}
+}}
 
 \item{obj}{An object.}
 
@@ -417,8 +406,6 @@ data.table
 \link[data.table]{data.table}
 
 \link[data.table]{data.table} of mappings.
-
-\link[simona]{ontology_DAG}
 
 \link[simona]{ontology_DAG}
 
@@ -551,16 +538,17 @@ Mondo GitHub}.
 
 \item \code{get_mondo_maps_files()}: get_
 
-\item \code{get_ontology()}: get_
+\item \code{get_ols_options()}: get_
+Get a complete up=to-date list of ontologies available via the
+\href{https://www.ebi.ac.uk/ols4}{EBML-EBI Ontology Lookup Service} API.
+
+\item \code{get_ontology()}: get_ontology
 Get ontology
 
-Import an up-to-date ontology directly from from the creators.
+Import an up-to-date ontology directly from from the creators or via the
+\href{https://www.ebi.ac.uk/ols4}{EBML-EBI Ontology Lookup Service} API.
 
 \item \code{get_ontology_dict()}: get_
-
-\item \code{get_ontology_github()}: get_
-
-Get ontology from GitHub
 
 \item \code{get_ontology_levels()}: get_
 Get ontology level for ontology terms
@@ -612,11 +600,11 @@ HPO GitHub Releases page}.
 \dontrun{
 am <- get_alphamissense()
 }
-ont <- get_ontology("hpo", terms=10)
+ont <- get_ontology("hp", terms=10)
 def <- get_definitions(ont)
 d <- get_gencc()
 genes <- get_genes_disease()
-dat <- get_monarch()
+dat <- get_monarch(maps=list(c("gene","disease")))
 files <- get_monarch_files() 
 \dontrun{
 g <- get_monarch_kg(save_dir=tempdir(), nrows=100)
@@ -624,11 +612,12 @@ g <- get_monarch_kg(save_dir=tempdir(), nrows=100)
 models <- get_monarch_models()
 map <- get_mondo_maps("default") 
 mondo <- get_ontology(name="mondo")
-hpo <- get_ontology(name="hpo")
-upheno <- get_ontology(name="upheno")
-ont <- get_ontology("hpo", terms=10)
+\dontrun{
+  hp <- get_ontology(name="hp")
+  upheno <- get_ontology(name="upheno")
+}
+ont <- get_ontology("hp", terms=10)
 dict <- get_ontology_dict(ont)
-mondo <- get_ontology_github()
 ont <- get_ontology("hp")
 terms <- ont@terms[1:10]
 lvls <- get_ontology_levels(ont, terms = terms)

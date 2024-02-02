@@ -107,6 +107,7 @@ NULL
 #' @inheritParams map_
 #' @inheritParams simona::dag_ancestors
 #' @inheritParams data.table::merge.data.table
+#' @import rols
 #' @description
 #' Functions to get data resources.
 #' @family get_ 

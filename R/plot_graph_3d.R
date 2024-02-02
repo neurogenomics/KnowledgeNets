@@ -21,7 +21,7 @@
 #' @importFrom stringr str_wrap
 #' @importFrom methods show
 #' @examples
-#' ont <- get_ontology("hpo", terms=10, add_ancestors=TRUE)
+#' ont <- get_ontology("hp", terms=10, add_ancestors=TRUE)
 #' g <- ontology_to(ont, to="tbl_graph")
 #' plt <- plot_graph_3d(g=g, show_plot=FALSE)
 plot_graph_3d <- function(g,

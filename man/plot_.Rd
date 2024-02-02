@@ -3,7 +3,8 @@
 %   R/plot_ggnetwork.R, R/plot_graph_3d.R, R/plot_graph_visnetwork.R,
 %   R/plot_ontology.R, R/plot_ontology_circular.R, R/plot_ontology_graphviz.R,
 %   R/plot_ontology_heatmap.R, R/plot_ontology_tidygraph.R,
-%   R/plot_ontology_visnetwork.R, R/plot_save.R, R/plot_upheno_heatmap.R
+%   R/plot_ontology_visnetwork.R, R/plot_save.R, R/plot_ttd.R,
+%   R/plot_upheno_heatmap.R
 \name{plot_}
 \alias{plot_}
 \alias{plot_clinvar}
@@ -17,6 +18,7 @@
 \alias{plot_ontology_tidygraph}
 \alias{plot_ontology_visnetwork}
 \alias{plot_save}
+\alias{plot_ttd}
 \alias{plot_upheno_heatmap}
 \title{Plot functions}
 \source{
@@ -147,6 +149,8 @@ plot_ontology_tidygraph(ont, ...)
 plot_ontology_visnetwork(ont, ...)
 
 plot_save(plt, path, width = 7, height = width)
+
+plot_ttd(dat_sub)
 
 plot_upheno_heatmap(
   plot_dat,
@@ -421,6 +425,9 @@ Plot a phenotype x phenotype correlation matrix based on genetic overlap.
 \item \code{plot_save()}: plot_
 Save a plot using \pkg{grDevices} or \link[visNetwork]{visSave}.
 
+\item \code{plot_ttd()}: plot_
+Plot TTD.
+
 \item \code{plot_upheno_heatmap()}: plot_
 
 }}
@@ -429,10 +436,10 @@ ont <- get_ontology(terms=10)
 g <- ontology_to(ont, to="tbl_graph")
 g <- add_hoverboxes(g)
 out <- plot_ggnetwork(g, label_var="label")
-ont <- get_ontology("hpo", terms=10, add_ancestors=TRUE)
+ont <- get_ontology("hp", terms=10, add_ancestors=TRUE)
 g <- ontology_to(ont, to="tbl_graph")
 plt <- plot_graph_3d(g=g, show_plot=FALSE)
-ont <- get_ontology("hpo", terms=10)
+ont <- get_ontology("hp", terms=10)
 g <- ontology_to(ont, to="tbl_graph")
 out <- plot_graph_visnetwork(g)
 ont <- get_ontology("hp")
@@ -441,7 +448,7 @@ res <- plot_ontology(ont,
                      types="circular",
                      partition_by_level=2,
                      edge_transparency=.9)
-ont <- get_ontology("hpo", terms=2)
+ont <- get_ontology("hp", terms=2)
 hm <- plot_ontology_heatmap(ont)
 }
 \concept{plot_}

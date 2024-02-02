@@ -132,12 +132,12 @@ Add per-term metadata to ontology.
 
 }}
 \examples{
-ont <- get_ontology("hpo")
+ont <- get_ontology("hp")
 ont2 <- add_ancestors(ont)
-ont <- get_ontology("hpo", terms=10)
+ont <- get_ontology("hp", terms=10)
 g <- ontology_to(ont, to="tbl_graph")
 g2 <- add_hoverboxes(g)
-ont <- get_ontology("hpo", terms=10)
+ont <- get_ontology("hp", terms=10)
 ont2 <- add_ontology_metadata(ont)
 }
 \concept{add_}

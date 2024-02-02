@@ -15,7 +15,7 @@
 #'
 #' @export
 #' @examples
-#' dat <- get_monarch()
+#' dat <- get_monarch(maps=list(c("gene","disease")))
 get_monarch <- function(queries=NULL,
                         maps=NULL,
                         domain="https://data.monarchinitiative.org",

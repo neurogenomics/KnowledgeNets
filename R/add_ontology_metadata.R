@@ -5,7 +5,7 @@
 #' @import simona
 #' @importFrom Matrix colSums
 #' @examples
-#' ont <- get_ontology("hpo", terms=10)
+#' ont <- get_ontology("hp", terms=10)
 #' ont2 <- add_ontology_metadata(ont)
 add_ontology_metadata <- function(ont,
                                   add_ancestors=2,

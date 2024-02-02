@@ -35,6 +35,9 @@ get_monarch_files <- function(maps=NULL,
     if(!is.null(maps)){
       messager("Filtering with `maps`.")
       files <- lapply(maps, function(m){
+        if(length(m)<2) {
+          stopper("Each map elements must be a vector of at least 2 items.")
+        }
         if(!is.null(m)){
           files[(subject==m[1] & object==m[2]) | 
                 (subject==m[2] & object==m[1])]

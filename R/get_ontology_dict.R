@@ -2,7 +2,7 @@
 #' 
 #' @export
 #' @examples
-#' ont <- get_ontology("hpo", terms=10)
+#' ont <- get_ontology("hp", terms=10)
 #' dict <- get_ontology_dict(ont)
 get_ontology_dict <- function(ont, 
                               from="id",

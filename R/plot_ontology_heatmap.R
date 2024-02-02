@@ -17,7 +17,7 @@
 #'
 #' @export
 #' @examples
-#' ont <- get_ontology("hpo", terms=2)
+#' ont <- get_ontology("hp", terms=2)
 #' hm <- plot_ontology_heatmap(ont)
 plot_ontology_heatmap <- function(ont,
                                   annot = data.table::data.table(

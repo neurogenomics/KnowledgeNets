@@ -5,7 +5,7 @@
 #' and add the ID and name of the ancestor to the ontology metadata.
 #' @export
 #' @examples 
-#' ont <- get_ontology("hpo", terms=10)
+#' ont <- get_ontology("hp", terms=10)
 #' def <- get_definitions(ont)
 get_definitions <- function(ont,
                             from="id",

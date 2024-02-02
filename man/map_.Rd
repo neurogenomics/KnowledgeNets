@@ -100,11 +100,10 @@ orthologous genes will appear as a new column (\code{TRUE}).
 Otherwise, the orthologs will be added as new nodes to the graph 
 (\code{FALSE}).}
 
-\item{all.x}{logical; if \code{TRUE}, then extra rows will be added to the
-output, one for each row in \code{x} that has no matching row in \code{y}.
-These rows will have 'NA's in those columns that are usually filled with values
-from \code{y}.  The default is \code{FALSE}, so that only rows with data from both
-\code{x} and \code{y} are included in the output.}
+\item{all.x}{logical; if \code{TRUE}, rows from \code{x} which have no matching row
+in \code{y} are included. These rows will have 'NA's in the columns that are usually
+filled with values from \code{y}. The default is \code{FALSE} so that only rows with
+data from both \code{x} and \code{y} are included in the output.}
 
 \item{input_col}{Column name of input IDs.}
 
@@ -242,7 +241,7 @@ dat <- example_dat("gene")
 dt2 <- map_genes_monarch(dat=dat, gene_col="gene")
 dat <- example_dat(rm_types="gene")
 dat2 <- map_mondo(dat = dat, map_to="hpo")
-ont <- get_ontology("hpo")
+ont <- get_ontology("hp")
 terms <- c("Focal motor seizure","HP:0000002","HP:0000003")
 term_names <- map_ontology_terms(ont=ont, terms=terms)
 term_ids <- map_ontology_terms(ont=ont, terms=terms, to="id")

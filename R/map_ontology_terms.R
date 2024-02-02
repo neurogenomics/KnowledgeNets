@@ -14,7 +14,7 @@
 #'
 #' @export
 #' @examples
-#' ont <- get_ontology("hpo")
+#' ont <- get_ontology("hp")
 #' terms <- c("Focal motor seizure","HP:0000002","HP:0000003")
 #' term_names <- map_ontology_terms(ont=ont, terms=terms)
 #' term_ids <- map_ontology_terms(ont=ont, terms=terms, to="id")

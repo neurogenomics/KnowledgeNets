@@ -16,8 +16,12 @@ BugReports: https://github.com/neurogenomics/KGExplorer/issues
 Encoding: UTF-8
 Depends: R (>= 4.2)
 biocViews:
+  Software,
+  Network,
+  GraphAndNetwork
 Imports:
   simona,
+  rols,
   data.table,
   ggplot2,
   plotly,
@@ -78,7 +82,7 @@ Remotes:
   github::RajLabMSSM/echogithub,
   github::RajLabMSSM/downloadR,
   github::kwstat/pals
-RoxygenNote: 7.3.0
+RoxygenNote: 7.3.1
 VignetteBuilder: knitr
 License: GPL-3
 Config/testthat/edition: 3
