@@ -14,8 +14,7 @@ plot_ontology <- function(ont,
                                    "graphviz",
                                    "tidygraph",
                                    "visnetwork"),
-                          ...){
-  requireNamespace("DiagrammeR")
+                          ...){ 
   #### Filter ont ####
   ont <- filter_ontology(ont,
                          terms=terms)

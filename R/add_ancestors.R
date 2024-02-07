@@ -14,17 +14,20 @@
 #' @inheritParams simona::dag_offspring
 #' @examples 
 #' ont <- get_ontology("hp")
-#' ont2 <- add_ancestors(ont)
+#' ont2 <- add_ancestors(ont, lvl=4)
 add_ancestors <- function(ont,
                           lvl=2, 
                           include_self=TRUE,
+                          prefix="ancestor",
+                          fill_na=TRUE,
                           force_new=FALSE){
-  term <- ancestor <- NULL;
+  term <- NULL;
   
   if(is.null(lvl)) return (ont)
   messager("Adding ancestor metadata.")
   #### Check if ancestor metadata already present
-  if(all(c("ancestor","ancestor_name") %in% colnames(ont@elementMetadata)) &&
+  prefix_name <- paste0(prefix,"_name")
+  if(all(c(prefix,prefix_name) %in% colnames(ont@elementMetadata)) &&
      isFALSE(force_new)){
     messager("Ancestor metadata already present.",
              "Use force_new=TRUE to overwrite.")
@@ -39,16 +42,18 @@ add_ancestors <- function(ont,
       term=simona::dag_offspring(ont, term = x, 
                                  include_self = include_self)
     )
-  }) |> data.table::rbindlist(idcol  = "ancestor", fill = TRUE)
+  }) |> data.table::rbindlist(idcol  = prefix, fill = TRUE)
   #### Ensure one row per term ####
   ancestors_groups <- ancestors_groups[, .SD[1], keyby = "term"] 
-  ancestors_groups <- ancestors_groups[ont@terms][is.na(ancestor),
-                                                  ancestor:=term]
-  ont@elementMetadata$ancestor <- ancestors_groups$ancestor 
+  if(isTRUE(fill_na)){
+    ancestors_groups <- ancestors_groups[ont@terms][is.na(get(prefix)),
+                                                    (prefix):=term]
+  } 
+  ont@elementMetadata[[prefix]] <- ancestors_groups[[prefix]]
   #### Add ancestor_name col
-  ont@elementMetadata$ancestor_name <-  map_ontology_terms(
+  ont@elementMetadata[[prefix_name]] <-  map_ontology_terms(
     ont = ont, 
-    terms = ont@elementMetadata$ancestor, 
+    terms = ont@elementMetadata[[prefix]], 
     to = "name")
   #### Return ####
   return(ont)

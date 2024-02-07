@@ -17,7 +17,7 @@
 #' @export
 #' @importFrom stringr str_wrap
 #' @examples
-#' ont <- get_ontology("hp", terms=10)
+#' ont <- get_ontology("hp")
 #' g <- ontology_to(ont, to="tbl_graph")
 #' g2 <- add_hoverboxes(g)
 add_hoverboxes <- function(g,

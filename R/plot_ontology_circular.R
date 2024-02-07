@@ -4,6 +4,7 @@
 #' @keywords internal
 plot_ontology_circular <- function(ont,
                                    ...){
+  requireNamespace("DiagrammeR")
   simona::dag_circular_viz(ont,
                            ...) 
 }

@@ -5,8 +5,9 @@ plot_clinvar <- function(hits,
                          x="region",
                          y="N",
                          fill="Type",
-                         by=c("build","region","Type","ClinSigSimple"),
-                         rows="ClinSigSimple"){
+                         rows="ClinSigSimple",
+                         by=c("build",x,fill,rows)
+                         ){
   
   requireNamespace("ggplot2")
   requireNamespace("forcats")
