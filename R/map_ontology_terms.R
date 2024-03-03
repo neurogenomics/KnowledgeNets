@@ -24,6 +24,7 @@ map_ontology_terms <- function(ont,
                                keep_order = TRUE,
                                invert = FALSE){
   to <- match.arg(to)
+  if(!is.null(terms)) terms <- as.character(terms)
   terms_og <- terms
   terms <- unique(terms)
   #### to IDs ###

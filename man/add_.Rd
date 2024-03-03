@@ -9,7 +9,14 @@
 \alias{add_ontology_metadata}
 \title{Add functions}
 \usage{
-add_ancestors(ont, lvl = 2, include_self = TRUE, force_new = FALSE)
+add_ancestors(
+  ont,
+  lvl = 2,
+  include_self = TRUE,
+  prefix = "ancestor",
+  fill_na = TRUE,
+  force_new = FALSE
+)
 
 add_db(
   dat,
@@ -133,8 +140,8 @@ Add per-term metadata to ontology.
 }}
 \examples{
 ont <- get_ontology("hp")
-ont2 <- add_ancestors(ont)
-ont <- get_ontology("hp", terms=10)
+ont2 <- add_ancestors(ont, lvl=4)
+ont <- get_ontology("hp")
 g <- ontology_to(ont, to="tbl_graph")
 g2 <- add_hoverboxes(g)
 ont <- get_ontology("hp", terms=10)

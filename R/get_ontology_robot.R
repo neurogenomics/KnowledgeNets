@@ -7,8 +7,13 @@
 get_ontology_robot <- function(...){
   simona_opt <- utils::getFromNamespace(x = "simona_opt",
                                         ns = "simona")
-  robot <- get_data(file = "robot.jar",
-                    repo = "ontodev/robot",
-                    ...)
-  simona_opt$robot_jar <- robot
+  # robot <- get_data(file = "robot.jar",
+  #                   repo = "ontodev/robot",
+  #                   ...)
+  # simona_opt$robot_jar <- robot
+  if(is.null(simona_opt$robot_jar)) {
+    download_robot <- utils::getFromNamespace(x = "download_robot",
+                                              ns = "simona")
+    download_robot()
+  }
 }

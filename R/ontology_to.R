@@ -50,7 +50,7 @@ ontology_to <- function(ont,
     obj <- stats::as.dendrogram(dh)
   } else if(to=="dendrogram"){
     ont2 <- simona::dag_treelize(ont)
-    obj <- simona::dag_as_dendrogram(ont2)
+    obj <- simona::dag_as_dendrogram(ont2,...)
   } else if(to=="dot"){
     obj <- simona::dag_as_DOT(ont, ...)
   } else if(to=="similarity"){
@@ -77,9 +77,9 @@ ontology_to <- function(ont,
     obj <- ontology_to_graph(ont, ...)
   } else if(to=="data.frame"){
     g <- ontology_to_graph(ont)
-    obj <- graph_to_dt(g, id_col="name")
+    obj <- graph_to_dt(g, ...)
   } else if(to=="data.table"){
-    df <- ontology_to(ont, to="data.frame")
+    df <- ontology_to(ont, to="data.frame", ...)
     obj <- data.table::as.data.table(df)
   } else if(to=="list") {
     obj <- list(

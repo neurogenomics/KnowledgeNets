@@ -3,6 +3,10 @@
 #'
 #' Get phenotype-gene evidence score from the
 #' \href{https://thegencc.org/}{Gene Curation Coalition}.
+#' Note that the column "submitted_as_moi_id" indicates the mechanism of action
+#'  (e.g. "Autosomal dominant inheritance"), not specific HPO phenotypes.
+#' Set \code{agg_by=NULL} to return raw unaggregated data.
+#' 
 #' Data downloaded from \href{https://search.thegencc.org/download}{here}.\cr
 #' \emph{NOTE:} Due to licensing restrictions, a GenCC download does not
 #'  include OMIM data. OMIM data can be accessed and downloaded through
@@ -37,14 +41,15 @@ get_gencc <- function(agg_by=c("disease_id",
                                "Refuted Evidence"=0, # GENCC:100006
                                "No Known Disease Relationship"=0 # GENCC:100008
                       ),
-                      save_dir=cache_dir()){
+                      save_dir=cache_dir(),
+                      force_new=FALSE){
   disease_id <- disease_original_curie <- classification_title <-
-    evidence_score <- NULL;
+    submitted_as_moi_id <- evidence_score <- hpo_id <- NULL;
 
   messager("Gathering data from GenCC.")
   URL <- "https://search.thegencc.org/download/action/submissions-export-csv"
   f <- file.path(save_dir,"genCC_submission.csv")
-  if(!file.exists(f)){
+  if(!file.exists(f) || isTRUE(force_new)){
     dir.create(save_dir, showWarnings = FALSE, recursive = TRUE)
     utils::download.file(URL, f)
   } else {
@@ -52,6 +57,10 @@ get_gencc <- function(agg_by=c("disease_id",
   }
   d <- data.table::fread(f)
   d[,disease_id:=gsub("^Orphanet","ORPHA",disease_original_curie)]
+  # d <- map_mondo(dat = d,  
+  #                input_col = "disease_original_curie",
+  #                output_col = "disease_id",
+  #                to = c("OMIM","DECIPHER","Orphanet"))
   #### Encode evidence numerically ####
   d[,evidence_score:=dict[classification_title]]
   #### Aggregate so that there's 1 entry/gene/disease ####

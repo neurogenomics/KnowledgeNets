@@ -1,9 +1,7 @@
 #' @describeIn get_ get_
 #' @export
 #' @examples
-#' \dontrun{
 #' ttd <- get_ttd()
-#' }
 get_ttd <- function(save_dir = cache_dir(),
                     run_map_genes = TRUE){
 
@@ -31,6 +29,7 @@ get_ttd <- function(save_dir = cache_dir(),
   ##### Parse drug data #####
   drugs <- data.table::fread(f[["P1-02-TTD_drug_download.txt"]],
                              skip = 29,
+                             fill = TRUE,
                              col.names = c("DRUGID","key","value")) |>
     data.table::dcast.data.table(formula = "DRUGID  ~ key",
                                  value.var = "value",
@@ -38,7 +37,8 @@ get_ttd <- function(save_dir = cache_dir(),
                                  collapse=";")
   #### Parse target data ####
   targets <- data.table::fread(f[["P1-01-TTD_target_download.txt"]],
-                               skip=40,
+                               skip=33,
+                               fill = TRUE,
                                col.names = c("TARGETID","key",
                                              "value","value2","status"))
   targets2 <- targets[key %in% c("GENENAME","TARGNAME","TARGTYPE","status"),] |>
@@ -56,8 +56,9 @@ get_ttd <- function(save_dir = cache_dir(),
   )
   diseases <- data.table::fread(
     text = l[-seq(1,utils::tail(grep("----",l),1)+1)],
-    col.names = c("key","value"))[key!="",]
-  diseases <- rbind(list("TTDDRUID","D00ABE"),diseases)
+    fill=TRUE,
+    col.names = c("key","value","ICD11","status"))[key!="",]
+  # diseases <- rbind(list("TTDDRUID","D00ABE"),diseases)
   diseases[,TTDDRUID:=ifelse(key=="TTDDRUID",value,NA)]
   diseases <- tidyr::fill(diseases,TTDDRUID,.direction = "down")
   diseases2 <- data.table::dcast.data.table(diseases[key!="TTDDRUID",],

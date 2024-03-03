@@ -3,8 +3,7 @@
 %   R/plot_ggnetwork.R, R/plot_graph_3d.R, R/plot_graph_visnetwork.R,
 %   R/plot_ontology.R, R/plot_ontology_circular.R, R/plot_ontology_graphviz.R,
 %   R/plot_ontology_heatmap.R, R/plot_ontology_tidygraph.R,
-%   R/plot_ontology_visnetwork.R, R/plot_save.R, R/plot_ttd.R,
-%   R/plot_upheno_heatmap.R
+%   R/plot_ontology_visnetwork.R, R/plot_save.R, R/plot_upheno_heatmap.R
 \name{plot_}
 \alias{plot_}
 \alias{plot_clinvar}
@@ -18,7 +17,6 @@
 \alias{plot_ontology_tidygraph}
 \alias{plot_ontology_visnetwork}
 \alias{plot_save}
-\alias{plot_ttd}
 \alias{plot_upheno_heatmap}
 \title{Plot functions}
 \source{
@@ -43,8 +41,8 @@ plot_clinvar(
   x = "region",
   y = "N",
   fill = "Type",
-  by = c("build", "region", "Type", "ClinSigSimple"),
-  rows = "ClinSigSimple"
+  rows = "ClinSigSimple",
+  by = c("build", x, fill, rows)
 )
 
 plot_ggnetwork(
@@ -148,9 +146,7 @@ plot_ontology_tidygraph(ont, ...)
 
 plot_ontology_visnetwork(ont, ...)
 
-plot_save(plt, path, width = 7, height = width)
-
-plot_ttd(dat_sub)
+plot_save(plt, path, width = NULL, height = width)
 
 plot_upheno_heatmap(
   plot_dat,
@@ -423,10 +419,8 @@ Plot a phenotype x phenotype correlation matrix based on genetic overlap.
 \item \code{plot_ontology_visnetwork()}: plot_
 
 \item \code{plot_save()}: plot_
-Save a plot using \pkg{grDevices} or \link[visNetwork]{visSave}.
-
-\item \code{plot_ttd()}: plot_
-Plot TTD.
+Save a plot using \link[ggplot2]{ggsave}, \pkg{grDevices},
+ or \link[visNetwork]{visSave}.
 
 \item \code{plot_upheno_heatmap()}: plot_
 

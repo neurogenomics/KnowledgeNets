@@ -70,7 +70,8 @@ get_gencc(
   agg_by = c("disease_id", "gene_symbol"),
   dict = c(Definitive = 6, Strong = 5, Moderate = 4, Supportive = 3, Limited = 2,
     `Disputed Evidence` = 1, `Refuted Evidence` = 0, `No Known Disease Relationship` = 0),
-  save_dir = cache_dir()
+  save_dir = cache_dir(),
+  force_new = FALSE
 )
 
 get_gene_lengths(genes, keep_chr = c(seq(22), "X", "Y"), ensembl_version = 75)
@@ -136,7 +137,7 @@ get_ols_options(ol = rols::Ontologies())
 
 get_ontology(
   name = c("mondo", "hp", "upheno", "uberon", "cl"),
-  method = c("rols", "github"),
+  method = c("github", "rols"),
   terms = NULL,
   add_metadata = TRUE,
   add_ancestors = 2,
@@ -460,6 +461,10 @@ Get GenCC
 
 Get phenotype-gene evidence score from the
 \href{https://thegencc.org/}{Gene Curation Coalition}.
+Note that the column "submitted_as_moi_id" indicates the mechanism of action
+ (e.g. "Autosomal dominant inheritance"), not specific HPO phenotypes.
+Set \code{agg_by=NULL} to return raw unaggregated data.
+
 Data downloaded from \href{https://search.thegencc.org/download}{here}.\cr
 \emph{NOTE:} Due to licensing restrictions, a GenCC download does not
  include OMIM data. OMIM data can be accessed and downloaded through
@@ -628,9 +633,7 @@ pli <- get_pli()
 \dontrun{
 get_prevalence()
 }
-\dontrun{
 ttd <- get_ttd()
-}
 upheno <- get_upheno()
 obj <- get_ontology("hp")
 get_version(obj=obj)

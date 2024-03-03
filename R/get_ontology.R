@@ -33,6 +33,8 @@ get_ontology <- function(name=c("mondo",
                                 "upheno",
                                 "uberon",
                                 "cl"),
+                         ## Safer to use OBO files (via GitHub) 
+                         ## rather than OWL files (via rols)
                          method=c("rols",
                                   "github"), 
                          terms=NULL,
