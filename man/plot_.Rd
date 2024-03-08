@@ -150,10 +150,11 @@ plot_save(plt, path, width = NULL, height = width)
 
 plot_upheno_heatmap(
   plot_dat,
-  ont,
+  ont = get_ontology("upheno", add_ancestors = 10),
   hpo_ids = NULL,
   value.var = c("phenotype_genotype_score", "prop_intersect", "equivalence_score",
     "subclass_score"),
+  name = value.var[1],
   min_rowsums = NULL,
   cluster_from_ontology = FALSE,
   save_dir = tempdir(),

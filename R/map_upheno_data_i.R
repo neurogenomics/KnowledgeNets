@@ -88,20 +88,21 @@ map_upheno_data_i <- function(pheno_map_method,
       all.y = keep_nogenes,
       suffixes = c(1,2),
       allow.cartesian = TRUE
-    )
+    ) 
+    pheno_map_genes[,db2:=id2_db]
     ## Fill in missing species for those without gene data
-    # pheno_map_genes[
-    #   is.na(gene_taxon_label1),
-    #   gene_taxon_label1:=species_map[db1]$subject_taxon_label]
-    # pheno_map_genes[
-    #   is.na(gene_taxon_label2),
-    #   gene_taxon_label2:=species_map[db2]$subject_taxon_label]
+    pheno_map_genes[
+      is.na(gene_taxon_label1),
+      gene_taxon_label1:=species_map[db1]$subject_taxon_label]
+    pheno_map_genes[
+      is.na(gene_taxon_label2),
+      gene_taxon_label2:=species_map[db2]$subject_taxon_label]
     ## Add gene counts
-    # pheno_map_genes[,n_genes_db1:=data.table::uniqueN(gene_label1), by="id1"]
-    # pheno_map_genes[,n_genes_db2:=data.table::uniqueN(gene_label2), by="id2"]
+    pheno_map_genes[,n_genes_db1:=data.table::uniqueN(gene_label1), by="id1"]
+    pheno_map_genes[,n_genes_db2:=data.table::uniqueN(gene_label2), by="id2"]
     ## Report
-    messager(data.table::uniqueN(pheno_map_genes$subject_taxon_label2),"/",
-             data.table::uniqueN(genes_homol$subject_taxon_label),
+    messager(data.table::uniqueN(pheno_map_genes$gene_taxon_label2),"/",
+             data.table::uniqueN(genes_homol$gene_taxon_label),
              "species remain after cross-species phenotype mapping.")
     ## Remove
     # remove(genes_human,genes_nonhuman,pheno_map)
@@ -116,18 +117,18 @@ map_upheno_data_i <- function(pheno_map_method,
     }
     pheno_map_genes_match <-
       pheno_map_genes_match[,
-                            list(n_genes_intersect=data.table::uniqueN(hgnc_id2)),
-                            by=c("id1","db1","label1","n_genes_db1",
-                                 "id2","db2","label2","n_genes_db2",
-                                 "subject_taxon1","subject_taxon_label1",
-                                 "subject_taxon2","subject_taxon_label2",
+                            list(n_genes_intersect=data.table::uniqueN(hgnc2)),
+                            by=c("id1","db1","object_label1","n_genes_db1",
+                                 "id2","db2","object_label2","n_genes_db2",
+                                 "gene_taxon1","gene_taxon_label1",
+                                 "gene_taxon2","gene_taxon_label2",
                                  "equivalence_score","subclass_score")
       ] |>
       data.table::setorderv("n_genes_intersect",-1)
     pheno_map_genes_match[,n_phenotypes:=data.table::uniqueN(id1),
                           by=c("db1","db2",
-                               "subject_taxon1","subject_taxon2",
-                               "subject_taxon_label1","subject_taxon_label2"
+                               "gene_taxon1","gene_taxon2",
+                               "gene_taxon_label1","gene_taxon_label2"
                           )]
     pheno_map_genes_match[,prop_intersect:=(n_genes_intersect/n_genes_db1)]
     ## Compute a score that captures both the phenotype mapping score and

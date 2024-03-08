@@ -63,11 +63,17 @@ get_gencc <- function(agg_by=c("disease_id",
   #                to = c("OMIM","DECIPHER","Orphanet"))
   #### Encode evidence numerically ####
   d[,evidence_score:=dict[classification_title]]
+  #### Report ####
+  messager("Evidence scores for:",
+           "\n -",length(unique(d$disease_id)),"diseases",
+           "\n -",length(unique(d$gene_symbol)),"genes")
   #### Aggregate so that there's 1 entry/gene/disease ####
   if(!is.null(agg_by)){
     d <- d[,list(evidence_score_min=min(evidence_score, na.rm = TRUE),
                  evidence_score_max=max(evidence_score, na.rm = TRUE),
-                 evidence_score_mean=mean(evidence_score, na.rm=TRUE)),
+                 evidence_score_mean=mean(evidence_score, na.rm=TRUE),
+                 evidence_score_sum=sum(evidence_score, na.rm=TRUE),
+                 evidence_score_sd=sd(evidence_score, na.rm=TRUE)),
                by=agg_by]
   }
   #### Add version ####

@@ -9,11 +9,11 @@ plot_upheno_rainplot <- function(plot_dat){
 
   ### Plot proportion of intersecting orthologs per ontology ####
   ggplot2::ggplot(plot_dat,
-         ggplot2::aes(x=paste0(subject_taxon_label2,
+         ggplot2::aes(x=paste0(gene_taxon_label2,
                       "\n(n = ",n_phenotypes," phenotypes)"),
              y=(n_genes_intersect/n_genes_db1),
-             fill=factor(object_db))) +
-    ggplot2::facet_grid(object_db~.,
+             fill=factor(db2))) +
+    ggplot2::facet_grid(db2~.,
                scales = "free_y",
                space = "free_y") +
     # add half-violin from {ggdist} package

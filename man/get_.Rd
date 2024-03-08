@@ -137,7 +137,7 @@ get_ols_options(ol = rols::Ontologies())
 
 get_ontology(
   name = c("mondo", "hp", "upheno", "uberon", "cl"),
-  method = c("github", "rols"),
+  method = c("rols", "github"),
   terms = NULL,
   add_metadata = TRUE,
   add_ancestors = 2,

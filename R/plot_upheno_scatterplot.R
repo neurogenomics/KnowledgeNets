@@ -8,6 +8,6 @@ plot_upheno_scatterplot <- function(plot_dat){
                   ggplot2::aes(x=(n_genes_intersect/n_genes_db1),
              y=equivalence_score)) +
     ggplot2::geom_point() +
-    ggplot2::facet_grid(rows = "subject_taxon_label2") +
+    ggplot2::facet_grid(rows = "gene_taxon_label2") +
     ggplot2::geom_smooth()
 }

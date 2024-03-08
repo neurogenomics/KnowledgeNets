@@ -17,27 +17,25 @@
 #'   pheno_map_genes_match = pheno_map_genes_match)
 #' }
 plot_upheno <- function(pheno_map_genes_match=NULL,
-                        subset_db1="HP",
+                        filters=list(db1="HP",
+                                     gene_taxon_label1="Homo sapiens"),
                         types=c("rainplot","scatterplot","heatmap")){
   ## Prepare plot data
-  n_phenotypes <- object_db <- subject <-NULL;
+  id1 <- n_phenotypes <-NULL;
   {
     #### Subset data ####
-    if(!is.null(subset_db1)) {
-      plot_dat <- pheno_map_genes_match[object_db %in% subset_db1,]
-      messager(data.table::uniqueN(plot_dat$subject_taxon_label2),"/",
-               data.table::uniqueN(pheno_map_genes_match$subject_taxon_label2),
-               "species remain after filtering by `subset_db1`.")
-    }else {
-      plot_dat <- data.table::copy(pheno_map_genes_match)
-    }
+    plot_dat <- filter_dt(pheno_map_genes_match, 
+                          filters = filters)
+    messager(data.table::uniqueN(plot_dat$gene_taxon_label2),"/",
+             data.table::uniqueN(pheno_map_genes_match$gene_taxon_label2),
+             "species remain after filtering by `subset_db1`.")
     ## Only use one phenotype-phenotype per row
-    plot_dat <- plot_dat[,.SD[1],by=c("object_db","subject","object_db","object")]
+    plot_dat <- plot_dat[,.SD[1],by=c("db1","id1","db2","id2")]
     ## Recompute n_phenotypes
-    plot_dat[,n_phenotypes:=data.table::uniqueN(subject),
-             by=c("object_db","object_db",
-                  "subject_taxon1","subject_taxon2",
-                  "subject_taxon_label1","subject_taxon_label2"
+    plot_dat[,n_phenotypes:=data.table::uniqueN(id1),
+             by=c("db1","db2",
+                  "gene_taxon1","gene_taxon2",
+                  "gene_taxon_label1","gene_taxon_label2"
              )]
   }
   plots <- list()
