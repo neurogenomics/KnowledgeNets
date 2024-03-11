@@ -79,12 +79,14 @@ map_ontology_terms <- function(ont,
   old_to_new <- stats::setNames(terms,terms_og) 
   data.table::setkeyv(map,"from")
   map <- map[unname(old_to_new),][,input:=names(old_to_new)] 
+  map_tmp <- unique(map[,c("input","to")]) 
+  data.table::setkeyv(map_tmp,"input")
   #### Return ####
   if(isFALSE(keep_order)){
     messager("+ Returning a dictionary of terms",
-             "(different order as input).",v=verbose>1)
-    dict <- stats::setNames(map$to,
-                            map$input)
+             "(different order as input).",v=verbose>1) 
+    dict <- stats::setNames(map_tmp$to,
+                            map_tmp$input)
     #### Invert ####
     if(isTRUE(invert)){
       dict <- invert_dict(dict)
@@ -93,10 +95,9 @@ map_ontology_terms <- function(ont,
   } else {
     messager("+ Returning a vector of terms",
              "(same order as input).",v=verbose>1) 
-    data.table::setkeyv(map,"input")
-    return(stats::setNames(
-      map[terms_og]$to,
-      terms_og
-    ))
+    return(
+      stats::setNames(map_tmp[terms_og]$to,
+                      terms_og)
+      )
   }
 }
