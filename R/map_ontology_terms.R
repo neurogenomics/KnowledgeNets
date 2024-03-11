@@ -37,7 +37,8 @@ map_ontology_terms <- function(ont,
   to <- match.arg(to)
   if(!is.null(terms)) terms <- as.character(terms)
   terms_og <- terms
-  terms <- unique(terms)
+  # terms <- unique(terms)
+  # new_to_old <- stats::setNames(unique(terms_og),terms)
   #### to IDs ###
   if(to=="id"){
     messager("Translating ontology terms to ids.",v=verbose)
@@ -74,23 +75,28 @@ map_ontology_terms <- function(ont,
     ) |> unique()
     terms <- rm_char(terms, ignore_char)
   }
-  data.table::setkey(map,"from")
-  out <- stats::setNames(
-    map[terms]$to,
-    terms_og
-  ) 
+  # map og terms onto new terms
+  old_to_new <- stats::setNames(terms,terms_og) 
+  data.table::setkeyv(map,"from")
+  map <- map[unname(old_to_new),][,input:=names(old_to_new)] 
   #### Return ####
   if(isFALSE(keep_order)){
     messager("+ Returning a dictionary of terms",
              "(different order as input).",v=verbose>1)
+    dict <- stats::setNames(map$to,
+                            map$input)
+    #### Invert ####
+    if(isTRUE(invert)){
+      dict <- invert_dict(dict)
+    }
+    return(dict)
   } else {
     messager("+ Returning a vector of terms",
-             "(same order as input).",v=verbose>1)
-    out <- out[terms_og]
+             "(same order as input).",v=verbose>1) 
+    data.table::setkeyv(map,"input")
+    return(stats::setNames(
+      map[terms_og]$to,
+      terms_og
+    ))
   }
-  #### Invert ####
-  if(isTRUE(invert)){
-    out <- invert_dict(out)
-  }
-  return(out)
 }
