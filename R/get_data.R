@@ -1,8 +1,8 @@
 #' @describeIn utils_ utils_
 #' Get remote data
 #'
-#' Download remotely stored data via \link[piggyback]{pb_download}.
-#' @param save_dir Directory to save data to.
+#' Download remotely stored data via \link[piggyback]{pb_download}. 
+#' @inheritParams get_ 
 #' @param add_version Add the release version
 #'  to the returned object's \link[base]{attributes}
 #' @returns Path to downloaded file or the object itself (when ".rds" format).

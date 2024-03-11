@@ -148,7 +148,13 @@ get_ontology(
   ...
 )
 
-get_ontology_dict(ont, from = "id", to = "name", include_self = FALSE)
+get_ontology_dict(
+  ont,
+  from = "id",
+  to = c("name", "label", "term"),
+  include_self = FALSE,
+  as_datatable = FALSE
+)
 
 get_ontology_levels(
   ont,
@@ -281,8 +287,7 @@ return any rows where the "type" column contains either "gene" or "variant".}
     \item{\code{tag}}{tag for the GitHub release to which this data should be attached.}
   }}
 
-\item{g}{ggnetwork object 
-(or an igraph/tbl_graph to be converted to ggnetwork format).}
+\item{g}{\link[tidygraph]{tbl_graph} object.}
 
 \item{what}{What should get activated? Possible values are \code{nodes} or
 \code{edges}.}
@@ -311,7 +316,7 @@ together. Otherwise, returns a named list of separated
 a column in the data, and the vector within each element represents the 
 values to include in the final data.}
 
-\item{input_col}{Column containing IDs.}
+\item{input_col}{Column name of input IDs.}
 
 \item{map_orthologs}{Add gene-level data.}
 
@@ -337,8 +342,7 @@ Can be a character vector of one or more column names.}
  \item{"depth"} \link[simona]{dag_depth}.
 }}
 
-\item{terms}{Term IDs to include. Can alternatively be an integer, 
-which will be used to randomly sample N terms from the data.}
+\item{terms}{A vector of ontology term IDs.}
 
 \item{add_metadata}{Add metadata to the resulting ontology object.}
 
@@ -349,6 +353,8 @@ which will be used to randomly sample N terms from the data.}
 \item{add_ontology_levels}{Add the ontology level for each term.}
 
 \item{include_self}{For \code{dag_offspring()} and \code{dag_ancestors()}, this controls whether to also include the query term itself.}
+
+\item{as_datatable}{Return as a data.table instead of a named vector.}
 
 \item{remove_terms}{Character vector of term IDs to exclude.}
 

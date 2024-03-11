@@ -1,5 +1,4 @@
-#' @describeIn add_ add_
-#' Add ancestor
+#' Add ancestors
 #' 
 #' For each term, get its ancestor at a given level
 #' and add the ID and name of the ancestor to the ontology metadata.
@@ -10,6 +9,10 @@
 #'   to itself as its own ancestor.
 #' When a term has multiple ancestors at a given level, 
 #' the first ancestor is arbitrarily chosen.
+#' @param prefix A prefix for the ancestor column names.
+#' @param fill_na If \code{TRUE}, fill ancestor columns with 
+#' NA values using the term ID and name.
+#' @inheritParams add_
 #' @export
 #' @inheritParams simona::dag_offspring
 #' @examples 

@@ -31,12 +31,12 @@ map_upheno_data <- function(pheno_map_method=c("upheno","monarch"),
                             save_dir=cache_dir(),
                             force_new=FALSE){
   #### Check for cached data ####
-  path <- file.path(save_dir,"pheno_map_genes_match.rds")
-  if(file.exists(path) &&
+  save_path <- file.path(save_dir,"pheno_map_genes_match.rds")
+  if(file.exists(save_path) &&
      isFALSE(force_new)){
     ## Read from cache
-    messager("Importing cached data:",path)
-    pheno_map_genes_match <- readRDS(path)
+    messager("Importing cached data:",save_path)
+    pheno_map_genes_match <- readRDS(save_path)
   } else {
     ## Create
     pheno_map_genes_match <- lapply(
@@ -50,10 +50,10 @@ map_upheno_data <- function(pheno_map_method=c("upheno","monarch"),
                           terms=terms)
       }) |> data.table::rbindlist(fill=TRUE, idcol = "pheno_map_method")
     ## Save
-    messager("Caching processed file -->",path)
+    messager("Caching processed file -->",save_path)
     attr(pheno_map_genes_match,"version") <- format(Sys.Date(), "%Y-%m-%d")
     dir.create(save_dir, showWarnings = FALSE, recursive = TRUE)
-    saveRDS(pheno_map_genes_match,path)
+    saveRDS(pheno_map_genes_match,save_path)
   }
   ## Return
   return(pheno_map_genes_match)

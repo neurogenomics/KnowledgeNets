@@ -4,10 +4,10 @@
 #' @examples
 #' cache_save(mtcars, tempfile())
 cache_save <- function(obj,
-                       path){
-  if(!is.null(path)){
-    dir.create(dirname(path), showWarnings = FALSE, recursive = TRUE)
-    messager("Caching file -->",path)
-    saveRDS(obj, path)
+                       save_path){
+  if(!is.null(save_path)){
+    dir.create(dirname(save_path), showWarnings = FALSE, recursive = TRUE)
+    messager("Caching file -->",save_path)
+    saveRDS(obj, save_path)
   } 
 }

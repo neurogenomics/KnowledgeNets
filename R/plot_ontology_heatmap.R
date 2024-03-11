@@ -113,7 +113,7 @@ plot_ontology_heatmap <- function(ont,
     #### Save plot ####
     if(!is.null(save_path)){
       plot_save(plt = hm, 
-                path = save_path, 
+                save_path = save_path, 
                 height = height, 
                 width = width)
     }

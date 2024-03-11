@@ -1,4 +1,3 @@
-#' @describeIn add_ add_
 #' Add hoverboxes
 #'
 #' A hoverbox is a box of text that shows up when the cursor
@@ -6,6 +5,7 @@
 #' These can be useful when making interactive network plots
 #' of the HPO phenotypes because we can include a hoverbox that gives
 #' information and data associated with each phenotype. 
+#' @inheritParams add_
 #' @param columns Character vector of column names to include in the hoverbox.
 #' @param hoverbox_column Name of the new hoverbox column to add.
 #' @param decorators Left and right decorators to add to the hoverbox titles.

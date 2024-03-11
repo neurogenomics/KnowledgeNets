@@ -52,8 +52,7 @@ filter_ontology(
 a column in the data, and the vector within each element represents the 
 values to include in the final data.}
 
-\item{g}{ggnetwork object 
-(or an igraph/tbl_graph to be converted to ggnetwork format).}
+\item{g}{\link[tidygraph]{tbl_graph} object.}
 
 \item{node_filters}{A named list of filters to apply to the node data. 
 Names should be name of the metadata column, and values should be a vector of 
@@ -64,8 +63,7 @@ return any rows where the "type" column contains either "gene" or "variant".}
 
 \item{ont}{An ontology of class \link[simona]{ontology_DAG}.}
 
-\item{terms}{Term IDs to include. Can alternatively be an integer, 
-which will be used to randomly sample N terms from the data.}
+\item{terms}{A vector of ontology term IDs.}
 
 \item{remove_terms}{Character vector of term IDs to exclude.}
 

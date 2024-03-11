@@ -3,6 +3,8 @@
 #' Prune redundant ancestral terms from a \link{data.table}.
 #' @export
 #' @param dat A \link{data.table} with a column of ontology terms.
+#' @param id_col The name of the column containing ontology term IDs.
+#' @inheritParams filter_
 #' @examples
 #' dat <- data.table::data.table(hpo_id=c("HP:0000001","HP:0000002","HP:0000003"),
 #'                              name=c("term1","term2","term3"))
@@ -29,6 +31,6 @@ prune_ancestors <- function(dat,
       return(x)
     }
   }) |> unlist()
-  messager(length(pruned_ids),"/",length(ids),"terms were pruned.")
+  messager(length(pruned_ids),"/",length(ids),"terms were kept after pruning.")
   return(dat[get(id_col) %in% pruned_ids])
 }

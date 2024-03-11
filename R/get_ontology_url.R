@@ -3,13 +3,13 @@ get_ontology_url <- function(URL,
                              import_func=simona::import_ontology,
                              force_new=FALSE,
                              ...){
-  path <- file.path(save_dir,basename(URL))
-  if(file.exists(path) && !isTRUE(force_new)){
-    messager("Importing cached file:",path)
-    ont <- readRDS(path)
+  save_path <- file.path(save_dir,basename(URL))
+  if(file.exists(save_path) && !isTRUE(force_new)){
+    messager("Importing cached file:",save_path)
+    ont <- readRDS(save_path)
     return(ont)
   }
   ont <- import_func(URL, ...)
-  saveRDS(ont, path)
+  saveRDS(ont, save_path)
   return(ont)
 }

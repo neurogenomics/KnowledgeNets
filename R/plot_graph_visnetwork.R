@@ -130,7 +130,7 @@ plot_graph_visnetwork <- function(g,
   }
   #### Save network ####
   plot_save(plt=visnet, 
-            path=save_path) 
+            save_path=save_path) 
   return(list(
     data=g,
     plot=visnet

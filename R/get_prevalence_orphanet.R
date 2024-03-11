@@ -3,9 +3,9 @@ get_prevalence_orphanet <- function(agg_by=c("mondo_id","id","Name"),
   prevalence_numerator <- prevalence <- prevalence_mean <- Prevalence.ValMoy <-
     prevalence_denominator <- OrphaCode <- disease_id <- NULL;
   ## Open in Excel and convert to CSV first ##
-  path <- system.file("extdata", "orphanet_epidemiology.csv.gz",
+  save_path <- system.file("extdata", "orphanet_epidemiology.csv.gz",
                       package = "KGExplorer")
-  d <- data.table::fread(path)
+  d <- data.table::fread(save_path)
   #### Fix column names ####
   names(d) <- trimws(whitespace = "[.]",
                      gsub("[.]+",".",

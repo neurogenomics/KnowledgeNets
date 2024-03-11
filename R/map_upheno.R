@@ -24,8 +24,6 @@
 #' \itemize{
 #' \item{"monarch"}{Use Monarch's gene-to-gene mappings.}
 #' }
-#' @param force_new Force new data to be downloaded and processed.
-#' @param subset_db1 Subset of ontologies to include in the plot.
 #' @param save_dir Directory to save cached data.
 #' @param show_plot Show the plot.
 #' @param fill_scores Fill missing scores in the "equivalence_score" and
@@ -43,7 +41,8 @@
 #' }
 map_upheno <- function(pheno_map_method=c("upheno","monarch"),
                        gene_map_method=c("monarch"),
-                       subset_db1=c("HP"),
+                       filters=list(db1="HP",
+                                    gene_taxon_label1="Homo sapiens"),
                        terms=NULL,
                        fill_scores=NULL,
                        show_plot=TRUE,
@@ -57,7 +56,7 @@ map_upheno <- function(pheno_map_method=c("upheno","monarch"),
                                            terms=terms)
   #### Plots ####
   plots <- plot_upheno(pheno_map_genes_match,
-                           subset_db1=subset_db1)
+                       filters=filters)
   #### Return ####
   return(
     list(data=pheno_map_genes_match,

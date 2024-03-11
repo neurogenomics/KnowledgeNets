@@ -15,8 +15,8 @@ get_ontology_github <- function(name,
                                 force_new=FALSE,
                                 ...){
   
-  path <- file.path(save_dir,file)
-  if(!file.exists(path) || isTRUE(force_new)){
+  save_path <- file.path(save_dir,file)
+  if(!file.exists(save_path) || isTRUE(force_new)){
     #### From Releases #### 
     requireNamespace("piggyback") 
     if(is.null(tag)){
@@ -30,10 +30,10 @@ get_ontology_github <- function(name,
     messager("Preparing ontology_index object from:",URL)
     ont <- simona::import_ontology(file=URL,
                                    ...) 
-    saveRDS(ont,path)
+    saveRDS(ont,save_path)
   } else {
-    messager("Importing cached file:",path)
-    ont <- readRDS(path)
+    messager("Importing cached file:",save_path)
+    ont <- readRDS(save_path)
   }
   return(ont)
 }

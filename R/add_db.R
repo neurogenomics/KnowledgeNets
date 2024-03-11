@@ -1,6 +1,8 @@
-#' @describeIn add_ add_
+#' Add database
+#' 
 #' Extract a database identifier from an ID column and add it
 #' as a separate column.
+#' @inheritParams add_
 #' @param dat data.table or tbl_graph.
 #' @param input_col Column containing IDs.
 #' @param output_col Column to add.

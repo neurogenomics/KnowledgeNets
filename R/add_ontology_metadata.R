@@ -1,6 +1,7 @@
-#' @describeIn add_ add_
+#' Add ontology metadata 
 #' 
 #' Add per-term metadata to ontology.
+#' @inheritParams add_
 #' @export
 #' @import simona
 #' @importFrom Matrix colSums

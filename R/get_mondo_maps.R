@@ -31,24 +31,24 @@ get_mondo_maps <- function(map_types=c("default",
                            top_by=c("subject","object"),
                            save_dir=cache_dir()
                            ){
-  path <- subject_label <- object_label <- disease_label <- map_type <- to <- 
-    db <- NULL;
   requireNamespace("downloadR")
+  save_path <- subject_label <- object_label <- map_type <- label <- file <-
+    NULL;
   
   if(length(map_types)==1 &&
      map_types=="default"){ 
-    path <- downloadR::downloader(
+    save_path <- downloadR::downloader(
       input_url =  paste0(
         "https://github.com/monarch-initiative/mondo/raw/master/",
         "src/ontology/mappings/mondo.sssom.tsv"),
       output_dir = save_dir,
       download_method = "download.file")
-    map <- data.table::fread(path,
+    map <- data.table::fread(save_path,
                              skip = "subject",
                              tmpdir = save_dir)
     data.table::setnames(map,
                          gsub("_id$","",names(map)))
-    map[,file:=basename(path)]
+    map[,file:=basename(save_path)]
     add_db(dat=map,
            input_col="subject",
            output_col="subject_db")
@@ -63,10 +63,10 @@ get_mondo_maps <- function(map_types=c("default",
     map <- lapply(stats::setNames(files$link_raw,
                                   basename(files$link_raw)),
                   function(x){
-      path <- downloadR::downloader(input_url = x,
+      save_path <- downloadR::downloader(input_url = x,
                                     output_dir = save_dir,
                                     download_method = "download.file")
-      data.table::fread(path,
+      data.table::fread(save_path,
                         skip="subject_id",
                         tmpdir = save_dir)
     }) |> data.table::rbindlist(fill = TRUE, idcol = "file")

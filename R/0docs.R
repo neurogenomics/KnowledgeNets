@@ -1,3 +1,23 @@
+#### main_ ####
+#' @title Main functions
+#' 
+#' @description
+#' Documentation for common arguments.
+#' @param ont An ontology of class \link[simona]{ontology_DAG}. 
+#' @param terms A vector of ontology term IDs.
+#' @param g \link[tidygraph]{tbl_graph} object.
+#' @param force_new Create a new file instead of using any cached files.
+#' @param save_dir Directory to save a file to.
+#' @param save_path File name to save to.
+#' @param obj R object.
+#' @family main_ 
+#' @returns R object.
+#' 
+#' @name main_
+NULL
+
+
+
 #### utils_ ####
 #' @title Utility functions
 #' 
@@ -16,6 +36,7 @@ NULL
 #' Functions to query specific subset of data via dedicated APIs.
 #' @param ids IDs to query.
 #' @param batch_size Number of IDs to query at once.
+#' @inheritParams main_
 #' 
 #' @family query_ 
 #' @returns Queried data.
@@ -28,10 +49,7 @@ NULL
 #' 
 #' @description
 #' Functions to plot data.
-#' @param ont An ontology of class \link[simona]{ontology_DAG}.
 #' @param types Types of graph to produce. Can be one or more.
-
-#' @param g \link[tidygraph]{tbl_graph} object.
 #' @param layout_func Layout function for the graph.
 #' @param node_color_var Variable in the vertex metadata to color nodes by.
 #' @param edge_color_var Variable in the edge metadata to color edges by.
@@ -67,6 +85,8 @@ NULL
 #' @param size_var Column to scale node size by.
 #' @param colour_var Column to color nodes by.
 #' @param ... Additional arguments passed to plot-specific functions.
+#' @inheritParams main_
+#' @inheritParams filter_
 #' @import simona
 #' @family plot_ 
 #' @returns A named list containing the plot and the data.
@@ -77,11 +97,6 @@ NULL
 #### get_ ####
 #' @title Get functions
 #' 
-#' @param force_new Create a new file instead of using any cached files.
-#' @param save_dir Directory to save a file to.
-#' @param filters A named list, where each element in the list is the name of 
-#' a column in the data, and the vector within each element represents the 
-#' values to include in the final data.
 #' @param maps A list of paired to/from types to filter Monarch association 
 #' files by. For example, \code{list(c("gene","disease"))} will return any 
 #'  files that contains gene-disease associations.
@@ -102,6 +117,7 @@ NULL
 #' @param run_map_genes Map genes to standardised HGNC symbols using 
 #' \link[orthogene]{map_genes}.
 #' @param from The designated from column in from-to mapping or relations.
+#' @inheritParams main_
 #' @inheritParams add_
 #' @inheritParams to_
 #' @inheritParams map_
@@ -133,6 +149,7 @@ NULL
 #' @param add_definitions logical, if TRUE, add mondo definition column.  
 #' @param gr A \link[GenomicRanges]{GRanges} object.
 #' @param build Genome build to use when mapping genomic coordinates.
+#' @inheritParams main_
 #' @inheritParams to_
 #' @inheritParams filter_
 #' @inheritParams data.table::merge.data.table
@@ -150,12 +167,13 @@ NULL
 #' 
 #' @description
 #' Functions to filter objects
-#' @param terms Term IDs to include. Can alternatively be an integer, 
-#' which will be used to randomly sample N terms from the data.
 #' @param remove_terms Character vector of term IDs to exclude.
 #' @param use_simona Use \link[simona]{dag_filter} to filter terms.
 #' @param keep_chr Which chromosomes to keep.
 #' @param grlist Named list of \link[GenomicRanges]{GRanges} objects.
+#' @param filters A named list, where each element in the list is the name of 
+#' a column in the data, and the vector within each element represents the 
+#' values to include in the final data.
 #' @param node_filters A named list of filters to apply to the node data. 
 #' Names should be name of the metadata column, and values should be a vector of 
 #' valid options. For example, \code{list("type" = c("gene","variant"))} will
@@ -167,6 +185,7 @@ NULL
 #' @param remove_descendants Terms whose descendants should be removed 
 #' (including themselves).
 #'  Set to \code{NULL} (default) to skip this filtering step.
+#' @inheritParams main_
 #' @inheritParams plot_
 #' @inheritParams get_
 #' @import simona
@@ -186,6 +205,7 @@ NULL
 #' @param as_graph Return the object as a \link[tidygraph]{tbl_graph}.
 #' @param as_sparse Return the object as a \link[Matrix]{sparseMatrix}. 
 #' @param as_granges Return the object as a \link[GenomicRanges]{GRanges}.
+#' @inheritParams main_
 #' @inheritParams plot_
 #' @inheritParams filter_
 #' @import tidygraph
@@ -200,6 +220,9 @@ NULL
 #' 
 #' @description
 #' Functions to add extra metadata to an ontology or data.table object. 
+#' @param ont An ontology of class \link[simona]{ontology_DAG}. 
+#' @param terms A vector of ontology term IDs.
+#' @param g \link[tidygraph]{tbl_graph} object.
 #' @param force_new Add the data again even if the associated column already 
 #' exists.
 #' @param lvl Depth of the ancestor terms to add. 
@@ -207,6 +230,7 @@ NULL
 #' @param add_ancestors Add ancestors for each term.
 #' @param add_n_edges Add the number of edges (connections) for each term.
 #' @param add_ontology_levels Add the ontology level for each term.
+#' @inheritParams main_
 #' @inheritParams plot_
 #' @inheritParams simona::dag_ancestors
 #' @import simona
@@ -220,9 +244,7 @@ NULL
 #' 
 #' @description
 #' Functions to cache objects in order to speed up processes the second time. 
-#' @param obj R object.
-#' @param path File name to save to.
-#' @param save_dir Path to cache directory.
+#' @inheritParams main_
 #' @inheritParams base::unlink
 #' @family cache_ 
 #' @returns Null. 
@@ -234,6 +256,7 @@ NULL
 #' 
 #' @description
 #' Functions to merge data resources.
+#' @inheritParams main_
 #' @inheritParams get_
 #' @inheritParams map_
 #' @inheritParams to_

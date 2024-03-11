@@ -42,8 +42,7 @@ to_graph(g, ...)
 \arguments{
 \item{as_sparse}{Return the object as a \link[Matrix]{sparseMatrix}.}
 
-\item{g}{ggnetwork object 
-(or an igraph/tbl_graph to be converted to ggnetwork format).}
+\item{g}{\link[tidygraph]{tbl_graph} object.}
 
 \item{id_col}{Column containing the unique identifier for each node 
 in a graph (e.g. "name").}
@@ -58,8 +57,7 @@ in a graph (e.g. "name").}
 
 \item{to}{A character string specifying the format to convert to.}
 
-\item{terms}{Term IDs to include. Can alternatively be an integer, 
-which will be used to randomly sample N terms from the data.}
+\item{terms}{A vector of ontology term IDs.}
 
 \item{remove_terms}{Character vector of term IDs to exclude.}
 

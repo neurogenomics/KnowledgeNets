@@ -8,6 +8,10 @@ prune_ancestors(dat, id_col, ont)
 }
 \arguments{
 \item{dat}{A \link{data.table} with a column of ontology terms.}
+
+\item{id_col}{The name of the column containing ontology term IDs.}
+
+\item{ont}{An ontology of class \link[simona]{ontology_DAG}.}
 }
 \description{
 Prune redundant ancestral terms from a \link{data.table}.

@@ -56,13 +56,15 @@ map_ontology_terms(
   terms = NULL,
   to = c("name", "id"),
   keep_order = TRUE,
-  invert = FALSE
+  invert = FALSE,
+  ignore_case = TRUE,
+  verbose = 1
 )
 
 map_upheno(
   pheno_map_method = c("upheno", "monarch"),
   gene_map_method = c("monarch"),
-  subset_db1 = c("HP"),
+  filters = list(db1 = "HP", gene_taxon_label1 = "Homo sapiens"),
   terms = NULL,
   fill_scores = NULL,
   show_plot = TRUE,
@@ -148,6 +150,10 @@ sometimes in a different order.}
 \item{invert}{Invert the keys/values of the dictionary,
 such that the key becomes the values (and vice versa).}
 
+\item{ignore_case}{Ignore case when mapping terms.}
+
+\item{verbose}{Print messages.}
+
 \item{pheno_map_method}{Method to use for mapping phenotypes across ontologies.
 \itemize{
 \item{"upheno"}{Use uPheno's phenotype-to-phenotype mappings.
@@ -162,7 +168,9 @@ Contains more ontologies but with less coverage of phenotypes.
 \item{"monarch"}{Use Monarch's gene-to-gene mappings.}
 }}
 
-\item{subset_db1}{Subset of ontologies to include in the plot.}
+\item{filters}{A named list, where each element in the list is the name of 
+a column in the data, and the vector within each element represents the 
+values to include in the final data.}
 
 \item{fill_scores}{Fill missing scores in the "equivalence_score" and
 "subclass_score" columns with this value. These columns represent the
@@ -170,7 +178,7 @@ quality of mapping between two phenotypes on a scale from 0-1.}
 
 \item{show_plot}{Show the plot.}
 
-\item{force_new}{Force new data to be downloaded and processed.}
+\item{force_new}{Create a new file instead of using any cached files.}
 
 \item{gr}{A \link[GenomicRanges]{GRanges} object.}
 
@@ -193,7 +201,7 @@ Mapped data.
 
 Mapped \code{dat}
 
-Character vector
+Character vector.
 
 A list containing the data and plot.
 }
@@ -242,7 +250,9 @@ dt2 <- map_genes_monarch(dat=dat, gene_col="gene")
 dat <- example_dat(rm_types="gene")
 dat2 <- map_mondo(dat = dat, map_to="hpo")
 ont <- get_ontology("hp")
-terms <- c("Focal motor seizure","HP:0000002","HP:0000003")
+terms <- c("Focal motor seizure",
+            "Focal MotoR SEIzure",
+            "HP:0000002","HP:0000003")
 term_names <- map_ontology_terms(ont=ont, terms=terms)
 term_ids <- map_ontology_terms(ont=ont, terms=terms, to="id")
 \dontrun{

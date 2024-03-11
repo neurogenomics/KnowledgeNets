@@ -1,4 +1,4 @@
-#' @describeIn utils_ utils_
+#' @describeIn cache_ cache_
 #' Cache directory
 #' 
 #' Provides the path to the package-wide cache directory.

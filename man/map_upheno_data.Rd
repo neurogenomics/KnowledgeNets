@@ -41,7 +41,7 @@ quality of mapping between two phenotypes on a scale from 0-1.}
 
 \item{save_dir}{Directory to save cached data.}
 
-\item{force_new}{Force new data to be downloaded and processed.}
+\item{force_new}{Create a new file instead of using any cached files.}
 }
 \value{
 A data.table containing the mapped data.
