@@ -58,6 +58,7 @@ map_ontology_terms(
   keep_order = TRUE,
   invert = FALSE,
   ignore_case = TRUE,
+  ignore_char = c("-", "/", ",", "\\\\."),
   verbose = 1
 )
 
@@ -151,6 +152,9 @@ sometimes in a different order.}
 such that the key becomes the values (and vice versa).}
 
 \item{ignore_case}{Ignore case when mapping terms.}
+
+\item{ignore_char}{A character vector of characters to ignore when 
+mapping terms.}
 
 \item{verbose}{Print messages.}
 
@@ -252,6 +256,7 @@ dat2 <- map_mondo(dat = dat, map_to="hpo")
 ont <- get_ontology("hp")
 terms <- c("Focal motor seizure",
             "Focal MotoR SEIzure",
+            "Focal-motor,/seizure.",
             "HP:0000002","HP:0000003")
 term_names <- map_ontology_terms(ont=ont, terms=terms)
 term_ids <- map_ontology_terms(ont=ont, terms=terms, to="id")

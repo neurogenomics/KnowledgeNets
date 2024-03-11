@@ -11,6 +11,8 @@
 #' @param invert Invert the keys/values of the dictionary,
 #' such that the key becomes the values (and vice versa).
 #' @param ignore_case Ignore case when mapping terms.
+#' @param ignore_char A character vector of characters to ignore when 
+#' mapping terms.
 #' @param verbose Print messages.
 #' @returns Character vector.
 #'
@@ -19,6 +21,7 @@
 #' ont <- get_ontology("hp")
 #' terms <- c("Focal motor seizure",
 #'             "Focal MotoR SEIzure",
+#'             "Focal-motor,/seizure.",
 #'             "HP:0000002","HP:0000003")
 #' term_names <- map_ontology_terms(ont=ont, terms=terms)
 #' term_ids <- map_ontology_terms(ont=ont, terms=terms, to="id")
@@ -28,6 +31,7 @@ map_ontology_terms <- function(ont,
                                keep_order = TRUE,
                                invert = FALSE,
                                ignore_case=TRUE,
+                               ignore_char=c("-","/",",","\\."),
                                verbose=1){
   from <- NULL;
   to <- match.arg(to)
@@ -56,11 +60,24 @@ map_ontology_terms <- function(ont,
       map,
       data.table::copy(map)[,from:=tolower(from)]
     ) |> unique()
+    terms <- tolower(terms)
   } 
+  if(length(ignore_char)>0){
+    rm_char <- function(x, ignore_char){
+      x <- gsub(paste0(paste0("[",ignore_char,"]"),collapse="|")," ",x)
+      x <- gsub("\\s+"," ",x)
+      trimws(x)
+    }
+    map <- rbind(
+      map,
+      data.table::copy(map)[,from:=rm_char(from, ignore_char)]
+    ) |> unique()
+    terms <- rm_char(terms, ignore_char)
+  }
   data.table::setkey(map,"from")
   out <- stats::setNames(
-    map[tolower(terms)]$to,
-    terms
+    map[terms]$to,
+    terms_og
   ) 
   #### Return ####
   if(isFALSE(keep_order)){
