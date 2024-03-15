@@ -30,6 +30,7 @@ plot_graph_visnetwork <- function(g,
                                     avoidOverlap = 0.5, 
                                     gravitationalConstant = -50),
                                   scaling = NULL,
+                                  arrows = "from",
                                   smooth = list(enabled = TRUE, 
                                                 type = "cubicBezier", 
                                                 roundness = 0.5),
@@ -111,6 +112,7 @@ plot_graph_visnetwork <- function(g,
     ) |>
     visNetwork::visEdges(shadow = list(enabled=FALSE),
                          smooth = smooth,
+                         arrows = arrows,
                          color = list(opacity = 0.5)) |>
     # visNetwork::visLegend() |>
     # visNetwork::visClusteringByConnection(nodes = unique(top_targets[[group_var]])) |>

@@ -52,6 +52,9 @@ get_ontology <- function(name=c("mondo",
   if(isFALSE(force_new) && file.exists(save_path)){
     messager("Loading cached ontology:",save_path)
     ont <- readRDS(save_path)
+    #### Subset ontology ####
+    ont <- filter_ontology(ont = ont, 
+                           terms = terms)
     return(ont)
   } 
   ol <- rols::Ontologies()
@@ -115,15 +118,15 @@ get_ontology <- function(name=c("mondo",
                                  add_ancestors=add_ancestors, 
                                  add_ontology_levels=add_ontology_levels)
   }
-  #### Subset ontology ####
-  ont <- filter_ontology(ont = ont, 
-                         terms = terms)
   #### Cache RDS object ####
   if(!is.null(save_dir)){
     dir.create(save_dir, recursive=TRUE, showWarnings = FALSE)
     messager("Saving ontology -->",save_path)
     saveRDS(ont, save_path)
   }
+  #### Subset ontology ####
+  ont <- filter_ontology(ont = ont, 
+                         terms = terms)
   #### Return ####
   return(ont)
 }
