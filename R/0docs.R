@@ -230,9 +230,6 @@ NULL
 #' @param add_ancestors Add ancestors for each term.
 #' @param add_n_edges Add the number of edges (connections) for each term.
 #' @param add_ontology_levels Add the ontology level for each term.
-#' @inheritParams main_
-#' @inheritParams plot_
-#' @inheritParams simona::dag_ancestors
 #' @import simona
 #' @family add_ 
 #' @returns Added data. 

@@ -1,5 +1,7 @@
-#' @describeIn plot_ plot_
 #' Plot graph using visNetwork.
+#' 
+#' Plot graph using visNetwork.
+#' @inheritParams plot_
 #' @param add_visExport Add PDF download button.
 #' @inheritParams map_colors
 #' @inheritParams visNetwork::visIgraph

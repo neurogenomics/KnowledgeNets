@@ -2,6 +2,7 @@
 #' Filter ontology
 #'
 #' Filter ontology by terms.
+#' @inheritDotParams simona::dag_filter
 #' @export
 #' @examples
 #' ont <- get_ontology("hp")
@@ -12,6 +13,7 @@ filter_ontology <- function(ont,
                             remove_terms=NULL,
                             keep_descendants=NULL,
                             remove_descendants=NULL,
+                            include_self = TRUE,
                             use_simona=FALSE,
                             ...){
   #### Check remove_terms #### 
@@ -29,7 +31,7 @@ filter_ontology <- function(ont,
     if(length(keep_descendants)>0){
       messager("Keeping descendants of",length(keep_descendants),"term(s).")
       keep_descendants <- simona::dag_offspring(dag = ont,
-                                                include_self = TRUE,
+                                                include_self = include_self,
                                                 term = keep_descendants)
       ont <- simona::dag_filter(ont, 
                                 terms=keep_descendants, 
@@ -48,7 +50,7 @@ filter_ontology <- function(ont,
     if(length(remove_descendants)>0){
       messager("Removing descendants of",length(remove_descendants),"term(s).")
       remove_descendants <- simona::dag_offspring(dag = ont,
-                                                  include_self = TRUE,
+                                                  include_self = include_self,
                                                   term = remove_descendants)
       keep_terms <- ont@terms[!ont@terms %in% remove_descendants]
       ont <- simona::dag_filter(ont, 

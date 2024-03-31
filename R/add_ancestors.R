@@ -23,6 +23,7 @@ add_ancestors <- function(ont,
                           include_self=TRUE,
                           prefix="ancestor",
                           fill_na=TRUE,
+                          i=1,
                           force_new=FALSE){
   term <- NULL;
   
@@ -47,14 +48,14 @@ add_ancestors <- function(ont,
     )
   }) |> data.table::rbindlist(idcol  = prefix, fill = TRUE)
   #### Ensure one row per term ####
-  ancestors_groups <- ancestors_groups[, .SD[1], keyby = "term"] 
+  ancestors_groups <- ancestors_groups[, .SD[i], keyby = "term"] 
   if(isTRUE(fill_na)){
     ancestors_groups <- ancestors_groups[ont@terms][is.na(get(prefix)),
                                                     (prefix):=term]
   } 
   ont@elementMetadata[[prefix]] <- ancestors_groups[[prefix]]
   #### Add ancestor_name col
-  ont@elementMetadata[[prefix_name]] <-  map_ontology_terms(
+  ont@elementMetadata[[prefix_name]] <- map_ontology_terms(
     ont = ont, 
     terms = ont@elementMetadata[[prefix]], 
     to = "name")

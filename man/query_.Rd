@@ -25,13 +25,6 @@ query_oard(
 )
 }
 \arguments{
-\item{...}{
-  Arguments passed on to \code{\link[monarchr:biolink_search]{monarchr::biolink_search}}
-  \describe{
-    \item{\code{phrase_or_id}}{Something for which we are looking for more information, or to find useful entities.}
-    \item{\code{rows}}{Number of rows of results to fetch.}
-  }}
-
 \item{ids}{IDs to query.}
 
 \item{concept_prefix}{Concept prefix.}
@@ -62,7 +55,4 @@ Query the Open Real-world-based Annotation for Rare Disease (OARD).
 See \href{https://rare.cohd.io/}{here} for details.
 
 }}
-\examples{
-cells <- monarchr::biolink_search(phrase_or_id = "T-cell")
-}
 \concept{query_}

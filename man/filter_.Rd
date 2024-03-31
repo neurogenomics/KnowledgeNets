@@ -39,6 +39,7 @@ filter_ontology(
   remove_terms = NULL,
   keep_descendants = NULL,
   remove_descendants = NULL,
+  include_self = TRUE,
   use_simona = FALSE,
   ...
 )
@@ -77,7 +78,21 @@ return any rows where the "type" column contains either "gene" or "variant".}
 
 \item{use_simona}{Use \link[simona]{dag_filter} to filter terms.}
 
-\item{...}{Additional arguments passed to plot-specific functions.}
+\item{...}{
+  Arguments passed on to \code{\link[simona:dag_filter]{simona::dag_filter}}
+  \describe{
+    \item{\code{dag}}{An \code{ontology_DAG} object.}
+    \item{\code{relations}}{A vector of relations. The sub-DAG will only contain these relations.
+Valid values of "relations" should correspond to the values set in the
+\code{relations} argument in the \code{\link[simona:create_ontology_DAG]{create_ontology_DAG()}}. If \code{relations_DAG} is
+already provided, offspring relation types will all be selected. Note "is_a"
+is always included.}
+    \item{\code{root}}{A vector of term names which will be used as roots of the sub-DAG. Only
+these with their offspring terms will be kept. If there are multiple root terms,
+a super root will be automatically added.}
+    \item{\code{leaves}}{A vector of leaf terms. Only these with their ancestor terms will be kept.}
+    \item{\code{mcols_filter}}{Filtering on columns in the meta data frame.}
+  }}
 }
 \value{
 Converted data.
