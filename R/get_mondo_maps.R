@@ -65,7 +65,8 @@ get_mondo_maps <- function(map_types=c("default",
                   function(x){
       save_path <- downloadR::downloader(input_url = x,
                                     output_dir = save_dir,
-                                    download_method = "download.file")
+                                    download_method = "download.file", 
+                                    verbose = FALSE)
       data.table::fread(save_path,
                         skip="subject_id",
                         tmpdir = save_dir)
