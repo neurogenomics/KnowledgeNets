@@ -84,7 +84,6 @@ NULL
 #'  (e.g. "hpo_name").
 #' @param size_var Column to scale node size by.
 #' @param colour_var Column to color nodes by.
-#' @param ... Additional arguments passed to plot-specific functions.
 #' @inheritParams main_
 #' @inheritParams filter_
 #' @import simona

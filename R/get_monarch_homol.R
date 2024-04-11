@@ -1,7 +1,8 @@
 get_monarch_homol <- function(filters=list(subject_db="HGNC"),
                               as_graph=FALSE){
   gene_label <- hgnc_label <- gene <- hgnc <- 
-    subject_category <- object_categpry <- NULL;
+    subject_category <- object_categpry <- 
+    object_category <- subject_taxon_label <- NULL;
   
   homol <- get_monarch("gene_homolog", 
                        rbind=TRUE)

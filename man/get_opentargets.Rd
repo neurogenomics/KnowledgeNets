@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_opentargets.R
 \name{get_opentargets}
 \alias{get_opentargets}
-\title{Get OpenTargets}
+\title{Get Open Targets}
 \source{
 \href{https://community.opentargets.org/t/r-script-for-graphql-query-query-targetdiseaseevidence/662/5}{OpenTargets GraphQL queries in R}
 }
@@ -12,14 +12,33 @@ get_opentargets(
   data_type = c("associationByDatasourceDirect", "associationByDatasourceIndirect",
     "associationByDatatypeDirect", "associationByDatatypeIndirect",
     "associationByOverallDirect", "associationByOverallIndirect")[1],
-  server = "https://ftp.ebi.ac.uk/pub/databases/opentargets/platform/",
-  ftp = paste0(server, release, "/output/etl/parquet/", data_type[1], "/"),
+  server = "https://ftp.ebi.ac.uk/pub/databases/opentargets/",
+  subdir = c("platform/", "genetics/")[1],
+  subdir2 = c("/output/etl/parquet/", "/")[1],
+  ftp = paste0(server, subdir, release, subdir2, data_type[1], "/"),
   save_dir = cache_dir(),
   force_new = FALSE
 )
 }
+\arguments{
+\item{release}{Open Targets release version.}
+
+\item{data_type}{Type of data to download.}
+
+\item{server}{Open Targets server.}
+
+\item{subdir}{Open Targets subdirectory.}
+
+\item{subdir2}{Open Targets sub-subdirectory.}
+
+\item{ftp}{The final Open Targets FTP URL.}
+
+\item{save_dir}{Directory to save a file to.}
+
+\item{force_new}{If TRUE, force a new download.}
+}
 \description{
-Get OpenTargets disease-gene associations data
+Get Open Targets disease-gene associations data
 }
 \examples{
 d <- get_opentargets()

@@ -73,7 +73,7 @@ get_gencc <- function(agg_by=c("disease_id",
                  evidence_score_max=max(evidence_score, na.rm = TRUE),
                  evidence_score_mean=mean(evidence_score, na.rm=TRUE),
                  evidence_score_sum=sum(evidence_score, na.rm=TRUE),
-                 evidence_score_sd=sd(evidence_score, na.rm=TRUE)),
+                 evidence_score_sd=stats::sd(evidence_score, na.rm=TRUE)),
                by=agg_by]
   }
   #### Add version ####

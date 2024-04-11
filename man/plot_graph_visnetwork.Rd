@@ -43,6 +43,8 @@ plot_graph_visnetwork(
 
 \item{colour_var}{Column to color nodes by.}
 
+\item{invert_colour_var}{Invert colour variable.}
+
 \item{columns}{Names of columns to map colour palettes to.}
 
 \item{preferred_palettes}{Preferred palettes to use for each column.}
@@ -102,9 +104,14 @@ If you want to control the size of the arrowheads, you can supply an object. See
 
 \item{add_visExport}{Add PDF download button.}
 
+\item{degree}{The number of degrees away from the selected nodes
+to highlight.}
+
 \item{width}{Width of the heatmap body.}
 
 \item{height}{Height of the heatmap body.}
+
+\item{highlight_color}{Colour to highlight selected nodes.}
 
 \item{randomSeed}{: Number. The nodes are randomly positioned initially. This means that the settled result is different every time. If you provide a random seed manually, the layout will be the same every time.}
 

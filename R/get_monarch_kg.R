@@ -25,7 +25,7 @@ get_monarch_kg <- function(as_graph=TRUE,
                            ...){
   files <- get_monarch_files(subdir = "monarch-kg/latest/",
                              queries = "\\.tsv\\.gz")
-  save_path <- file.save_path(
+  save_path <- file.path(
     save_dir, 
     paste0(gsub("\\.tsv\\.gz","",basename(files$url[1])),".rds"))
   if(file.exists(save_path) & 

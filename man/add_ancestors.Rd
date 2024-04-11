@@ -10,6 +10,7 @@ add_ancestors(
   include_self = TRUE,
   prefix = "ancestor",
   fill_na = TRUE,
+  i = 1,
   force_new = FALSE
 )
 }
@@ -25,6 +26,8 @@ Will get the closest ancestor to this level if none have this exact level.}
 
 \item{fill_na}{If \code{TRUE}, fill ancestor columns with 
 NA values using the term ID and name.}
+
+\item{i}{Index of ancestor to use when more than one is available.}
 
 \item{force_new}{Add the data again even if the associated column already 
 exists.}

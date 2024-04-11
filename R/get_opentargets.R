@@ -1,7 +1,14 @@
-#' Get OpenTargets
+#' Get Open Targets
 #' 
-#' Get OpenTargets disease-gene associations data
+#' Get Open Targets disease-gene associations data
 #' @source \href{https://community.opentargets.org/t/r-script-for-graphql-query-query-targetdiseaseevidence/662/5}{OpenTargets GraphQL queries in R}
+#' @param release Open Targets release version.
+#' @param data_type Type of data to download.
+#' @param server Open Targets server.
+#' @param subdir Open Targets subdirectory.
+#' @param subdir2 Open Targets sub-subdirectory.
+#' @param ftp The final Open Targets FTP URL.
+#' @inheritParams get_
 #' @import rvest
 #' @export
 #' @examples
@@ -29,6 +36,7 @@ get_opentargets <- function(release="latest",
   
   ## Variant and gene level data merged for all genome-wide summary statistics:
   # ftp="https://ftp.ebi.ac.uk/pub/databases/opentargets/genetics/latest/d2v2g_scored/"
+  Name <- NULL;
   save_path <- file.path(save_dir,
                          paste0("opentargets_",data_type,".rds"))
   #### Import cached data ####

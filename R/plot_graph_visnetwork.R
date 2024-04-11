@@ -3,6 +3,10 @@
 #' Plot graph using visNetwork.
 #' @inheritParams plot_
 #' @param add_visExport Add PDF download button.
+#' @param invert_colour_var Invert colour variable.
+#' @param degree The number of degrees away from the selected nodes
+#'  to highlight.
+#' @param highlight_color Colour to highlight selected nodes.
 #' @inheritParams map_colors
 #' @inheritParams visNetwork::visIgraph
 #' @inheritParams visNetwork::visIgraphLayout

@@ -12,6 +12,7 @@
 #' @param prefix A prefix for the ancestor column names.
 #' @param fill_na If \code{TRUE}, fill ancestor columns with 
 #' NA values using the term ID and name.
+#' @param i Index of ancestor to use when more than one is available.
 #' @inheritParams add_
 #' @export
 #' @inheritParams simona::dag_offspring

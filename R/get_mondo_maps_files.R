@@ -3,7 +3,7 @@ get_mondo_maps_files <- function(map_types,
                                  map_to,
                                  save_dir){
   requireNamespace("echogithub")
-  save_path <- map_type <- to <- NULL;
+  map_type <- to <- path <- NULL;
   
   save_path <- file.path(save_dir,"mondo_maps.csv.gz")
   if(!file.exists(save_path)){

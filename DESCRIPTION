@@ -38,7 +38,10 @@ Imports:
   methods,
   BiocParallel,
   GenomicRanges,
-  orthogene
+  orthogene,
+  echogithub,
+  downloadR,
+  EnsDb.Hsapiens.v75
 Suggests:
   rworkflows,
   markdown,
@@ -57,15 +60,12 @@ Suggests:
   VariantAnnotation,
   AnnotationFilter,
   AnnotationHub,
-  EnsDb.Hsapiens.v75,
   TxDb.Hsapiens.UCSC.hg19.knownGene,
   TxDb.Hsapiens.UCSC.hg38.knownGene,
   MASS,
   GenomeInfoDb, 
   ensembldb,
   BiocGenerics,
-  echogithub,
-  downloadR,
   readxl,
   htmlwidgets,
   sparklyr,

@@ -40,7 +40,7 @@ return any rows where the "type" column contains either "gene" or "variant".}
 \item{subdir}{Subdirectory path to search for Monarch files within
 \code{domain}.}
 
-\item{...}{Additional arguments passed to plot-specific functions.}
+\item{...}{Not used at this time.}
 }
 \value{
 Merged data.

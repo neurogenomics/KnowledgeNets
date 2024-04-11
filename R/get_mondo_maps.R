@@ -33,7 +33,7 @@ get_mondo_maps <- function(map_types=c("default",
                            ){
   requireNamespace("downloadR")
   save_path <- subject_label <- object_label <- map_type <- label <- file <-
-    NULL;
+    predicate <- NULL;
   
   if(length(map_types)==1 &&
      map_types=="default"){ 

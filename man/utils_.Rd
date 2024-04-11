@@ -65,7 +65,7 @@ to the returned object's \link[base]{attributes}}
 \item{overwrite}{Should any local files of the same name be overwritten?
 default \code{TRUE}.}
 
-\item{...}{Additional arguments passed to plot-specific functions.}
+\item{...}{Not used at this time.}
 
 \item{v}{Whether to print messages or not.}
 
