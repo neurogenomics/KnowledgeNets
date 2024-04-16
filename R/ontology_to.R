@@ -28,7 +28,8 @@ ontology_to <- function(ont,
                              "list"),
                         terms=ont@terms,
                         remove_terms=grep(":",terms,
-                                          invert = TRUE, value = TRUE),
+                                          invert = TRUE, 
+                                          value = TRUE),
                         as_sparse=FALSE,
                         ...){
   to <- match.arg(to)

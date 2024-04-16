@@ -1,14 +1,14 @@
 #' Get ontology from GitHub and import it via \link[simona]{import_ontology}.
-#' @param filetype File type to search for.
 #' @inheritParams get_
 #' @inheritDotParams simona::import_ontology
 #' @inheritParams piggyback::pb_download_url  
+#' @inheritParams get_ontology
 #' @returns \link[simona]{ontology_DAG}
 #'
 #' @keywords internal
 get_ontology_github <- function(name,
                                 repo,
-                                filetype="-base.obo",
+                                filetype=".obo",
                                 file=paste0(name,filetype),  
                                 tag="latest",
                                 save_dir=cache_dir(),

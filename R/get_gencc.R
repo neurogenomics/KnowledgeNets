@@ -28,6 +28,7 @@
 #' @export
 #' @import data.table
 #' @importFrom utils download.file
+#' @importFrom stats sd
 #' @examples
 #' d <- get_gencc()
 get_gencc <- function(agg_by=c("disease_id",

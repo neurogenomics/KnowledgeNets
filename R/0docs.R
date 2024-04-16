@@ -36,7 +36,6 @@ NULL
 #' Functions to query specific subset of data via dedicated APIs.
 #' @param ids IDs to query.
 #' @param batch_size Number of IDs to query at once.
-#' @inheritParams main_
 #' 
 #' @family query_ 
 #' @returns Queried data.

@@ -9,7 +9,7 @@ ontology_to_graph <- function(ont,
   ## Add ont@elementMetadata to g
   g <- g |>
     tidygraph::left_join(
-      ont@elementMetadata |>
+      as.data.frame(ont@elementMetadata) |>
         tidygraph::rename(label=name) |>
         tidygraph::rename(name=id),
       by="name")

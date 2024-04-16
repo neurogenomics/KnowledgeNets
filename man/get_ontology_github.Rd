@@ -7,7 +7,7 @@
 get_ontology_github(
   name,
   repo,
-  filetype = "-base.obo",
+  filetype = ".obo",
   file = paste0(name, filetype),
   tag = "latest",
   save_dir = cache_dir(),

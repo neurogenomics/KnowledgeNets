@@ -11,7 +11,7 @@ get_ontology_dict <- function(ont,
                               include_self=FALSE,
                               as_datatable=FALSE){
   
-  to <- to[to %in% colnames(ont@elementMetadata)][1]
+  to <- intersect(to,colnames(ont@elementMetadata))[1]
   ## Check from col exists
   if(!from %in% colnames(ont@elementMetadata)){
     stopper("Column",from,"not found in ontology metadata.")
@@ -23,10 +23,14 @@ get_ontology_dict <- function(ont,
   
   if(isTRUE(as_datatable)){
     #### As data.table ####
-    dict <- data.table::data.table(ont@elementMetadata)[,from:=get(from)][,to:=get(to)][,c("from","to")]
+    dict <- data.table::as.data.table(
+      ont@elementMetadata
+      )[,from:=get(from)][,to:=get(to)][,c("from","to")]
     if(isTRUE(include_self)){
       dict <- rbind(dict,
-                    data.table::data.table(ont@elementMetadata)[,from:=get(to)][,to:=get(to)][,c("from","to")])
+                    data.table::as.data.table(
+                      ont@elementMetadata
+                      )[,from:=get(to)][,to:=get(to)][,c("from","to")])
     }
     dict <- unique(dict)
     data.table::setkeyv(dict, c("from")) 

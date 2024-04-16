@@ -28,7 +28,7 @@ add_ontology_metadata <- function(ont,
     dict <- Matrix::colSums(adj)
     simona::mcols(ont)$n_edges <- dict[ont@terms]
   }
-  if(add_ontology_levels){
+  if(isTRUE(add_ontology_levels)){
     simona::mcols(ont)$ontLvl <- get_ontology_levels(ont)
   }
   return(ont)

@@ -92,6 +92,7 @@ these with their offspring terms will be kept. If there are multiple root terms,
 a super root will be automatically added.}
     \item{\code{leaves}}{A vector of leaf terms. Only these with their ancestor terms will be kept.}
     \item{\code{mcols_filter}}{Filtering on columns in the meta data frame.}
+    \item{\code{namespace}}{The prefix before ":" of the term IDs.}
   }}
 }
 \value{

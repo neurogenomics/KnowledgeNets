@@ -136,8 +136,9 @@ get_mondo_maps_files(map_types, map_to, save_dir)
 get_ols_options(ol = rols::Ontologies())
 
 get_ontology(
-  name = c("mondo", "hp", "upheno", "uberon", "cl"),
-  method = c("rols", "github"),
+  name = c("mondo", "hp", "upheno", "uberon", "cl")[1],
+  method = c("github", "rols")[1],
+  filetype = ".obo",
   terms = NULL,
   add_metadata = TRUE,
   add_ancestors = 2,
@@ -282,7 +283,6 @@ return any rows where the "type" column contains either "gene" or "variant".}
     \item{\code{autostart}}{ Deprecated and ignored with warning. Please use \code{skip} instead. }
     \item{\code{tmpdir}}{ Directory to use as the \code{tmpdir} argument for any \code{tempfile} calls, e.g. when the input is a URL or a shell command. The default is \code{tempdir()} which can be controlled by setting \code{TMPDIR} before starting the R session; see \code{\link[base:tempfile]{base::tempdir}}. }
     \item{\code{tz}}{ Relevant to datetime values which have no Z or UTC-offset at the end, i.e. \emph{unmarked} datetime, as written by \code{\link[utils:write.table]{utils::write.csv}}. The default \code{tz="UTC"} reads unmarked datetime as UTC POSIXct efficiently. \code{tz=""} reads unmarked datetime as type character (slowly) so that \code{as.POSIXct} can interpret (slowly) the character datetimes in local timezone; e.g. by using \code{"POSIXct"} in \code{colClasses=}. Note that \code{fwrite()} by default writes datetime in UTC including the final Z and therefore \code{fwrite}'s output will be read by \code{fread} consistently and quickly without needing to use \code{tz=} or \code{colClasses=}. If the \code{TZ} environment variable is set to \code{"UTC"} (or \code{""} on non-Windows where unset vs `""` is significant) then the R session's timezone is already UTC and \code{tz=""} will result in unmarked datetimes being read as UTC POSIXct. For more information, please see the news items from v1.13.0 and v1.14.0. }
-    \item{\code{filetype}}{File type to search for.}
     \item{\code{repo}}{Repository name in format "owner/repo". Defaults to \code{guess_repo()}.}
     \item{\code{tag}}{tag for the GitHub release to which this data should be attached.}
   }}
@@ -341,6 +341,8 @@ Can be a character vector of one or more column names.}
  \item{"height" (default)} \link[simona]{dag_height}.
  \item{"depth"} \link[simona]{dag_depth}.
 }}
+
+\item{filetype}{File type to search for.}
 
 \item{terms}{A vector of ontology term IDs.}
 

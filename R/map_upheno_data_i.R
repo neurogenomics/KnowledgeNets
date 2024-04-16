@@ -25,7 +25,12 @@ map_upheno_data_i <- function(pheno_map_method,
       names(pheno_map) <-gsub("^object","id2",names(pheno_map))
       pheno_map[,db1:=gsub("*:.*","",basename(id1))]
     } else if(pheno_map_method=="monarch"){
-      pheno_map <- get_monarch("phenotype_to_phenotype") |>
+    
+      hpo <- HPOExplorer::get_hpo()
+      out <- monarchr::monarch_search(query = NULL,
+                                      category = "biolink:PhenotypicFeature", 
+                                      limit = 500)
+      pheno_map <- get_monarch(queries = "phenotype_to_phenotype") |>
         data.table::setnames(c("label_x","label_y"),c("label1","label2"))
       pheno_map[,id1:=gsub("_",":",basename(p1))
       ][,id2:=gsub("_",":",basename(p2))]
