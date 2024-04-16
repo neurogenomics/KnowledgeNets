@@ -137,7 +137,7 @@ get_ontology <- function(name=c("mondo",
   #### Cache RDS object ####
   if(!is.null(save_dir)){
     dir.create(save_dir, recursive=TRUE, showWarnings = FALSE)
-    messager("Saving ontology -->",save_path)
+    messager("Saving ontology -->",save_path) 
     saveRDS(ont, save_path)
   }
   #### Subset ontology ####
