@@ -30,11 +30,8 @@ filter_ontology <- function(ont,
                                            to = "id") |> stats::na.omit()
     if(length(keep_descendants)>0){
       messager("Keeping descendants of",length(keep_descendants),"term(s).")
-      keep_descendants <- simona::dag_offspring(dag = ont,
-                                                include_self = include_self,
-                                                term = keep_descendants)
       ont <- simona::dag_filter(ont, 
-                                terms=keep_descendants, 
+                                root=as.character(keep_descendants),
                                 ...)
       messager(formatC(ont@n_terms,big.mark = ","),
                "terms remain after filtering.")
@@ -64,9 +61,12 @@ filter_ontology <- function(ont,
   }
   #### Use custom filtering methods ####
   if(!is.null(terms)){
+    terms <- map_ontology_terms(ont = ont,
+                                terms = terms,
+                                to = "id") |> stats::na.omit()
     ## Characters 
     if(is.character(terms)){
-      terms <- terms[terms %in% ont@terms] |> unique()
+      terms <- terms[simona::dag_has_terms(dag=ont, terms = unique(terms))]
       if(length(terms)==0) {
         stopper("None of the supplied terms found in the ontology.")
       } 

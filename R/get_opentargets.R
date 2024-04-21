@@ -1,6 +1,9 @@
 #' Get Open Targets
 #' 
 #' Get Open Targets disease-gene associations data
+#' NOTE: If you get an error like " Cannot call parquet...", 
+#' try running \code{arrow::install_arrow},
+#'  restarting the R session, and trying again.
 #' @source \href{https://community.opentargets.org/t/r-script-for-graphql-query-query-targetdiseaseevidence/662/5}{OpenTargets GraphQL queries in R}
 #' @param release Open Targets release version.
 #' @param data_type Type of data to download.
@@ -59,13 +62,12 @@ get_opentargets <- function(release="latest",
   d <- BiocParallel::bplapply(stats::setNames(tbl$Name,
                                               tbl$Name),
                               BPPARAM = BPPARAM,
-                              function(f){
-                                
+                              function(f){ 
                                 if(endsWith(f,".json")){
-                                  j <- jsonlite::fromJSON(file.path(ftp, f))
+                                  j <- jsonlite::fromJSON(paste0(ftp,"/",f))
                                   jsonlite::fromJSON(j$serialisedSchema) 
                                 } else if (endsWith(f,".parquet")){
-                                  arrow::read_parquet(file.path(ftp, f)) |>
+                                  arrow::read_parquet(paste0(ftp,f)) |>
                                     data.table::data.table()
                                 }
                               }) |> data.table::rbindlist(idcol = "file")

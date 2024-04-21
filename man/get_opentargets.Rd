@@ -39,6 +39,9 @@ get_opentargets(
 }
 \description{
 Get Open Targets disease-gene associations data
+NOTE: If you get an error like " Cannot call parquet...", 
+try running \code{arrow::install_arrow}, r
+estarting the R session, and try again.
 }
 \examples{
 d <- get_opentargets()
