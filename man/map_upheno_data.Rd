@@ -11,6 +11,7 @@ map_upheno_data(
   fill_scores = NULL,
   terms = NULL,
   save_dir = cache_dir(),
+  agg = TRUE,
   force_new = FALSE
 )
 }
@@ -40,6 +41,9 @@ quality of mapping between two phenotypes on a scale from 0-1.}
 (e.g. c("HP:0001508","HP:0001507")).}
 
 \item{save_dir}{Directory to save cached data.}
+
+\item{agg}{Aggregate the data to to phenotype-level (TRUE). 
+Otherwise, keep data at gene level (FALSE).}
 
 \item{force_new}{Create a new file instead of using any cached files.}
 }

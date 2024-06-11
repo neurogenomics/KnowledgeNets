@@ -11,7 +11,7 @@ get_opentargets(
   release = "latest",
   data_type = c("associationByDatasourceDirect", "associationByDatasourceIndirect",
     "associationByDatatypeDirect", "associationByDatatypeIndirect",
-    "associationByOverallDirect", "associationByOverallIndirect")[1],
+    "associationByOverallDirect", "associationByOverallIndirect", "l2g")[1],
   server = "https://ftp.ebi.ac.uk/pub/databases/opentargets/",
   subdir = c("platform/", "genetics/")[1],
   subdir2 = c("/output/etl/parquet/", "/")[1],
@@ -40,8 +40,8 @@ get_opentargets(
 \description{
 Get Open Targets disease-gene associations data
 NOTE: If you get an error like " Cannot call parquet...", 
-try running \code{arrow::install_arrow}, r
-estarting the R session, and try again.
+try running \code{arrow::install_arrow},
+ restarting the R session, and trying again.
 }
 \examples{
 d <- get_opentargets()

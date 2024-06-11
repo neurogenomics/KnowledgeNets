@@ -3,6 +3,7 @@
 #' @examples
 #' ttd <- get_ttd()
 get_ttd <- function(save_dir = cache_dir(),
+                    force_new = FALSE,
                     run_map_genes = TRUE){
 
   requireNamespace("orthogene")
@@ -20,7 +21,8 @@ get_ttd <- function(save_dir = cache_dir(),
   f <- lapply(stats::setNames(files,files),
               function(x){
     loc <- file.path(save_dir,x)
-    if(!file.exists(loc)){
+    if(!file.exists(loc) & 
+       isFALSE(force_new)){
       utils::download.file(paste(domain,x,sep="/"),
                            destfile = loc)
     }
@@ -86,6 +88,8 @@ get_ttd <- function(save_dir = cache_dir(),
                                                 mthreshold = 1,
                                                 drop_na = FALSE)$name
     dat[,GENENAME3:=data.table::fcoalesce(GENENAME2,GENENAME_mapped)]
+  } else {
+    dat[,GENENAME3:=GENENAME2]
   }
   #### Convert status to ordered factor ####
   sts <- sort(unique(dat$HIGHEST_STATUS), na.last = TRUE)

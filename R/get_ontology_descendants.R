@@ -14,7 +14,7 @@ get_ontology_descendants <- function(ont,
                                      include_self = TRUE,
                                      ...){
   lapply(terms, function(x){
-    message(x)
+    # message(x)
     xt <- map_ontology_terms(ont = ont,
                              terms = x,
                              to = 'id')

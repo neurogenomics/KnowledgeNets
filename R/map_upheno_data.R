@@ -15,6 +15,8 @@
 #' }
 #' @param keep_nogenes Logical indicating whether to keep mappings that do not
 #' have any orthologous genes.
+#' @param agg Aggregate the data to to phenotype-level (TRUE). 
+#' Otherwise, keep data at gene level (FALSE).
 #' @inheritParams map_upheno
 #' @returns A data.table containing the mapped data.
 #'
@@ -29,9 +31,12 @@ map_upheno_data <- function(pheno_map_method=c("upheno","monarch"),
                             fill_scores=NULL,
                             terms=NULL,
                             save_dir=cache_dir(),
+                            agg=TRUE,
                             force_new=FALSE){
   #### Check for cached data ####
-  save_path <- file.path(save_dir,"pheno_map_genes_match.rds")
+  save_path <- file.path(
+    save_dir,
+    paste0("pheno_map_genes_match",if(isFALSE(agg)) ".noAgg",".rds"))
   if(file.exists(save_path) &&
      isFALSE(force_new)){
     ## Read from cache
@@ -47,7 +52,8 @@ map_upheno_data <- function(pheno_map_method=c("upheno","monarch"),
                           gene_map_method=gene_map_method,
                           keep_nogenes=keep_nogenes,
                           fill_scores=fill_scores,
-                          terms=terms)
+                          terms=terms,
+                          agg=agg)
       }) |> data.table::rbindlist(fill=TRUE, idcol = "pheno_map_method")
     ## Save
     messager("Caching processed file -->",save_path)

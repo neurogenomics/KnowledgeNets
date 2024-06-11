@@ -2,7 +2,8 @@ map_upheno_data_i <- function(pheno_map_method,
                               gene_map_method,
                               keep_nogenes,
                               fill_scores,
-                              terms){
+                              terms,
+                              agg){
   hgnc <- gene_label1 <- subject <- subject_taxon_label <-
     hgnc_label <- n_phenotypes <- n_genes_intersect <-
     prop_intersect <- p1 <- p2 <- db1 <- db2 <- id1 <- id2 <-
@@ -120,6 +121,7 @@ map_upheno_data_i <- function(pheno_map_method,
     } else {
       pheno_map_genes_match <- pheno_map_genes |> data.table::copy()
     }
+    if(isFALSE(agg)) return(pheno_map_genes_match)
     pheno_map_genes_match <-
       pheno_map_genes_match[,
                             list(n_genes_intersect=data.table::uniqueN(hgnc2)),

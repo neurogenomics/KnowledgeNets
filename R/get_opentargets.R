@@ -24,7 +24,9 @@ get_opentargets <- function(release="latest",
                                         "associationByDatatypeIndirect",
                                         
                                         "associationByOverallDirect",
-                                        "associationByOverallIndirect"
+                                        "associationByOverallIndirect",
+                                        
+                                        "l2g"
                             )[1],
                             server="https://ftp.ebi.ac.uk/pub/databases/opentargets/",
                             subdir=c("platform/","genetics/")[1],

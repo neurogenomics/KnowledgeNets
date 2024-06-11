@@ -175,7 +175,7 @@ get_prevalence(
   ...
 )
 
-get_ttd(save_dir = cache_dir(), run_map_genes = TRUE)
+get_ttd(save_dir = cache_dir(), force_new = FALSE, run_map_genes = TRUE)
 
 get_upheno(file = c("ontology", "bestmatches", "upheno_mapping"))
 

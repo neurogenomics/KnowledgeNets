@@ -70,6 +70,7 @@ get_ontology <- function(name=c("mondo",
      !name %in% c("mondo",
                   "hp","hpo",
                   "cl","cellontology","cell-ontology",
+                  "upheno",
                   "uberon")){
     if(name %in% rols_opts){
       messager("Ontology not found via 'github.' Using method='rols'.")
@@ -114,7 +115,7 @@ get_ontology <- function(name=c("mondo",
       ont <- get_ontology_url(URL = 
         # "https://github.com/obophenotype/upheno/raw/master/upheno.owl",
         "https://purl.obolibrary.org/obo/upheno/v2/upheno.owl",
-        # import_func = simona::import_owl,
+        import_func = simona::import_owl,
         force_new = force_new, 
         save_dir = save_dir, 
         ...) 
