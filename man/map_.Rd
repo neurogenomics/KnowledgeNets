@@ -54,7 +54,7 @@ map_mondo(
 map_ontology_terms(
   ont,
   terms = NULL,
-  to = c("name", "id"),
+  to = c("name", "id", "short_id"),
   keep_order = TRUE,
   invert = FALSE,
   ignore_case = TRUE,

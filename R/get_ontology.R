@@ -19,6 +19,8 @@
 #' via the \link{get_ontology_github}/link{get_ontology_url} functions. 
 #' @param add_metadata Add metadata to the resulting ontology object.
 #' @param filetype File type to search for.
+#' @param import_func Function to import the ontology with. 
+#' If \code{NULL}, automatically tries to choose the correct function.
 #' @inheritDotParams get_ontology_github
 #' @returns \link[simona]{ontology_DAG}
 #' 
@@ -39,9 +41,10 @@ get_ontology <- function(name=c("mondo",
                          method=c("github",
                                   "rols")[1], 
                          filetype=".obo",
+                         import_func=NULL,
                          terms=NULL,
                          add_metadata=TRUE,
-                         add_ancestors=2,
+                         lvl=2,
                          add_n_edges=TRUE,
                          add_ontology_levels=TRUE,
                          save_dir=cache_dir(),
@@ -84,6 +87,7 @@ get_ontology <- function(name=c("mondo",
     ol_ont <- ol[[name]]
     ont <- get_ontology_url(
       URL = ol_ont@config$fileLocation,
+      import_func=import_func,
       force_new = force_new, 
       save_dir = save_dir, 
       ...) 
@@ -132,7 +136,7 @@ get_ontology <- function(name=c("mondo",
   if(isTRUE(add_metadata)) {
     ont <- add_ontology_metadata(ont,
                                  add_n_edges=add_n_edges,
-                                 add_ancestors=add_ancestors, 
+                                 lvl=lvl, 
                                  add_ontology_levels=add_ontology_levels)
   }
   #### Cache RDS object ####

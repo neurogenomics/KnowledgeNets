@@ -6,7 +6,8 @@
 \usage{
 add_ontology_metadata(
   ont,
-  add_ancestors = 2,
+  lvl = 2,
+  force_new = FALSE,
   add_n_edges = TRUE,
   add_ontology_levels = TRUE
 )
@@ -14,7 +15,11 @@ add_ontology_metadata(
 \arguments{
 \item{ont}{An ontology of class \link[simona]{ontology_DAG}.}
 
-\item{add_ancestors}{Add ancestors for each term.}
+\item{lvl}{Depth of the ancestor terms to add. 
+Will get the closest ancestor to this level if none have this exact level.}
+
+\item{force_new}{Add the data again even if the associated column already 
+exists.}
 
 \item{add_n_edges}{Add the number of edges (connections) for each term.}
 

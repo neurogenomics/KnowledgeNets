@@ -139,9 +139,10 @@ get_ontology(
   name = c("mondo", "hp", "upheno", "uberon", "cl")[1],
   method = c("github", "rols")[1],
   filetype = ".obo",
+  import_func = NULL,
   terms = NULL,
   add_metadata = TRUE,
-  add_ancestors = 2,
+  lvl = 2,
   add_n_edges = TRUE,
   add_ontology_levels = TRUE,
   save_dir = cache_dir(),
@@ -151,9 +152,10 @@ get_ontology(
 
 get_ontology_dict(
   ont,
-  from = "id",
+  from = "short_id",
   to = c("name", "label", "term"),
   include_self = FALSE,
+  include_alternative_terms = TRUE,
   as_datatable = FALSE
 )
 
@@ -344,17 +346,23 @@ Can be a character vector of one or more column names.}
 
 \item{filetype}{File type to search for.}
 
+\item{import_func}{Function to import the ontology with. 
+If \code{NULL}, automatically tries to choose the correct function.}
+
 \item{terms}{A vector of ontology term IDs.}
 
 \item{add_metadata}{Add metadata to the resulting ontology object.}
 
-\item{add_ancestors}{Add ancestors for each term.}
+\item{lvl}{Depth of the ancestor terms to add. 
+Will get the closest ancestor to this level if none have this exact level.}
 
 \item{add_n_edges}{Add the number of edges (connections) for each term.}
 
 \item{add_ontology_levels}{Add the ontology level for each term.}
 
 \item{include_self}{For \code{dag_offspring()} and \code{dag_ancestors()}, this controls whether to also include the query term itself.}
+
+\item{include_alternative_terms}{Include alternative terms in the dictionary.}
 
 \item{as_datatable}{Return as a data.table instead of a named vector.}
 

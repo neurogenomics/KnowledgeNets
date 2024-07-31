@@ -1,3 +1,11 @@
+# KGExplorer 0.99.03
+
+## New features
+
+* `map_ontology_terms`: 
+  - Can now recognize `alternative_terms` slot in simona object (https://github.com/jokergoo/simona/issues/6)
+  - Automatically uses "short_id" when "id" is set, as the "id" column can sometimes contain long ID formats (http://purl.obolibrary.org/obo/MONDO_0100229 vs. MONDO:0100229)
+
 # KGExplorer 0.99.01
 
 ## Bug fixes

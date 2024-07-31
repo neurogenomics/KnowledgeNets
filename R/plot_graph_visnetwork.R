@@ -7,6 +7,8 @@
 #' @param degree The number of degrees away from the selected nodes
 #'  to highlight.
 #' @param highlight_color Colour to highlight selected nodes.
+#' @param node_opacity Node opacity.
+#' @param edge_opacity Edge opacity.
 #' @inheritParams map_colors
 #' @inheritParams visNetwork::visIgraph
 #' @inheritParams visNetwork::visIgraphLayout
@@ -26,6 +28,8 @@ plot_graph_visnetwork <- function(g,
                                   colour_var = size_var,
                                   invert_colour_var = TRUE,
                                   columns = get_graph_colnames(g),
+                                  node_opacity = .75,
+                                  edge_opacity = .5,
                                   preferred_palettes = NULL,
                                   selectedBy = label_var,
                                   show_plot = TRUE,
@@ -107,7 +111,7 @@ plot_graph_visnetwork <- function(g,
     ),
     shadow = list(enabled=TRUE,
                   size = 10),
-    opacity = 0.75,
+    opacity = node_opacity,
     borderWidth=3,
     borderWidthSelected=6,
     color = list(hover = list(background="rgba(0,0,0,.5)"),
@@ -119,7 +123,7 @@ plot_graph_visnetwork <- function(g,
     visNetwork::visEdges(shadow = list(enabled=FALSE),
                          smooth = smooth,
                          arrows = arrows,
-                         color = list(opacity = 0.5)) |>
+                         color = list(opacity = edge_opacity)) |>
     # visNetwork::visLegend() |>
     # visNetwork::visClusteringByConnection(nodes = unique(top_targets[[group_var]])) |>
     # visNetwork::visGroups(groupname = unique(igraph::vertex_attr(g,"group"))[[2]],

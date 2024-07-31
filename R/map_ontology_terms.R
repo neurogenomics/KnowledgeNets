@@ -27,7 +27,7 @@
 #' term_ids <- map_ontology_terms(ont=ont, terms=terms, to="id")
 map_ontology_terms <- function(ont,
                                terms = NULL,
-                               to=c("name","id"),
+                               to=c("name","id","short_id"),
                                keep_order = TRUE,
                                invert = FALSE,
                                ignore_case=TRUE,
@@ -37,10 +37,13 @@ map_ontology_terms <- function(ont,
   to <- match.arg(to)
   if(!is.null(terms)) terms <- as.character(terms)
   terms_og <- terms
+  
+  if(to=="id") to <- "short_id"
+  
   # terms <- unique(terms)
   # new_to_old <- stats::setNames(unique(terms_og),terms)
   #### to IDs ###
-  if(to=="id"){
+  if(to %in% c("id","short_id")){
     messager("Translating ontology terms to ids.",v=verbose)
     map <- get_ontology_dict(ont,
                              from="name",
@@ -51,7 +54,7 @@ map_ontology_terms <- function(ont,
     #### to names ###
     messager("Translating ontology terms to names.",v=verbose)
     map <- get_ontology_dict(ont,
-                             from="id",
+                             from="short_id",
                              to=to,
                              as_datatable=TRUE,
                              include_self=TRUE)

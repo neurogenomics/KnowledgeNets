@@ -9,7 +9,8 @@
 #' ont <- get_ontology("hp", terms=10)
 #' ont2 <- add_ontology_metadata(ont)
 add_ontology_metadata <- function(ont,
-                                  add_ancestors=2,
+                                  lvl=2,
+                                  force_new = FALSE,
                                   add_n_edges=TRUE,
                                   add_ontology_levels=TRUE){
   messager("Adding term metadata.")
@@ -21,7 +22,8 @@ add_ontology_metadata <- function(ont,
   simona::mcols(ont)$n_offspring <- simona::n_offspring(ont)
   simona::mcols(ont)$n_connected_leaves <- simona::n_connected_leaves(ont) 
   ont <- add_ancestors(ont = ont, 
-                       lvl = add_ancestors)
+                       force_new = force_new,
+                       lvl = lvl)
   if(isTRUE(add_n_edges)){
     adj <- ontology_to(ont = ont,
                        to="adjacency")

@@ -11,6 +11,8 @@ plot_graph_visnetwork(
   colour_var = size_var,
   invert_colour_var = TRUE,
   columns = get_graph_colnames(g),
+  node_opacity = 0.75,
+  edge_opacity = 0.5,
   preferred_palettes = NULL,
   selectedBy = label_var,
   show_plot = TRUE,
@@ -46,6 +48,10 @@ plot_graph_visnetwork(
 \item{invert_colour_var}{Invert colour variable.}
 
 \item{columns}{Names of columns to map colour palettes to.}
+
+\item{node_opacity}{Node opacity.}
+
+\item{edge_opacity}{Edge opacity.}
 
 \item{preferred_palettes}{Preferred palettes to use for each column.}
 
