@@ -1,18 +1,19 @@
 #' @describeIn plot_ plot_
 plot_upheno_heatmap <- function(plot_dat,
-                               ont=get_ontology("upheno",
-                                                add_ancestors = 10),
-                               hpo_ids=NULL,
-                               value.var=c("phenotype_genotype_score",
-                                           "prop_intersect",
-                                           "equivalence_score",
-                                           "subclass_score"),
-                               name=value.var[1],
-                               min_rowsums=NULL,
-                               cluster_from_ontology=FALSE,
-                               save_dir=tempdir(),
-                               height = 15,
-                               width = 10){
+                                lvl=10,
+                                 ont=get_ontology("upheno",
+                                                  lvl = lvl),
+                                 hpo_ids=NULL,
+                                 value.var=c("phenotype_genotype_score",
+                                             "prop_intersect",
+                                             "equivalence_score",
+                                             "subclass_score"),
+                                 name=value.var[1],
+                                 min_rowsums=NULL,
+                                 cluster_from_ontology=FALSE,
+                                 save_dir=tempdir(),
+                                 height = 15,
+                                 width = 10){
   requireNamespace("ComplexHeatmap")
   hpo_id <- object_label1 <- NULL;
   set.seed(2023)
@@ -25,7 +26,7 @@ plot_upheno_heatmap <- function(plot_dat,
   plot_dat[,hpo_id:=id1][,object_label1:=gsub(" (HPO)","",
                                               object_label1,fixed = TRUE)]
   if(isFALSE(cluster_from_ontology)){
-    ont <- add_ancestors(ont)
+    ont <- add_ancestors(ont, lvl = lvl)
     if(!"ancestor_name" %in% names(plot_dat)){
       plot_dat <- merge(
         plot_dat,
@@ -88,13 +89,14 @@ plot_upheno_heatmap <- function(plot_dat,
   #       max(annot_dat$n_genes_db1),
   #       length.out=4),
   #   pals::gnuplot(4))
+  data.table::setnames(annot_dat,"n_genes_db1","N genes (HPO)")
   la <- ComplexHeatmap::rowAnnotation(
     df=data.frame(annot_dat[,-c("object_label1")],
-                  row.names = annot_dat$label1),
-    # ?ComplexHeatmap::Legend
-    show_legend = c(TRUE, FALSE),
-    annotation_legend_param = list(
-      n_genes_db1= list(title = "HPO genes"))
+                  row.names = annot_dat$object_label1, 
+                  check.names = FALSE),
+    show_legend = c(TRUE, FALSE)
+    # annotation_legend_param = list(
+    #   `N genes (HPO)`= list(title = "HPO genes"))
   )
   row_split <- if(isFALSE(cluster_from_ontology)) annot_dat$ancestor_name
   #### make heatmap ####

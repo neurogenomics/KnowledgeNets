@@ -7,7 +7,8 @@
 plot_upheno(
   pheno_map_genes_match = NULL,
   filters = list(db1 = "HP", gene_taxon_label1 = "Homo sapiens"),
-  types = c("rainplot", "scatterplot", "heatmap")
+  types = c("rainplot", "scatterplot", "heatmap"),
+  ...
 )
 }
 \arguments{
@@ -20,6 +21,8 @@ a column in the data, and the vector within each element represents the
 values to include in the final data.}
 
 \item{types}{A character vector of plot types to generate.}
+
+\item{...}{Arguments passed to plotting functions.}
 }
 \value{
 A named list of \pkg{ggplot2} objects.
