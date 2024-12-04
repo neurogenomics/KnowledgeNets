@@ -20,5 +20,5 @@ Prune redundant ancestral terms from a \link{data.table}.
 dat <- data.table::data.table(hpo_id=c("HP:0000001","HP:0000002","HP:0000003"),
                              name=c("term1","term2","term3"))
 ont <- get_ontology("hp")
-dat2 <- prune_ancestors(dat,ont=ont)
+dat2 <- prune_ancestors(dat,id_col="hpo_id",ont=ont)
 }
