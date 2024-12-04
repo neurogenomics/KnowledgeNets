@@ -9,10 +9,10 @@ set_cores(workers = 0.9, progressbar = TRUE, verbose = TRUE)
 \arguments{
 \item{workers}{Number (>1) or proportion (<1) of worker cores to use.}
 
-\item{progressbar}{logical(1) Enable progress bar 
+\item{progressbar}{logical(1) Enable progress bar
 (based on \code{plyr:::progress_text}).
- Enabling the progress bar changes the default value of tasks to 
- \code{.Machine$integer.max}, so that progress is reported for 
+ Enabling the progress bar changes the default value of tasks to
+ \code{.Machine$integer.max}, so that progress is reported for
  each element of X.}
 
 \item{verbose}{Print messages.}
