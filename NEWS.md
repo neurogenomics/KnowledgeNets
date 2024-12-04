@@ -1,3 +1,15 @@
+# KGExplorer 0.99.04
+
+## Bug fixes
+* `test-get_ontology_levels`
+  - Check for range rather than fixed values.
+* `filter_ontology`
+  - Move `terms` processing block to after check for character, as appropriate.
+* `get_ontology_dict`
+  - Add error handling for missing `alternative_terms` when
+  `include_alternative_terms=TRUE`.
+
+
 # KGExplorer 0.99.03
 
 ## New features
