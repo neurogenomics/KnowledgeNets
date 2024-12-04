@@ -8,6 +8,13 @@
 * `get_ontology_dict`
   - Add error handling for missing `alternative_terms` when
   `include_alternative_terms=TRUE`.
+* `plot_ontology_heatmap`
+  - Fix default value for argument `annot`-- cast one@elementMetadata to
+  data.frame first.
+* `prune_ancestors`
+  - Add value for argument `id_col` in example.
+* `set_cores`
+  - Reduce workers during `R CMD CHECK` if required.
 
 
 # KGExplorer 0.99.03
