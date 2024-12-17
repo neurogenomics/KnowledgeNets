@@ -83,6 +83,7 @@ Suggests:
   forcats,
   arrow
 Remotes:
+  github::neurogenomics/KGExplorer,
   github::neurogenomics/HPOExplorer,
   github::monarch-initiative/monarchr,
   github::phenoscape/rphenoscape,

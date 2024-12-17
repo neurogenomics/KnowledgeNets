@@ -4,6 +4,8 @@
 * `DESCRIPTION`
   - Update remote for `monarchr`.
   - Add `HPOExplorer` to Suggests and remotes.
+  - Add `KGExplorer` (self) to remote to fix circular dependency with
+  `HPOExplorer` installation.
 
 # KGExplorer 0.99.04
 
