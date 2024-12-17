@@ -1,7 +1,7 @@
 Package: KGExplorer
 Type: Package
 Title: Biomedical Knowledge Network Construction and Analysis
-Version: 0.99.04
+Version: 0.99.05
 Authors@R:
     c(
     person(given = "Brian",
@@ -73,6 +73,7 @@ Suggests:
   BiocGenerics,
   readxl,
   htmlwidgets,
+  HPOExplorer,
   sparklyr,
   httr,
   jsonlite,
@@ -82,7 +83,8 @@ Suggests:
   forcats,
   arrow
 Remotes:
-  github::charlieccarey/monarchr,
+  github::neurogenomics/HPOExplorer,
+  github::monarch-initiative/monarchr,
   github::phenoscape/rphenoscape,
   github::vjcitn/biocBiocypher,
   github::RajLabMSSM/echogithub,

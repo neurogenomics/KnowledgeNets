@@ -15,7 +15,7 @@ status](https://github.com/neurogenomics/KGExplorer/workflows/rworkflows/badge.s
 Authors: <i>Brian Schilder, Hiranyamaya Dash</i>  
 </h4>
 <h4>  
-README updated: <i>Dec-04-2024</i>  
+README updated: <i>Dec-17-2024</i>  
 </h4>
 
 <!-- To modify Package/Title/Description/Authors fields, edit the DESCRIPTION file -->
@@ -60,7 +60,7 @@ utils::sessionInfo()
 
     ## R version 4.4.2 (2024-10-31)
     ## Platform: aarch64-apple-darwin20
-    ## Running under: macOS Sequoia 15.1.1
+    ## Running under: macOS Sequoia 15.2
     ## 
     ## Matrix products: default
     ## BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 

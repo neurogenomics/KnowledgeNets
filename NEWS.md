@@ -1,3 +1,10 @@
+# KGExplorer 0.99.05
+
+## Bug fixes
+* `DESCRIPTION`
+  - Update remote for `monarchr`.
+  - Add `HPOExplorer` to Suggests and remotes.
+
 # KGExplorer 0.99.04
 
 ## Bug fixes
@@ -15,7 +22,6 @@
   - Add value for argument `id_col` in example.
 * `set_cores`
   - Reduce workers during `R CMD CHECK` if required.
-
 
 # KGExplorer 0.99.03
 
