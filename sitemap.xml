@@ -1,84 +1,41 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>/404.html</loc>
-  </url>
-  <url>
-    <loc>/articles/KGExplorer.html</loc>
-  </url>
-  <url>
-    <loc>/articles/docker.html</loc>
-  </url>
-  <url>
-    <loc>/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>/authors.html</loc>
-  </url>
-  <url>
-    <loc>/index.html</loc>
-  </url>
-  <url>
-    <loc>/news/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/add_.html</loc>
-  </url>
-  <url>
-    <loc>/reference/cache_.html</loc>
-  </url>
-  <url>
-    <loc>/reference/filter_.html</loc>
-  </url>
-  <url>
-    <loc>/reference/get_.html</loc>
-  </url>
-  <url>
-    <loc>/reference/get_ontology_github.html</loc>
-  </url>
-  <url>
-    <loc>/reference/get_ontology_robot.html</loc>
-  </url>
-  <url>
-    <loc>/reference/graph_to_plotly.html</loc>
-  </url>
-  <url>
-    <loc>/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/kde_surface.html</loc>
-  </url>
-  <url>
-    <loc>/reference/link_.html</loc>
-  </url>
-  <url>
-    <loc>/reference/map_.html</loc>
-  </url>
-  <url>
-    <loc>/reference/map_genes_dt.html</loc>
-  </url>
-  <url>
-    <loc>/reference/map_upheno_data.html</loc>
-  </url>
-  <url>
-    <loc>/reference/plot_.html</loc>
-  </url>
-  <url>
-    <loc>/reference/plot_upheno.html</loc>
-  </url>
-  <url>
-    <loc>/reference/query_.html</loc>
-  </url>
-  <url>
-    <loc>/reference/query_phenoscape.html</loc>
-  </url>
-  <url>
-    <loc>/reference/query_ubergraph.html</loc>
-  </url>
-  <url>
-    <loc>/reference/to_.html</loc>
-  </url>
-  <url>
-    <loc>/reference/utils_.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>/404.html</loc></url>
+<url><loc>/articles/KGExplorer.html</loc></url>
+<url><loc>/articles/docker.html</loc></url>
+<url><loc>/articles/index.html</loc></url>
+<url><loc>/authors.html</loc></url>
+<url><loc>/index.html</loc></url>
+<url><loc>/news/index.html</loc></url>
+<url><loc>/reference/add_.html</loc></url>
+<url><loc>/reference/add_ancestors.html</loc></url>
+<url><loc>/reference/add_db.html</loc></url>
+<url><loc>/reference/add_hoverboxes.html</loc></url>
+<url><loc>/reference/add_ontology_metadata.html</loc></url>
+<url><loc>/reference/cache_.html</loc></url>
+<url><loc>/reference/filter_.html</loc></url>
+<url><loc>/reference/get_.html</loc></url>
+<url><loc>/reference/get_ontology_descendants.html</loc></url>
+<url><loc>/reference/get_ontology_github.html</loc></url>
+<url><loc>/reference/get_ontology_robot.html</loc></url>
+<url><loc>/reference/get_opentargets.html</loc></url>
+<url><loc>/reference/graph_to_plotly.html</loc></url>
+<url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/kde_surface.html</loc></url>
+<url><loc>/reference/link_.html</loc></url>
+<url><loc>/reference/main_.html</loc></url>
+<url><loc>/reference/map_.html</loc></url>
+<url><loc>/reference/map_genes_dt.html</loc></url>
+<url><loc>/reference/map_upheno_data.html</loc></url>
+<url><loc>/reference/plot_.html</loc></url>
+<url><loc>/reference/plot_graph_visnetwork.html</loc></url>
+<url><loc>/reference/plot_upheno.html</loc></url>
+<url><loc>/reference/prune_ancestors.html</loc></url>
+<url><loc>/reference/query_.html</loc></url>
+<url><loc>/reference/query_phenoscape.html</loc></url>
+<url><loc>/reference/query_ubergraph.html</loc></url>
+<url><loc>/reference/set_cores.html</loc></url>
+<url><loc>/reference/to_.html</loc></url>
+<url><loc>/reference/unlist_dt.html</loc></url>
+<url><loc>/reference/utils_.html</loc></url>
 </urlset>
+
