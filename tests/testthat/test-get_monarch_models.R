@@ -1,3 +1,4 @@
+skip_if_offline()
 test_that("get_monarch_models works", {
 
   models <- get_monarch_models()

@@ -80,7 +80,8 @@ Suggests:
   tidyr,
   DiagrammeR,
   forcats,
-  arrow
+  arrow,
+  curl
 Remotes:
   github::monarch-initiative/monarchr,
   github::phenoscape/rphenoscape,

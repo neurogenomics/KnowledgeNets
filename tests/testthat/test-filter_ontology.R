@@ -1,3 +1,4 @@
+skip_if_offline()
 test_that("filter_ontology works", {
 
   ont <- get_ontology("hp")

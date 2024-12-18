@@ -7,6 +7,8 @@
 ## Bug fixes
 * `DESCRIPTION`
   - Update remote for `monarchr`.
+* Tests
+  - Add `skip_if_offline` to tests that (may) require internet access.
 * `ontology_to`
   - `igraph::as_adj` (deprecated) -> `igraph::as_adjacency_matrix`.
 

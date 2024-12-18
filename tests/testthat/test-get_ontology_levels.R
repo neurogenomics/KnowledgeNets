@@ -1,3 +1,4 @@
+skip_if_offline()
 test_that("get_ontology_levels works", {
 
   hpo <- get_ontology("hp")

@@ -1,7 +1,8 @@
+skip_if_offline()
 test_that("map_upheno works", {
-  
+
   testthat::skip()
-  
+
   run_tests <- function(res){
     testthat::expect_true(methods::is(res$data,"data.table"))
     for(x in res$plots){
@@ -15,7 +16,7 @@ test_that("map_upheno works", {
                     # pheno_map_method="upheno",
                     terms = terms)
   run_tests(res)
-  
+
   #### Use cached data and filter by HPO terms
   res <- map_upheno(force_new = FALSE,
                     terms = terms)
