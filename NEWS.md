@@ -7,6 +7,8 @@
 ## Bug fixes
 * `DESCRIPTION`
   - Update remote for `monarchr`.
+* `ontology_to`
+  - `igraph::as_adj` (deprecated) -> `igraph::as_adjacency_matrix`.
 
 # KGExplorer 0.99.04
 

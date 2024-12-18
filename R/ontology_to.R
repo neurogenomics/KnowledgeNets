@@ -2,13 +2,13 @@
 #' Convert ontology
 #'
 #' Convert an  \link[simona]{ontology_DAG} to
-#' a number of other useful formats. 
-#' @export 
+#' a number of other useful formats.
+#' @export
 #' @importFrom stats as.dist hclust cutree
 #' @examples
 #' ont <- get_ontology()
 #' obj <- ontology_to(ont=ont, to="dendrogram")
-ontology_to <- function(ont, 
+ontology_to <- function(ont,
                         to=c("adjacency",
                              "adjacency_dist",
                              "adjacency_dist_hclust",
@@ -28,7 +28,7 @@ ontology_to <- function(ont,
                              "list"),
                         terms=ont@terms,
                         remove_terms=grep(":",terms,
-                                          invert = TRUE, 
+                                          invert = TRUE,
                                           value = TRUE),
                         as_sparse=FALSE,
                         ...){
@@ -38,7 +38,7 @@ ontology_to <- function(ont,
                          remove_terms = remove_terms)
   if(to=="adjacency"){
     g <- ontology_to_graph(ont)
-    obj <- igraph::as_adj(g)
+    obj <- igraph::as_adjacency_matrix(g)
   } else if(to=="adjacency_dist"){
     adj <- ontology_to(ont, to="adjacency")
     # obj <- stats::dist(adj) ### seems to take forever
@@ -56,7 +56,7 @@ ontology_to <- function(ont,
     obj <- simona::dag_as_DOT(ont, ...)
   } else if(to=="similarity"){
     obj <- simona::term_sim(ont, terms=ont@terms, ...)
-  } else if(to=="adjacency_dist_hclust_clusters"){ 
+  } else if(to=="adjacency_dist_hclust_clusters"){
     hc <- ontology_to(ont, to="adjacency_dist_hclust")
     obj <- stats::cutree(hc, ...)
   } else if(to=="igraph"){
@@ -74,7 +74,7 @@ ontology_to <- function(ont,
   } else if(to=="igraph_dist_hclust_dendrogram"){
     gdh <- ontology_to(ont, to="igraph_dist_hclust")
     obj <- stats::as.dendrogram(gdh)
-  } else if(to=="tbl_graph"){ 
+  } else if(to=="tbl_graph"){
     obj <- ontology_to_graph(ont, ...)
   } else if(to=="data.frame"){
     g <- ontology_to_graph(ont)
@@ -84,7 +84,7 @@ ontology_to <- function(ont,
     obj <- data.table::as.data.table(df)
   } else if(to=="list") {
     obj <- list(
-      similarity=ontology_to(ont, to = "similarity"), 
+      similarity=ontology_to(ont, to = "similarity"),
       adjacency=ontology_to(ont, to = "adjacency"),
       elementMetadata=data.table::data.table(ont@elementMetadata),
       annotation=ont@annotation,
