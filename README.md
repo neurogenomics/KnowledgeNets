@@ -3,7 +3,7 @@ KGExplorer
 <img src='https://github.com/neurogenomics/KGExplorer/raw/master/inst/hex/hex.png' title='Hex sticker for KGExplorer' height='300'><br>
 [![License:
 GPL-3](https://img.shields.io/badge/license-GPL--3-blue.svg)](https://cran.r-project.org/web/licenses/GPL-3)
-[![](https://img.shields.io/badge/devel%20version-0.99.04-black.svg)](https://github.com/neurogenomics/KGExplorer)
+[![](https://img.shields.io/badge/devel%20version-0.99.05-black.svg)](https://github.com/neurogenomics/KGExplorer)
 [![](https://img.shields.io/github/languages/code-size/neurogenomics/KGExplorer.svg)](https://github.com/neurogenomics/KGExplorer)
 [![](https://img.shields.io/github/last-commit/neurogenomics/KGExplorer.svg)](https://github.com/neurogenomics/KGExplorer/commits/master)
 <br> [![R build
@@ -15,7 +15,7 @@ status](https://github.com/neurogenomics/KGExplorer/workflows/rworkflows/badge.s
 Authors: <i>Brian Schilder, Hiranyamaya Dash</i>  
 </h4>
 <h4>  
-README updated: <i>Dec-17-2024</i>  
+README updated: <i>Dec-18-2024</i>  
 </h4>
 
 <!-- To modify Package/Title/Description/Authors fields, edit the DESCRIPTION file -->

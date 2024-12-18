@@ -1,11 +1,12 @@
 # KGExplorer 0.99.05
 
+## New features
+* `get_hpo`
+  - Port function from `HPOExplorer` package to prevent circular dependency.
+
 ## Bug fixes
 * `DESCRIPTION`
   - Update remote for `monarchr`.
-  - Add `HPOExplorer` to Suggests and remotes.
-  - Add `KGExplorer` (self) to remote to fix circular dependency with
-  `HPOExplorer` installation.
 
 # KGExplorer 0.99.04
 

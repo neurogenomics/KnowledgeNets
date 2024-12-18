@@ -73,7 +73,6 @@ Suggests:
   BiocGenerics,
   readxl,
   htmlwidgets,
-  HPOExplorer,
   sparklyr,
   httr,
   jsonlite,
