@@ -35,7 +35,11 @@ map_ontology_terms <- function(ont,
                                verbose=1){
   from <- NULL;
   to <- match.arg(to)
-  if(!is.null(terms)) terms <- as.character(terms)
+  if(is.null(terms)) {
+    terms <- ont@terms
+  } else {
+    terms <- as.character(terms)
+  }
   terms_og <- terms
   
   if(to=="id") to <- "short_id"

@@ -32,7 +32,8 @@ get_ontology_dict <- function(ont,
       ont@elementMetadata
       )[,from:=get(from)][,to:=get(to)][,c("from","to")]
     if(isTRUE(include_alternative_terms) &&
-       "alternative_terms" %in% methods::slotNames(ont)){
+       "alternative_terms" %in% methods::slotNames(ont) &&
+       length(ont@alternative_terms)>0){
       data.table::setkeyv(dict, c("from")) 
       tmp <- data.table::data.table(
         from=gsub("_",":",basename(names(ont@alternative_terms))),

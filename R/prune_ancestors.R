@@ -24,7 +24,8 @@ prune_ancestors <- function(dat,
       return(NULL)
     }
     descendants <- simona::dag_offspring(dag = ont,
-                                         term = x)
+                                         term = x, 
+                                         in_labels = FALSE)
     if(sum(descendants %in% ids) > 0){
       return(NULL)
     } else {
