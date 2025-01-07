@@ -2,12 +2,12 @@
 % Please edit documentation in R/0docs.R, R/get_alphamissense.R,
 %   R/get_clinvar.R, R/get_data_package.R, R/get_definitions.R, R/get_gencc.R,
 %   R/get_gene_lengths.R, R/get_genes_disease.R, R/get_graph_colnames.R,
-%   R/get_medgen_maps.R, R/get_metadata_omim.R, R/get_metadata_orphanet.R,
-%   R/get_monarch.R, R/get_monarch_files.R, R/get_monarch_kg.R,
-%   R/get_monarch_models.R, R/get_mondo_maps.R, R/get_mondo_maps_files.R,
-%   R/get_ols_options.R, R/get_ontology.R, R/get_ontology_dict.R,
-%   R/get_ontology_levels.R, R/get_pli.R, R/get_prevalence.R, R/get_ttd.R,
-%   R/get_upheno.R, R/get_version.R
+%   R/get_hpo.R, R/get_medgen_maps.R, R/get_metadata_omim.R,
+%   R/get_metadata_orphanet.R, R/get_monarch.R, R/get_monarch_files.R,
+%   R/get_monarch_kg.R, R/get_monarch_models.R, R/get_mondo_maps.R,
+%   R/get_mondo_maps_files.R, R/get_ols_options.R, R/get_ontology.R,
+%   R/get_ontology_dict.R, R/get_ontology_levels.R, R/get_pli.R,
+%   R/get_prevalence.R, R/get_ttd.R, R/get_upheno.R, R/get_version.R
 \name{get_}
 \alias{get_}
 \alias{get_alphamissense}
@@ -18,6 +18,7 @@
 \alias{get_gene_lengths}
 \alias{get_genes_disease}
 \alias{get_graph_colnames}
+\alias{get_hpo}
 \alias{get_medgen_maps}
 \alias{get_metadata_omim}
 \alias{get_metadata_orphanet}
@@ -84,6 +85,15 @@ get_genes_disease(
 )
 
 get_graph_colnames(g, what = c("nodes", "edges"))
+
+get_hpo(
+  lvl = 2,
+  force_new = FALSE,
+  terms = NULL,
+  method = "github",
+  save_dir = cache_dir(package = "KGExplorer"),
+  ...
+)
 
 get_medgen_maps()
 
@@ -155,7 +165,7 @@ get_ontology_dict(
   from = "short_id",
   to = c("name", "label", "term"),
   include_self = FALSE,
-  include_alternative_terms = TRUE,
+  include_alternative_terms = FALSE,
   as_datatable = FALSE
 )
 
@@ -243,7 +253,7 @@ Passes to \link{get_monarch_files}.}
 \item{run_map_mondo}{Run \link{map_mondo} to map MONDO IDs to disease IDs.}
 
 \item{...}{
-  Arguments passed on to \code{\link[=link_monarch]{link_monarch}}, \code{\link[data.table:fread]{data.table::fread}}, \code{\link[data.table:fread]{data.table::fread}}, \code{\link[=get_ontology_github]{get_ontology_github}}
+  Arguments passed on to \code{\link[=link_monarch]{link_monarch}}, \code{\link[=get_ontology]{get_ontology}}, \code{\link[data.table:fread]{data.table::fread}}, \code{\link[data.table:fread]{data.table::fread}}, \code{\link[=get_ontology_github]{get_ontology_github}}
   \describe{
     \item{\code{node_filters}}{A named list of filters to apply to the node data. 
 Names should be name of the metadata column, and values should be a vector of 
@@ -266,15 +276,15 @@ return any rows where the "type" column contains either "gene" or "variant".}
     If type coercion results in an error, introduces \code{NA}s, or would result in loss of accuracy, the coercion attempt is aborted for that column with warning and the column's type is left unchanged. If you really desire data loss (e.g. reading \code{3.14} as \code{integer}) you have to truncate such columns afterwards yourself explicitly so that this is clear to future readers of your code.
   }
     \item{\code{integer64}}{ "integer64" (default) reads columns detected as containing integers larger than 2^31 as type \code{bit64::integer64}. Alternatively, \code{"double"|"numeric"} reads as \code{utils::read.csv} does; i.e., possibly with loss of precision and if so silently. Or, "character". }
-    \item{\code{dec}}{ The decimal separator as in \code{utils::read.csv}. If not "." (default) then usually ",". See details. }
+    \item{\code{dec}}{ The decimal separator as in \code{utils::read.csv}. When \code{"auto"} (the default), an attempt is made to decide whether \code{"."} or \code{","} is more suitable for this input. See details. }
     \item{\code{col.names}}{ A vector of optional names for the variables (columns). The default is to use the header column if present or detected, or if not "V" followed by the column number. This is applied after \code{check.names} and before \code{key} and \code{index}. }
     \item{\code{check.names}}{default is \code{FALSE}. If \code{TRUE} then the names of the variables in the \code{data.table} are checked to ensure that they are syntactically valid variable names. If necessary they are adjusted (by \code{\link{make.names}}) so that they are, and also to ensure that there are no duplicates.}
     \item{\code{encoding}}{ default is \code{"unknown"}. Other possible options are \code{"UTF-8"} and \code{"Latin-1"}.  Note: it is not used to re-encode the input, rather enables handling of encoded strings in their native encoding. }
     \item{\code{quote}}{ By default (\code{"\\""}), if a field starts with a double quote, \code{fread} handles embedded quotes robustly as explained under \code{Details}. If it fails, then another attempt is made to read the field \emph{as is}, i.e., as if quotes are disabled. By setting \code{quote=""}, the field is always read as if quotes are disabled. It is not expected to ever need to pass anything other than \\"\\" to quote; i.e., to turn it off. }
-    \item{\code{strip.white}}{ default is \code{TRUE}. Strips leading and trailing whitespaces of unquoted fields. If \code{FALSE}, only header trailing spaces are removed. }
-    \item{\code{fill}}{logical (default is \code{FALSE}). If \code{TRUE} then in case the rows have unequal length, blank fields are implicitly filled.}
+    \item{\code{strip.white}}{ Logical, default \code{TRUE}, in which case leading and trailing whitespace is stripped from unquoted \code{"character"} fields. \code{"numeric"} fields are always stripped of leading and trailing whitespace.}
+    \item{\code{fill}}{logical or integer (default is \code{FALSE}). If \code{TRUE} then in case the rows have unequal length, number of columns is estimated and blank fields are implicitly filled. If an integer is provided it is used as an upper bound for the number of columns. If \code{fill=Inf} then the whole file is read for detecting the number of columns. }
     \item{\code{blank.lines.skip}}{\code{logical}, default is \code{FALSE}. If \code{TRUE} blank lines in the input are ignored.}
-    \item{\code{key}}{Character vector of one or more column names which is passed to \code{\link[data.table]{setkey}}. It may be a single comma separated string such as \code{key="x,y,z"}, or a vector of names such as \code{key=c("x","y","z")}. Only valid when argument \code{data.table=TRUE}. Where applicable, this should refer to column names given in \code{col.names}. }
+    \item{\code{key}}{Character vector of one or more column names which is passed to \code{\link[data.table]{setkey}}. Only valid when argument \code{data.table=TRUE}. Where applicable, this should refer to column names given in \code{col.names}. }
     \item{\code{index}}{ Character vector or list of character vectors of one or more column names which is passed to \code{\link[data.table]{setindexv}}. As with \code{key}, comma-separated notation like \code{index="x,y,z"} is accepted for convenience. Only valid when argument \code{data.table=TRUE}. Where applicable, this should refer to column names given in \code{col.names}. }
     \item{\code{showProgress}}{ \code{TRUE} displays progress on the console if the ETA is greater than 3 seconds. It is produced in fread's C code where the very nice (but R level) txtProgressBar and tkProgressBar are not easily available. }
     \item{\code{data.table}}{ TRUE returns a \code{data.table}. FALSE returns a \code{data.frame}. The default for this argument can be changed with \code{options(datatable.fread.datatable=FALSE)}.}
@@ -293,6 +303,17 @@ return any rows where the "type" column contains either "gene" or "variant".}
 
 \item{what}{What should get activated? Possible values are \code{nodes} or
 \code{edges}.}
+
+\item{lvl}{Depth of the ancestor terms to add. 
+Will get the closest ancestor to this level if none have this exact level.}
+
+\item{terms}{A vector of ontology term IDs.}
+
+\item{method}{Compute ontology levels using:
+\itemize{
+ \item{"height" (default)} \link[simona]{dag_height}.
+ \item{"depth"} \link[simona]{dag_depth}.
+}}
 
 \item{queries}{A list of free-form substring queries to filter files by 
 (using any column in the metadata). 
@@ -338,23 +359,12 @@ Can be a character vector of one or more column names.}
 
 \item{ol}{An \link[rols]{Ontologies} object.}
 
-\item{method}{Compute ontology levels using:
-\itemize{
- \item{"height" (default)} \link[simona]{dag_height}.
- \item{"depth"} \link[simona]{dag_depth}.
-}}
-
 \item{filetype}{File type to search for.}
 
 \item{import_func}{Function to import the ontology with. 
 If \code{NULL}, automatically tries to choose the correct function.}
 
-\item{terms}{A vector of ontology term IDs.}
-
 \item{add_metadata}{Add metadata to the resulting ontology object.}
-
-\item{lvl}{Depth of the ancestor terms to add. 
-Will get the closest ancestor to this level if none have this exact level.}
 
 \item{add_n_edges}{Add the number of edges (connections) for each term.}
 
@@ -419,6 +429,8 @@ A named list of data.tables of AlphaMissense predictions.
 }
 
 data.table
+
+\link[simona]{ontology_DAG} object.
 
 \link[data.table]{data.table}
 
@@ -503,6 +515,19 @@ Load gene lists associated with each disease phenotype from:
 
 \item \code{get_graph_colnames()}: get_
 Get column names in the nodes and/or edges of a tbl_graph.
+
+\item \code{get_hpo()}: get_
+Get Human Phenotype Ontology (HPO)
+
+Updated version of Human Phenotype Ontology (HPO).
+Created from the OBO files distributed by the HPO project's
+\href{https://github.com/obophenotype/human-phenotype-ontology}{GitHub}.
+Adapted from \link[HPOExplorer]{get_hpo}.
+
+By comparison, the \code{hpo} data from \pkg{ontologyIndex} is from 2016.
+Note that the maximum ontology level depth in the 2016 version was 14,
+whereas in the 2023 version the maximum ontology level depth is 16
+ (due to an expansion of the HPO).
 
 \item \code{get_medgen_maps()}: get_
 Get MedGen maps.
@@ -625,6 +650,7 @@ ont <- get_ontology("hp", terms=10)
 def <- get_definitions(ont)
 d <- get_gencc()
 genes <- get_genes_disease()
+hpo <- get_hpo()
 dat <- get_monarch(maps=list(c("gene","disease")))
 files <- get_monarch_files() 
 \dontrun{

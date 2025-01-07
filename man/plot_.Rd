@@ -96,7 +96,7 @@ plot_ontology_graphviz(ont, ...)
 
 plot_ontology_heatmap(
   ont,
-  annot = data.table::data.table(ont@elementMetadata),
+  annot = data.table::data.table(as.data.frame(ont@elementMetadata)),
   X = ontology_to(ont, to = "similarity"),
   fontsize = ont@n_terms * 4e-04,
   row_labels = ont@terms,

@@ -12,7 +12,7 @@ map_upheno_data_i <- function(pheno_map_method,
     n_genes_db1 <- object <- gene_label <- db <- .  <-
     n_genes_db2 <- subject_taxon_label1 <- subject_taxon_label2 <-
     phenotype_genotype_score <- equivalence_score <- NULL;
-  
+
   pheno_map_method <- pheno_map_method[1]
   gene_map_method <- gene_map_method[1]
   messager(paste0("map_upheno_data: pheno_map_method=",
@@ -26,10 +26,10 @@ map_upheno_data_i <- function(pheno_map_method,
       names(pheno_map) <-gsub("^object","id2",names(pheno_map))
       pheno_map[,db1:=gsub("*:.*","",basename(id1))]
     } else if(pheno_map_method=="monarch"){
-    
-      hpo <- HPOExplorer::get_hpo()
+
+      hpo <- get_hpo()
       out <- monarchr::monarch_search(query = NULL,
-                                      category = "biolink:PhenotypicFeature", 
+                                      category = "biolink:PhenotypicFeature",
                                       limit = 500)
       pheno_map <- get_monarch(queries = "phenotype_to_phenotype") |>
         data.table::setnames(c("label_x","label_y"),c("label1","label2"))
@@ -47,7 +47,7 @@ map_upheno_data_i <- function(pheno_map_method,
       }
     }
   }
-  
+
   ## Gene-phenotype associations across 8 species
   {
     genes <- get_monarch(maps = list(c("phenotype","gene")),
@@ -65,7 +65,7 @@ map_upheno_data_i <- function(pheno_map_method,
     ## Create an db-species map for each Ontology
     species_map <- genes_map[,.SD[1], keyby="db"][,.(db,subject_taxon_label)]
   }
-  
+
   #### Map non-human genes onto human orthologs ####
   {
     genes_homol <- map_genes_monarch(dat=genes,
@@ -75,7 +75,7 @@ map_upheno_data_i <- function(pheno_map_method,
              data.table::uniqueN(genes$subject_taxon_label),
              "species remain after cross-species gene mapping.")
   }
-  
+
   #### Map non-human phenotypes onto human phenotypes ####
   #### Merge nonhuman ontology genes with human HPO genes ####
   {
@@ -94,7 +94,7 @@ map_upheno_data_i <- function(pheno_map_method,
       all.y = keep_nogenes,
       suffixes = c(1,2),
       allow.cartesian = TRUE
-    ) 
+    )
     pheno_map_genes[,db2:=id2_db]
     ## Fill in missing species for those without gene data
     pheno_map_genes[
@@ -113,7 +113,7 @@ map_upheno_data_i <- function(pheno_map_method,
     ## Remove
     # remove(genes_human,genes_nonhuman,pheno_map)
   }
-  
+
   #### Count the number of overlapping genes
   {
     if(isFALSE(keep_nogenes)){
