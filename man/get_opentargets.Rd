@@ -39,6 +39,8 @@ get_opentargets(
 
 \item{max_files}{Limit the number of files to import}
 
+\item{workers}{Number (>1) or proportion (<1) of worker cores to use.}
+
 \item{force_new}{If TRUE, force a new download.}
 }
 \description{
@@ -48,5 +50,7 @@ try running \code{arrow::install_arrow},
  restarting the R session, and trying again.
 }
 \examples{
+\dontrun{
 d <- get_opentargets(max_files=2, save_dir=tempdir())
+}
 }

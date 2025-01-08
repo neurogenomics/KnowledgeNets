@@ -17,7 +17,9 @@
 #' @import rvest
 #' @export
 #' @examples
+#' \dontrun{
 #' d <- get_opentargets(max_files=2, save_dir=tempdir())
+#' }
 get_opentargets <- function(release="latest",
                             data_type=c("associationByDatasourceDirect",
                                         "associationByDatasourceIndirect",
