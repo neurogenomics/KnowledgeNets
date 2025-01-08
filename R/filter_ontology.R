@@ -16,7 +16,7 @@ filter_ontology <- function(ont,
                             include_self = TRUE,
                             use_simona=FALSE,
                             ...){
-  #### Check remove_terms #### 
+  #### Check remove_terms ####
   terms <- terms[!terms %in% remove_terms]
   #### Use simona ####
   if(isTRUE(use_simona)){
@@ -30,14 +30,14 @@ filter_ontology <- function(ont,
                                            to = "id") |> stats::na.omit()
     if(length(keep_descendants)>0){
       messager("Keeping descendants of",length(keep_descendants),"term(s).")
-      ont <- simona::dag_filter(ont, 
+      ont <- simona::dag_filter(ont,
                                 root=as.character(keep_descendants),
                                 ...)
       messager(formatC(ont@n_terms,big.mark = ","),
                "terms remain after filtering.")
     } else {
       messager("keep_descendants: No descendants found.")
-    } 
+    }
   }
   #### remove_descendants ####
   if(!is.null(remove_descendants)){
@@ -50,8 +50,8 @@ filter_ontology <- function(ont,
                                                   include_self = include_self,
                                                   term = remove_descendants)
       keep_terms <- ont@terms[!ont@terms %in% remove_descendants]
-      ont <- simona::dag_filter(ont, 
-                                terms=keep_terms, 
+      ont <- simona::dag_filter(ont,
+                                terms=keep_terms,
                                 ...)
       messager(formatC(ont@n_terms,big.mark = ","),
                "terms remain after filtering.")
@@ -61,29 +61,30 @@ filter_ontology <- function(ont,
   }
   #### Use custom filtering methods ####
   if(!is.null(terms)){
-    terms <- map_ontology_terms(ont = ont,
-                                terms = terms,
-                                to = "id") |> stats::na.omit()
-    ## Characters 
+
+    ## Characters
     if(is.character(terms)){
+      terms <- map_ontology_terms(ont = ont,
+                                  terms = terms,
+                                  to = "id") |> stats::na.omit()
       terms <- terms[simona::dag_has_terms(dag=ont, terms = unique(terms))]
       if(length(terms)==0) {
         stopper("None of the supplied terms found in the ontology.")
-      } 
+      }
       ont <- ont[,terms]
-      
+
     } else if (is.numeric(terms)){
       messager("Randomly sampling",terms,"term(s).")
       if(terms>length(ont@terms)){
         messager(
           "Number of terms requested exceeds number of terms in the ontology.",
           "Returning original ontology object without filtering.")
-        return(ont) 
-      } 
+        return(ont)
+      }
       if(terms==0) stopper("Terms must be >0 if numeric.")
       term_ids <- sample(ont@terms,terms, replace = FALSE)
       ont <- ont[,term_ids]
-    }  
+    }
   }
   return(ont)
 }

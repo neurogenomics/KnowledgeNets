@@ -1,3 +1,4 @@
+skip_if_offline()
 test_that("map_ontology_terms works", {
 
   
@@ -28,7 +29,5 @@ test_that("map_ontology_terms works", {
   cl <-  get_ontology("cl", )
   testthat::expect_lte(nrow(subset(cl@elementMetadata, is.na(name))), 3)
   terms <- cl@terms
-  run_tests(ont = ont, terms = terms)
-   
-  
+  run_tests(ont = ont, terms = terms) 
 })
