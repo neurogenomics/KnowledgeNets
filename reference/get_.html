@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">KGExplorer</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.05</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.06</span>
       </span>
     </div>
 
@@ -57,7 +57,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Get functions</h1>
-    <small class="dont-index">Source: <a href="https://github.com/neurogenomics/KGExplorer/blob/improve-docs/R/0docs.R" class="external-link"><code>R/0docs.R</code></a>, <a href="https://github.com/neurogenomics/KGExplorer/blob/improve-docs/R/get_alphamissense.R" class="external-link"><code>R/get_alphamissense.R</code></a>, <a href="https://github.com/neurogenomics/KGExplorer/blob/improve-docs/R/get_clinvar.R" class="external-link"><code>R/get_clinvar.R</code></a>, and 25 more</small>
+    <small class="dont-index">Source: <a href="https://github.com/neurogenomics/KGExplorer/blob/master/R/0docs.R" class="external-link"><code>R/0docs.R</code></a>, <a href="https://github.com/neurogenomics/KGExplorer/blob/master/R/get_alphamissense.R" class="external-link"><code>R/get_alphamissense.R</code></a>, <a href="https://github.com/neurogenomics/KGExplorer/blob/master/R/get_clinvar.R" class="external-link"><code>R/get_clinvar.R</code></a>, and 25 more</small>
     <div class="hidden name"><code>get_.Rd</code></div>
     </div>
 
@@ -791,7 +791,7 @@ HPO GitHub Releases page</a>.</p></li>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Evidence scores for: </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  - 10514 diseases </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  - 5171 genes</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> + Version: 2024-12-19</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> + Version: 2025-01-08</span>
 <span class="r-in"><span><span class="va">genes</span> <span class="op">&lt;-</span> <span class="fu">get_genes_disease</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Filtering with `maps`.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Files found: 1</span>
@@ -819,67 +819,68 @@ HPO GitHub Releases page</a>.</p></li>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> download.file download successful.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Time difference of 0.4 secs</span>
 <span class="r-in"><span><span class="va">mondo</span> <span class="op">&lt;-</span> <span class="fu">get_ontology</span><span class="op">(</span>name<span class="op">=</span><span class="st">"mondo"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ⠙ Iterating 9 done (4.5/s) | 2s</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ⠙ Iterating 14 done (4.9/s) | 2.9s</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Preparing ontology_index object from: https://github.com/monarch-initiative/mondo/releases/download/v2024-12-03/mondo.obo</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ⠙ Iterating 9 done (4.4/s) | 2.1s</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ⠙ Iterating 14 done (4.6/s) | 3s</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Preparing ontology_index object from: https://github.com/monarch-initiative/mondo/releases/download/v2025-01-07/mondo.obo</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Typedef] sections in the obo file [268/268]</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> remove 2 obsolete terms</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [1000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [2000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [3000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [4000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [5000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [6000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [7000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [8000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [9000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [10000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [11000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [12000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [13000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [14000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [15000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [16000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [17000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [18000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [19000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [20000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [21000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [22000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [23000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [24000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [25000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [26000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [27000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [28000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [29000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [30000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [31000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [32000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [33000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [34000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [35000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [36000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [37000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [38000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [39000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [40000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [41000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [42000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [43000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [44000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [45000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [46000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [47000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [48000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [49000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [50000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [51000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [52000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [53000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [54000/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [54683/54683]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> remove 4250 obsolete terms</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [1000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [2000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [3000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [4000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [5000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [6000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [7000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [8000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [9000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [10000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [11000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [12000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [13000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [14000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [15000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [16000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [17000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [18000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [19000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [20000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [21000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [22000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [23000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [24000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [25000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [26000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [27000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [28000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [29000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [30000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [31000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [32000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [33000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [34000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [35000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [36000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [37000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [38000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [39000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [40000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [41000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [42000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [43000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [44000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [45000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [46000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [47000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [48000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [49000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [50000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [51000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [52000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [53000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [54000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [55000/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Term] sections in the obo file [55917/55917]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> remove 4254 obsolete terms</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> There are more than one root:</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   BFO:0000001, CHEBI:24431, CHEBI:36342, CHEBI:50906, ECTO:0000015,</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>     and other 29 terms ...</span>
@@ -887,12 +888,12 @@ HPO GitHub Releases page</a>.</p></li>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Adding term metadata.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> IC_method: IC_offspring</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Adding ancestor metadata.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Getting absolute ontology level for 50,425 IDs.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Getting absolute ontology level for 51,655 IDs.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 206 ancestors found at level 2</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Translating ontology terms to names.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Translating ontology terms to ids.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Converted ontology to: adjacency </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Getting absolute ontology level for 50,425 IDs.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Getting absolute ontology level for 51,655 IDs.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Saving ontology --&gt; /github/home/.cache/R/KGExplorer/mondo.rds</span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span>  <span class="va">hp</span> <span class="op">&lt;-</span> <span class="fu">get_ontology</span><span class="op">(</span>name<span class="op">=</span><span class="st">"hp"</span><span class="op">)</span></span></span>
@@ -924,8 +925,9 @@ HPO GitHub Releases page</a>.</p></li>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 1 organism identified from search: hsapiens</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 13,815 / 27,118 (50.94%) genes mapped.</span>
 <span class="r-in"><span><span class="va">upheno</span> <span class="op">&lt;-</span> <span class="fu">get_upheno</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ⠙ Iterating 9 done (4.2/s) | 2.1s</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ⠙ Iterating 14 done (4.7/s) | 3s</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ⠙ Iterating 6 done (2.8/s) | 2.1s</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ⠹ Iterating 10 done (3.5/s) | 2.9s</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ⠹ Iterating 14 done (3.9/s) | 3.5s</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing 279 &lt;owl:ObjectProperty&gt; ...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> remove 2 obsolete terms</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing 190124 &lt;owl:Class&gt; ...</span>
