@@ -27,7 +27,7 @@ map_upheno_data_i <- function(pheno_map_method,
       pheno_map[,db1:=gsub("*:.*","",basename(id1))]
     } else if(pheno_map_method=="monarch"){
 
-      hpo <- get_hpo()
+      hpo <- get_ontology(name = "hpo")
       out <- monarchr::monarch_search(query = NULL,
                                       category = "biolink:PhenotypicFeature",
                                       limit = 500)
