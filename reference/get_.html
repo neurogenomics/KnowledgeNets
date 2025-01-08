@@ -57,7 +57,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Get functions</h1>
-    <small class="dont-index">Source: <a href="https://github.com/neurogenomics/KGExplorer/blob/master/R/0docs.R" class="external-link"><code>R/0docs.R</code></a>, <a href="https://github.com/neurogenomics/KGExplorer/blob/master/R/get_alphamissense.R" class="external-link"><code>R/get_alphamissense.R</code></a>, <a href="https://github.com/neurogenomics/KGExplorer/blob/master/R/get_clinvar.R" class="external-link"><code>R/get_clinvar.R</code></a>, and 25 more</small>
+    <small class="dont-index">Source: <a href="https://github.com/neurogenomics/KGExplorer/blob/master/R/0docs.R" class="external-link"><code>R/0docs.R</code></a>, <a href="https://github.com/neurogenomics/KGExplorer/blob/master/R/get_alphamissense.R" class="external-link"><code>R/get_alphamissense.R</code></a>, <a href="https://github.com/neurogenomics/KGExplorer/blob/master/R/get_clinvar.R" class="external-link"><code>R/get_clinvar.R</code></a>, and 24 more</small>
     <div class="hidden name"><code>get_.Rd</code></div>
     </div>
 
@@ -97,15 +97,6 @@
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">get_graph_colnames</span><span class="op">(</span><span class="va">g</span>, what <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"nodes"</span>, <span class="st">"edges"</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">get_hpo</span><span class="op">(</span></span>
-<span>  lvl <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>  force_new <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  terms <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  method <span class="op">=</span> <span class="st">"github"</span>,</span>
-<span>  save_dir <span class="op">=</span> <span class="fu"><a href="cache_.html">cache_dir</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"KGExplorer"</span><span class="op">)</span>,</span>
-<span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">get_medgen_maps</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
@@ -312,7 +303,7 @@ Passes to get_monarch_files.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Arguments passed on to <code><a href="link_.html">link_monarch</a></code>, <code>get_ontology</code>, <code><a href="https://rdrr.io/pkg/data.table/man/fread.html" class="external-link">data.table::fread</a></code>, <code><a href="https://rdrr.io/pkg/data.table/man/fread.html" class="external-link">data.table::fread</a></code>, <code><a href="get_ontology_github.html">get_ontology_github</a></code></p><dl><dt><code>node_filters</code></dt>
+<dd><p>Arguments passed on to <code><a href="link_.html">link_monarch</a></code>, <code><a href="https://rdrr.io/pkg/data.table/man/fread.html" class="external-link">data.table::fread</a></code>, <code><a href="https://rdrr.io/pkg/data.table/man/fread.html" class="external-link">data.table::fread</a></code>, <code><a href="get_ontology_github.html">get_ontology_github</a></code></p><dl><dt><code>node_filters</code></dt>
 <dd><p>A named list of filters to apply to the node data.
 Names should be name of the metadata column, and values should be a vector of
 valid options. For example, <code>list("type" = c("gene","variant"))</code> will
@@ -437,21 +428,6 @@ return any rows where the "type" column contains either "gene" or "variant".</p>
 <code>edges</code>.</p></dd>
 
 
-<dt id="arg-lvl">lvl<a class="anchor" aria-label="anchor" href="#arg-lvl"></a></dt>
-<dd><p>Depth of the ancestor terms to add.
-Will get the closest ancestor to this level if none have this exact level.</p></dd>
-
-
-<dt id="arg-terms">terms<a class="anchor" aria-label="anchor" href="#arg-terms"></a></dt>
-<dd><p>A vector of ontology term IDs.</p></dd>
-
-
-<dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
-<dd><p>Compute ontology levels using:</p><ul><li><p>"height" (default) <a href="https://rdrr.io/pkg/simona/man/dag_depth.html" class="external-link">dag_height</a>.</p></li>
-<li><p>"depth" <a href="https://rdrr.io/pkg/simona/man/dag_depth.html" class="external-link">dag_depth</a>.</p></li>
-</ul></dd>
-
-
 <dt id="arg-queries">queries<a class="anchor" aria-label="anchor" href="#arg-queries"></a></dt>
 <dd><p>A list of free-form substring queries to filter files by
 (using any column in the metadata).
@@ -526,6 +502,12 @@ Can be a character vector of one or more column names.</p></dd>
 <dd><p>An <a href="http://lgatto.github.io/rols/reference/Ontologies.html" class="external-link">Ontologies</a> object.</p></dd>
 
 
+<dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
+<dd><p>Compute ontology levels using:</p><ul><li><p>"height" (default) <a href="https://rdrr.io/pkg/simona/man/dag_depth.html" class="external-link">dag_height</a>.</p></li>
+<li><p>"depth" <a href="https://rdrr.io/pkg/simona/man/dag_depth.html" class="external-link">dag_depth</a>.</p></li>
+</ul></dd>
+
+
 <dt id="arg-filetype">filetype<a class="anchor" aria-label="anchor" href="#arg-filetype"></a></dt>
 <dd><p>File type to search for.</p></dd>
 
@@ -535,8 +517,17 @@ Can be a character vector of one or more column names.</p></dd>
 If <code>NULL</code>, automatically tries to choose the correct function.</p></dd>
 
 
+<dt id="arg-terms">terms<a class="anchor" aria-label="anchor" href="#arg-terms"></a></dt>
+<dd><p>A vector of ontology term IDs.</p></dd>
+
+
 <dt id="arg-add-metadata">add_metadata<a class="anchor" aria-label="anchor" href="#arg-add-metadata"></a></dt>
 <dd><p>Add metadata to the resulting ontology object.</p></dd>
+
+
+<dt id="arg-lvl">lvl<a class="anchor" aria-label="anchor" href="#arg-lvl"></a></dt>
+<dd><p>Depth of the ancestor terms to add.
+Will get the closest ancestor to this level if none have this exact level.</p></dd>
 
 
 <dt id="arg-add-n-edges">add_n_edges<a class="anchor" aria-label="anchor" href="#arg-add-n-edges"></a></dt>
@@ -623,7 +614,6 @@ Distributed by the
 <li><p>"gene_symbol": Gene symbol.</p></li>
 <li><p>"evidence_score": Evidence score.</p></li>
 </ul><p>data.table</p>
-<p><a href="https://rdrr.io/pkg/simona/man/ontology_DAG-class.html" class="external-link">ontology_DAG</a> object.</p>
 <p><a href="https://rdrr.io/pkg/data.table/man/data.table.html" class="external-link">data.table</a></p>
 <p><a href="https://rdrr.io/pkg/data.table/man/data.table.html" class="external-link">data.table</a> of mappings.</p>
 <p><a href="https://rdrr.io/pkg/simona/man/ontology_DAG-class.html" class="external-link">ontology_DAG</a></p>
@@ -683,16 +673,6 @@ Load disease genes</p>
 </ul></li>
 <li><p><code>get_graph_colnames()</code>: get_
 Get column names in the nodes and/or edges of a tbl_graph.</p></li>
-<li><p><code>get_hpo()</code>: get_
-Get Human Phenotype Ontology (HPO)</p>
-<p>Updated version of Human Phenotype Ontology (HPO).
-Created from the OBO files distributed by the HPO project's
-<a href="https://github.com/obophenotype/human-phenotype-ontology" class="external-link">GitHub</a>.
-Adapted from get_hpo.</p>
-<p>By comparison, the <code>hpo</code> data from <span class="pkg">ontologyIndex</span> is from 2016.
-Note that the maximum ontology level depth in the 2016 version was 14,
-whereas in the 2023 version the maximum ontology level depth is 16
- (due to an expansion of the HPO).</p></li>
 <li><p><code>get_medgen_maps()</code>: get_
 Get MedGen maps.</p></li>
 <li><p><code>get_metadata_omim()</code>: get_</p></li>
@@ -797,7 +777,6 @@ HPO GitHub Releases page</a>.</p></li>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Files found: 1</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Constructing data: gene &lt;--&gt; disease</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> genes(s): 0</span>
-<span class="r-in"><span><span class="va">hpo</span> <span class="op">&lt;-</span> <span class="fu">get_hpo</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">get_monarch</span><span class="op">(</span>maps<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gene"</span>,<span class="st">"disease"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Filtering with `maps`.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Files found: 1</span>
@@ -819,8 +798,8 @@ HPO GitHub Releases page</a>.</p></li>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> download.file download successful.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Time difference of 0.4 secs</span>
 <span class="r-in"><span><span class="va">mondo</span> <span class="op">&lt;-</span> <span class="fu">get_ontology</span><span class="op">(</span>name<span class="op">=</span><span class="st">"mondo"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ⠙ Iterating 9 done (4.4/s) | 2.1s</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ⠙ Iterating 14 done (4.6/s) | 3s</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ⠙ Iterating 5 done (2.4/s) | 2.1s</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ⠙ Iterating 14 done (3.2/s) | 4.3s</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Preparing ontology_index object from: https://github.com/monarch-initiative/mondo/releases/download/v2025-01-07/mondo.obo</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing [Typedef] sections in the obo file [268/268]</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> remove 2 obsolete terms</span>
@@ -925,9 +904,9 @@ HPO GitHub Releases page</a>.</p></li>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 1 organism identified from search: hsapiens</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 13,815 / 27,118 (50.94%) genes mapped.</span>
 <span class="r-in"><span><span class="va">upheno</span> <span class="op">&lt;-</span> <span class="fu">get_upheno</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ⠙ Iterating 6 done (2.8/s) | 2.1s</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ⠹ Iterating 10 done (3.5/s) | 2.9s</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ⠹ Iterating 14 done (3.9/s) | 3.5s</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ⠙ Iterating 2 done (0.95/s) | 2.1s</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ⠹ Iterating 9 done (2.3/s) | 3.9s</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ⠹ Iterating 14 done (2.7/s) | 5.1s</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing 279 &lt;owl:ObjectProperty&gt; ...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> remove 2 obsolete terms</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Parsing 190124 &lt;owl:Class&gt; ...</span>
