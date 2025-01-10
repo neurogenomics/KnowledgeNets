@@ -1,7 +1,7 @@
 #' Query Phenoscape
 #' 
 #' Query \href{https://phenoscape.org/}{Phenoscape}.
-#' @source {https://github.com/phenoscape/rphenoscape/}{rphenoscape}
+#' @source \href{https://github.com/phenoscape/rphenoscape/}{rphenoscape}
 query_phenoscape <- function(){
   requireNamespace("rphenoscape")
   

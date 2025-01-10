@@ -17,6 +17,8 @@ get_opentargets(
   subdir2 = c("/output/etl/parquet/", "/")[1],
   ftp = paste0(server, subdir, release, subdir2, data_type[1], "/"),
   save_dir = cache_dir(),
+  max_files = NULL,
+  workers = 1,
   force_new = FALSE
 )
 }
@@ -35,6 +37,10 @@ get_opentargets(
 
 \item{save_dir}{Directory to save a file to.}
 
+\item{max_files}{Limit the number of files to import}
+
+\item{workers}{Number (>1) or proportion (<1) of worker cores to use.}
+
 \item{force_new}{If TRUE, force a new download.}
 }
 \description{
@@ -44,5 +50,7 @@ try running \code{arrow::install_arrow},
  restarting the R session, and trying again.
 }
 \examples{
-d <- get_opentargets()
+\dontrun{
+d <- get_opentargets(max_files=2, save_dir=tempdir())
+}
 }

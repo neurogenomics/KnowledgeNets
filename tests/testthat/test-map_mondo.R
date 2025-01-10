@@ -1,5 +1,6 @@
+skip_if_offline()
 test_that("map_mondo works", {
-  
+
   dat <- example_dat(rm_types="gene")
   dat2 <- map_mondo(dat = dat, map_to = "hpo")
   testthat::expect_true(methods::is(dat2,"data.table"))

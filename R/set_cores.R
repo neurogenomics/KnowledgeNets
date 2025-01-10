@@ -1,24 +1,24 @@
 #' Set cores
 #'
 #' Assign cores automatically for parallel processing, while reserving some.
-#' 
+#'
 #' @param workers Number (>1) or proportion (<1) of worker cores to use.
 #' @param verbose Print messages.
-#' @param progressbar logical(1) Enable progress bar 
+#' @param progressbar logical(1) Enable progress bar
 #' (based on \code{plyr:::progress_text}).
-#'  Enabling the progress bar changes the default value of tasks to 
-#'  \code{.Machine$integer.max}, so that progress is reported for 
+#'  Enabling the progress bar changes the default value of tasks to
+#'  \code{.Machine$integer.max}, so that progress is reported for
 #'  each element of X.
 #' @returns List of core allocations.
-#' 
+#'
 #' @export
 #' @import data.table
 #' @import BiocParallel
 #' @importFrom parallel detectCores
 set_cores <- function(workers = .90,
                       progressbar = TRUE,
-                      verbose = TRUE) { 
-  
+                      verbose = TRUE) {
+
   # Enable parallelization of HDF5 functions
   ## Allocate ~10% of your available cores to non-parallelized processes
   workers <- if (is.null(workers)) .90 else workers
@@ -36,12 +36,20 @@ set_cores <- function(workers = .90,
   )
   ### Ensure data.table doesn't interfere with parallelization ####
   if(workers>1) data.table::setDTthreads(threads = 1)
+  ### Handle _R_CHECK_LIMIT_CORES_ ###
+  if (nzchar(chk <- Sys.getenv("_R_CHECK_LIMIT_CORES_", ""))) {
+    if (workers > 2) {
+      workers <- 2
+      messager(paste("R_CHECK_LIMIT_CORES_' environment variable detected",
+      "BiocParallel workers reduced to 2."))
+    }
+  }
   #### Handle Windows ####
   if (.Platform$OS.type == "windows") {
     params <- BiocParallel::SnowParam(workers = workers,
                                       progressbar = progressbar)
   } else {
-    params <- BiocParallel::MulticoreParam(workers = workers, 
+    params <- BiocParallel::MulticoreParam(workers = workers,
                                            progressbar = progressbar)
   }
   # DelayedArray::setAutoBPPARAM(params)

@@ -4,7 +4,7 @@
 \alias{query_phenoscape}
 \title{Query Phenoscape}
 \source{
-{https://github.com/phenoscape/rphenoscape/}{rphenoscape}
+\href{https://github.com/phenoscape/rphenoscape/}{rphenoscape}
 }
 \usage{
 query_phenoscape()

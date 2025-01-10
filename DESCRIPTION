@@ -1,14 +1,19 @@
 Package: KGExplorer
 Type: Package
 Title: Biomedical Knowledge Network Construction and Analysis
-Version: 0.99.03
+Version: 0.99.06
 Authors@R:
     c(
     person(given = "Brian",
            family = "Schilder",
            role = c("aut","cre"),
            email = "brian_schilder@alumni.brown.edu",
-           comment = c(ORCID = "0000-0001-5949-2191"))
+           comment = c(ORCID = "0000-0001-5949-2191")),
+    person(given = "Hiranyamaya",
+           family = "Dash",
+           role = c("ctb"),
+           email = "hdash.work@gmail.com",
+           comment = c(ORCID = "0009-0005-5514-505X"))
      ) 
 Description: Query, construct, and analyse large-scale biomedical knowledge graphs and ontologies.
 URL: https://github.com/neurogenomics/KGExplorer
@@ -75,9 +80,10 @@ Suggests:
   tidyr,
   DiagrammeR,
   forcats,
-  arrow
+  arrow,
+  curl
 Remotes:
-  github::charlieccarey/monarchr,
+  github::monarch-initiative/monarchr,
   github::phenoscape/rphenoscape,
   github::vjcitn/biocBiocypher,
   github::RajLabMSSM/echogithub,

@@ -1,5 +1,5 @@
 #' Prune ancestor
-#' 
+#'
 #' Prune redundant ancestral terms from a \link{data.table}.
 #' @export
 #' @param dat A \link{data.table} with a column of ontology terms.
@@ -9,7 +9,7 @@
 #' dat <- data.table::data.table(hpo_id=c("HP:0000001","HP:0000002","HP:0000003"),
 #'                              name=c("term1","term2","term3"))
 #' ont <- get_ontology("hp")
-#' dat2 <- prune_ancestors(dat,ont=ont)
+#' dat2 <- prune_ancestors(dat,id_col="hpo_id",ont=ont)
 prune_ancestors <- function(dat,
                             id_col,
                             ont){
@@ -24,7 +24,8 @@ prune_ancestors <- function(dat,
       return(NULL)
     }
     descendants <- simona::dag_offspring(dag = ont,
-                                         term = x)
+                                         term = x, 
+                                         in_labels = FALSE)
     if(sum(descendants %in% ids) > 0){
       return(NULL)
     } else {

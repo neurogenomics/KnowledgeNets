@@ -11,11 +11,15 @@
 #' @param subdir Open Targets subdirectory.
 #' @param subdir2 Open Targets sub-subdirectory.
 #' @param ftp The final Open Targets FTP URL.
+#' @param max_files Limit the number of files to import
 #' @inheritParams get_
+#' @inheritParams set_cores
 #' @import rvest
 #' @export
 #' @examples
-#' d <- get_opentargets()
+#' \dontrun{
+#' d <- get_opentargets(max_files=2, save_dir=tempdir())
+#' }
 get_opentargets <- function(release="latest",
                             data_type=c("associationByDatasourceDirect",
                                         "associationByDatasourceIndirect",
@@ -37,6 +41,8 @@ get_opentargets <- function(release="latest",
                                          subdir2,
                                          data_type[1],"/"),
                             save_dir=cache_dir(),
+                            max_files=NULL,
+                            workers=1,
                             force_new=FALSE){  
   
   ## Variant and gene level data merged for all genome-wide summary statistics:
@@ -59,8 +65,11 @@ get_opentargets <- function(release="latest",
   )[[1]]|>
     subset(endsWith(Name,".parquet")|endsWith(Name,".json")) 
   tbl$Date <- stringr::str_split(tbl$`Last modified`," ",simplify = TRUE)[,1]
+  if(!is.null(max_files)){
+    tbl <- tbl[seq(max_files),]
+  }
   if(nrow(tbl)==0) stopper("No data files found at", ftp)
-  BPPARAM <- set_cores()
+  BPPARAM <- set_cores(workers = workers)
   d <- BiocParallel::bplapply(stats::setNames(tbl$Name,
                                               tbl$Name),
                               BPPARAM = BPPARAM,
